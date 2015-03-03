@@ -96,7 +96,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cellType1") as
+        let cell = tableView.dequeueReusableCellWithIdentifier("cellType1") as UITableViewCell
     
         
        // cell.accessoryType = UITableViewCellAccessoryType.None
@@ -110,7 +110,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
         }
         
-        cell.textLabel.text = String(format:"%.2f", DataNote[indexPath.section].listeNote[indexPath.row].nbPoint)
+        cell.textLabel!.text = String(format:"%.2f", DataNote[indexPath.section].listeNote[indexPath.row].nbPoint)
+        cell.detailTextLabel!.text = String(DataNote[indexPath.section].listeNote[indexPath.row].coefficient)
         
         return cell
     }
@@ -165,7 +166,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
     }
-    
     
     @IBAction func retract(sender: AnyObject) {
         

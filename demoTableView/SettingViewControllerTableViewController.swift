@@ -43,11 +43,11 @@ class SettingViewControllerTableViewController: UITableViewController, UIAlertVi
         
         if indexPath.row == 0
         {
-            cell.textLabel.text = "supprimer la note"
+            cell.textLabel!.text = "supprimer la note"
         }
         else if indexPath.row == 1
         {
-            cell.textLabel.text = "modifier la note"
+            cell.textLabel!.text = "modifier la note"
         }
         
         return cell

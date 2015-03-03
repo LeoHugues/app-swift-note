@@ -103,9 +103,10 @@ struct MesFonctions {
         var sommemoyennematiere = 0.00
         var sommecoefmatiere = 0
         
-        
         for matiere : Matiere in Liste
         {
+            if matiere.listeNote.count > 0
+            {
             var sommeCoef = 0
             var sommeNote = 0.0
             
@@ -118,9 +119,8 @@ struct MesFonctions {
             
             sommemoyennematiere += Double(matiere.coefficient) * (sommeNote / Double(sommeCoef))
             sommecoefmatiere += matiere.coefficient
-            
         }
-        
+            }
         return sommemoyennematiere / Double(sommecoefmatiere)
         
     }
