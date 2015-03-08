@@ -27,7 +27,7 @@ class Validator {
         validations[textField] = ValidationRule(textField: textField, rules: rules, errorLabel: nil)
     }
     
-    func registerField(textField:UITextField, errorLabel:UILabel, rules:[Rule]) {
+    func registerField(#textField:UITextField, errorLabel:UILabel, rules:[Rule]) {
         validations[textField] = ValidationRule(textField: textField, rules:rules, errorLabel:errorLabel)
     }
     

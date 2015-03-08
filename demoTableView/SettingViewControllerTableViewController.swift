@@ -37,7 +37,7 @@ class SettingViewControllerTableViewController: UITableViewController, UIAlertVi
         return 2
     }
 
-    override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("celluleTypeSetting") as UITableViewCell
         
@@ -53,7 +53,7 @@ class SettingViewControllerTableViewController: UITableViewController, UIAlertVi
         return cell
     }
 
-    override func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if (indexPath.row == 0)
         {

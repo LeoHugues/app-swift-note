@@ -43,6 +43,9 @@
 		C07C657C1AACA2B600AB2DA6 /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C656F1AACA2B600AB2DA6 /* ValidationRule.swift */; };
 		C07C657D1AACA2B600AB2DA6 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65701AACA2B600AB2DA6 /* Validator.swift */; };
 		C07C657E1AACA2B600AB2DA6 /* ZipCodeRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65711AACA2B600AB2DA6 /* ZipCodeRule.swift */; };
+		C07C65801AACCE9300AB2DA6 /* CoefRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C657F1AACCE9300AB2DA6 /* CoefRule.swift */; };
+		C07C65821AACD71B00AB2DA6 /* MatiereNameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */; };
+		C07C65841AACE1A100AB2DA6 /* StringRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65831AACE1A100AB2DA6 /* StringRule.swift */; };
 		F83DD49C19EFACA00012C5A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83DD49B19EFACA00012C5A2 /* AppDelegate.swift */; };
 		F83DD49E19EFACA00012C5A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83DD49D19EFACA00012C5A2 /* ViewController.swift */; };
 		F83DD4A319EFACA00012C5A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F83DD4A219EFACA00012C5A2 /* Images.xcassets */; };
@@ -97,6 +100,9 @@
 		C07C656F1AACA2B600AB2DA6 /* ValidationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationRule.swift; sourceTree = "<group>"; };
 		C07C65701AACA2B600AB2DA6 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		C07C65711AACA2B600AB2DA6 /* ZipCodeRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipCodeRule.swift; sourceTree = "<group>"; };
+		C07C657F1AACCE9300AB2DA6 /* CoefRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoefRule.swift; sourceTree = "<group>"; };
+		C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatiereNameRule.swift; sourceTree = "<group>"; };
+		C07C65831AACE1A100AB2DA6 /* StringRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringRule.swift; sourceTree = "<group>"; };
 		F83DD49619EFACA00012C5A2 /* demoTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demoTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F83DD49A19EFACA00012C5A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F83DD49B19EFACA00012C5A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -171,6 +177,9 @@
 				C07C656F1AACA2B600AB2DA6 /* ValidationRule.swift */,
 				C07C65701AACA2B600AB2DA6 /* Validator.swift */,
 				C07C65711AACA2B600AB2DA6 /* ZipCodeRule.swift */,
+				C07C657F1AACCE9300AB2DA6 /* CoefRule.swift */,
+				C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */,
+				C07C65831AACE1A100AB2DA6 /* StringRule.swift */,
 			);
 			path = Validator;
 			sourceTree = "<group>";
@@ -365,6 +374,8 @@
 				54EBF75619EFE0F80012B91E /* AccueilVC.swift in Sources */,
 				C07C657E1AACA2B600AB2DA6 /* ZipCodeRule.swift in Sources */,
 				C07C65741AACA2B600AB2DA6 /* FullNameRule.swift in Sources */,
+				C07C65821AACD71B00AB2DA6 /* MatiereNameRule.swift in Sources */,
+				C07C65801AACCE9300AB2DA6 /* CoefRule.swift in Sources */,
 				C07C657B1AACA2B600AB2DA6 /* ValidationError.swift in Sources */,
 				C07C657A1AACA2B600AB2DA6 /* Rule.swift in Sources */,
 				C07C65791AACA2B600AB2DA6 /* RequiredRule.swift in Sources */,
@@ -375,6 +386,7 @@
 				5405C0951A028F85005B11AB /* VC_AjoutMatiere.swift in Sources */,
 				F83DD49E19EFACA00012C5A2 /* ViewController.swift in Sources */,
 				5405C0971A028F9F005B11AB /* VC_AjoutNote.swift in Sources */,
+				C07C65841AACE1A100AB2DA6 /* StringRule.swift in Sources */,
 				C07C65761AACA2B600AB2DA6 /* MinLengthRule.swift in Sources */,
 				5457C65419FE5E750035FA3A /* TVC_SectionMatiereTableViewCell.swift in Sources */,
 				C07C65731AACA2B600AB2DA6 /* EmailRule.swift in Sources */,
