@@ -31,6 +31,18 @@
 		54E404D919F80D11005AA8E5 /* Matiere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E404D819F80D11005AA8E5 /* Matiere.swift */; };
 		54EBF75619EFE0F80012B91E /* AccueilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EBF75519EFE0F80012B91E /* AccueilVC.swift */; };
 		54F1496C1A038C7B00638FA5 /* home63.png in Resources */ = {isa = PBXBuildFile; fileRef = 54F1496B1A038C7A00638FA5 /* home63.png */; };
+		C07C65721AACA2B600AB2DA6 /* ConfirmRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65651AACA2B600AB2DA6 /* ConfirmRule.swift */; };
+		C07C65731AACA2B600AB2DA6 /* EmailRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65661AACA2B600AB2DA6 /* EmailRule.swift */; };
+		C07C65741AACA2B600AB2DA6 /* FullNameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65671AACA2B600AB2DA6 /* FullNameRule.swift */; };
+		C07C65761AACA2B600AB2DA6 /* MinLengthRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65691AACA2B600AB2DA6 /* MinLengthRule.swift */; };
+		C07C65771AACA2B600AB2DA6 /* PasswordRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C656A1AACA2B600AB2DA6 /* PasswordRule.swift */; };
+		C07C65781AACA2B600AB2DA6 /* PhoneNumberRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C656B1AACA2B600AB2DA6 /* PhoneNumberRule.swift */; };
+		C07C65791AACA2B600AB2DA6 /* RequiredRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C656C1AACA2B600AB2DA6 /* RequiredRule.swift */; };
+		C07C657A1AACA2B600AB2DA6 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C656D1AACA2B600AB2DA6 /* Rule.swift */; };
+		C07C657B1AACA2B600AB2DA6 /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C656E1AACA2B600AB2DA6 /* ValidationError.swift */; };
+		C07C657C1AACA2B600AB2DA6 /* ValidationRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C656F1AACA2B600AB2DA6 /* ValidationRule.swift */; };
+		C07C657D1AACA2B600AB2DA6 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65701AACA2B600AB2DA6 /* Validator.swift */; };
+		C07C657E1AACA2B600AB2DA6 /* ZipCodeRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65711AACA2B600AB2DA6 /* ZipCodeRule.swift */; };
 		F83DD49C19EFACA00012C5A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83DD49B19EFACA00012C5A2 /* AppDelegate.swift */; };
 		F83DD49E19EFACA00012C5A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83DD49D19EFACA00012C5A2 /* ViewController.swift */; };
 		F83DD4A319EFACA00012C5A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F83DD4A219EFACA00012C5A2 /* Images.xcassets */; };
@@ -73,6 +85,18 @@
 		54E404D819F80D11005AA8E5 /* Matiere.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matiere.swift; sourceTree = "<group>"; };
 		54EBF75519EFE0F80012B91E /* AccueilVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccueilVC.swift; path = ../AccueilVC.swift; sourceTree = "<group>"; };
 		54F1496B1A038C7A00638FA5 /* home63.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home63.png; path = Img/home63.png; sourceTree = "<group>"; };
+		C07C65651AACA2B600AB2DA6 /* ConfirmRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmRule.swift; sourceTree = "<group>"; };
+		C07C65661AACA2B600AB2DA6 /* EmailRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailRule.swift; sourceTree = "<group>"; };
+		C07C65671AACA2B600AB2DA6 /* FullNameRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullNameRule.swift; sourceTree = "<group>"; };
+		C07C65691AACA2B600AB2DA6 /* MinLengthRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinLengthRule.swift; sourceTree = "<group>"; };
+		C07C656A1AACA2B600AB2DA6 /* PasswordRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordRule.swift; sourceTree = "<group>"; };
+		C07C656B1AACA2B600AB2DA6 /* PhoneNumberRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberRule.swift; sourceTree = "<group>"; };
+		C07C656C1AACA2B600AB2DA6 /* RequiredRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequiredRule.swift; sourceTree = "<group>"; };
+		C07C656D1AACA2B600AB2DA6 /* Rule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
+		C07C656E1AACA2B600AB2DA6 /* ValidationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
+		C07C656F1AACA2B600AB2DA6 /* ValidationRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationRule.swift; sourceTree = "<group>"; };
+		C07C65701AACA2B600AB2DA6 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		C07C65711AACA2B600AB2DA6 /* ZipCodeRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipCodeRule.swift; sourceTree = "<group>"; };
 		F83DD49619EFACA00012C5A2 /* demoTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demoTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F83DD49A19EFACA00012C5A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F83DD49B19EFACA00012C5A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +156,25 @@
 			path = demoTableView;
 			sourceTree = "<group>";
 		};
+		C07C65641AACA2B600AB2DA6 /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				C07C65651AACA2B600AB2DA6 /* ConfirmRule.swift */,
+				C07C65661AACA2B600AB2DA6 /* EmailRule.swift */,
+				C07C65671AACA2B600AB2DA6 /* FullNameRule.swift */,
+				C07C65691AACA2B600AB2DA6 /* MinLengthRule.swift */,
+				C07C656A1AACA2B600AB2DA6 /* PasswordRule.swift */,
+				C07C656B1AACA2B600AB2DA6 /* PhoneNumberRule.swift */,
+				C07C656C1AACA2B600AB2DA6 /* RequiredRule.swift */,
+				C07C656D1AACA2B600AB2DA6 /* Rule.swift */,
+				C07C656E1AACA2B600AB2DA6 /* ValidationError.swift */,
+				C07C656F1AACA2B600AB2DA6 /* ValidationRule.swift */,
+				C07C65701AACA2B600AB2DA6 /* Validator.swift */,
+				C07C65711AACA2B600AB2DA6 /* ZipCodeRule.swift */,
+			);
+			path = Validator;
+			sourceTree = "<group>";
+		};
 		F83DD48D19EFACA00012C5A2 = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +208,7 @@
 		F83DD49819EFACA00012C5A2 /* demoTableView */ = {
 			isa = PBXGroup;
 			children = (
+				C07C65641AACA2B600AB2DA6 /* Validator */,
 				F83DD49B19EFACA00012C5A2 /* AppDelegate.swift */,
 				54AFD91A19F6BE6100520A03 /* SettingViewControllerTableViewController.swift */,
 				54EBF75519EFE0F80012B91E /* AccueilVC.swift */,
@@ -319,6 +363,11 @@
 			files = (
 				54E404D719F806F7005AA8E5 /* Note.swift in Sources */,
 				54EBF75619EFE0F80012B91E /* AccueilVC.swift in Sources */,
+				C07C657E1AACA2B600AB2DA6 /* ZipCodeRule.swift in Sources */,
+				C07C65741AACA2B600AB2DA6 /* FullNameRule.swift in Sources */,
+				C07C657B1AACA2B600AB2DA6 /* ValidationError.swift in Sources */,
+				C07C657A1AACA2B600AB2DA6 /* Rule.swift in Sources */,
+				C07C65791AACA2B600AB2DA6 /* RequiredRule.swift in Sources */,
 				5405C08B1A02554E005B11AB /* VC_Note.swift in Sources */,
 				54AFD91B19F6BE6100520A03 /* SettingViewControllerTableViewController.swift in Sources */,
 				5435D60C1A01022700CAE93D /* TVC_Note.swift in Sources */,
@@ -326,9 +375,16 @@
 				5405C0951A028F85005B11AB /* VC_AjoutMatiere.swift in Sources */,
 				F83DD49E19EFACA00012C5A2 /* ViewController.swift in Sources */,
 				5405C0971A028F9F005B11AB /* VC_AjoutNote.swift in Sources */,
+				C07C65761AACA2B600AB2DA6 /* MinLengthRule.swift in Sources */,
 				5457C65419FE5E750035FA3A /* TVC_SectionMatiereTableViewCell.swift in Sources */,
+				C07C65731AACA2B600AB2DA6 /* EmailRule.swift in Sources */,
 				5405C0991A02AB4C005B11AB /* RootViewController.swift in Sources */,
+				C07C65771AACA2B600AB2DA6 /* PasswordRule.swift in Sources */,
+				C07C657C1AACA2B600AB2DA6 /* ValidationRule.swift in Sources */,
+				C07C65781AACA2B600AB2DA6 /* PhoneNumberRule.swift in Sources */,
 				5405C08D1A025C73005B11AB /* MesFonctions.swift in Sources */,
+				C07C65721AACA2B600AB2DA6 /* ConfirmRule.swift in Sources */,
+				C07C657D1AACA2B600AB2DA6 /* Validator.swift in Sources */,
 				F83DD49C19EFACA00012C5A2 /* AppDelegate.swift in Sources */,
 				54E404D919F80D11005AA8E5 /* Matiere.swift in Sources */,
 			);

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VC_AjoutMatiere: UIViewController {
+class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate {
     
     var DataNote = Array<Matiere>()
     var matiere = String()
@@ -17,18 +17,24 @@ class VC_AjoutMatiere: UIViewController {
     @IBOutlet weak var tf_coefMatiere: UITextField!
     @IBOutlet weak var tv_desc: UITextView!
     @IBOutlet weak var l_verif: UILabel!
+    @IBOutlet weak var l_verifCoef: UILabel!
 
+    let validator = Validator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "Ajout Matiere"
 
         // Do any additional setup after loading the view.
+        
+        validator.registerField(tf_saisieMatiere, errorLabel: l_verif , rules: [RequiredRule()])
+        validator.registerField(tf_coefMatiere, errorLabel: l_verifCoef, rules: [RequiredRule()])
     }
     
     @IBAction func AjouterMatiere(sender: AnyObject) {
         
-        if(CheckMatiere() == true)
+       /* if(CheckMatiere() == true)
         {
             var listeNote: Array<Note> = []
             var newMatiere: Matiere = Matiere(Id: DataNote.count+1, Name: tf_saisieMatiere.text, Coefficient: tf_coefMatiere.text.toInt()!, Description: tv_desc.text, ListeNote: listeNote)
@@ -36,7 +42,10 @@ class VC_AjoutMatiere: UIViewController {
             DataNote.append(newMatiere)
             matiere = newMatiere.name
             l_verif.text = "Une nouvelle matière a été ajouté :  \(newMatiere.name)"
-        }
+        }*/
+        println("Validating...")
+        self.clearErrors()
+        validator.validateAll(self)
         
     }
     
@@ -68,14 +77,14 @@ class VC_AjoutMatiere: UIViewController {
     
     
     @IBAction func CheckNom(sender: AnyObject) {
-        CheckNomMatiere()
+       // CheckNomMatiere()
     }
     
     @IBAction func CheckCoef(sender: AnyObject) {
-        CheckCoefMatiere()
+       // CheckCoefMatiere()
     }
     
-    func CheckNomMatiere() -> Bool
+  /*  func CheckNomMatiere() -> Bool
     {
         var nomValid = true
         
@@ -154,7 +163,51 @@ class VC_AjoutMatiere: UIViewController {
         }
         
         return false
+    }*/
+    
+    // MARK: Error Styling
+    
+    func removeError(label:UILabel, textField:UITextField) {
+        label.hidden = true
+        textField.layer.borderWidth = 0.0
     }
+    
+    func removeAllErrors(){
+        removeError(l_verif, textField: tf_saisieMatiere)
+        removeError(l_verifCoef, textField: tf_coefMatiere)
+    }
+    
+    // MARK: ValidationDelegate Methods
+    
+    func validationWasSuccessful() {
+        println("Validation Success!")
+        var alert = UIAlertController(title: "Success", message: "You are validated!", preferredStyle: UIAlertControllerStyle.Alert)
+        var defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(defaultAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    func validationFailed(errors:[UITextField:ValidationError]) {
+        println("Validation FAILED!")
+        self.setErrors()
+    }
+    
+    private func setErrors(){
+        for (field, error) in validator.errors {
+            field.layer.borderColor = UIColor.redColor().CGColor
+            field.layer.borderWidth = 1.0
+            error.errorLabel?.text = error.errorMessage
+            error.errorLabel?.hidden = false
+        }
+    }
+    
+    private func clearErrors(){
+        for (field, error) in validator.errors {
+            field.layer.borderWidth = 0.0
+            error.errorLabel?.hidden = true
+        }
+    }
+
     
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
