@@ -59,7 +59,26 @@ struct MesFonctions {
         
         return 0
     }
-
+    static func tableEleve() ->Array<Eleve>
+    {
+        var DataEleve = Array<Eleve>()
+        
+        var newEleveOne: Eleve = Eleve(Id: 0, Nom: "Prophete", Prenom: "Tristan", Date_naissance: MesFonctions.randDate(), ListeMatiere: InitTestData())
+        DataEleve.append(newEleveOne)
+        
+        var newEleveTwo: Eleve = Eleve(Id: 0, Nom: "Hugues", Prenom: "Léo", Date_naissance: MesFonctions.randDate(), ListeMatiere: InitTestData())
+        DataEleve.append(newEleveTwo)
+        
+        var newEleveThree: Eleve = Eleve(Id: 0, Nom: "Bourial", Prenom: "Morad", Date_naissance: MesFonctions.randDate(), ListeMatiere: InitTestData())
+        DataEleve.append(newEleveThree)
+        
+        
+        var newEleveFour: Eleve = Eleve(Id: 0, Nom: "Welmant", Prenom: "Pierre", Date_naissance: MesFonctions.randDate(), ListeMatiere: InitTestData())
+        DataEleve.append(newEleveFour)
+     
+        return DataEleve
+    }
+    
     
     static func InitTestData() -> Array<Matiere>
     {
@@ -79,7 +98,7 @@ struct MesFonctions {
             case 0 : newMatiere.name = "Math"
             newMatiere.description = "Arithmétique, calcul logique, graphe et matrice, rien de très compliqué"
             case 1 : newMatiere.name = "Anglais"
-            newMatiere.description = "Aglais niveau TOIC, spécialisé dans l'informatique. Tous le vocabulaire et les textes étudiés tournent autour de l'informatique"
+            newMatiere.description = "Anglais niveau TOIC, spécialisé dans l'informatique. Tous le vocabulaire et les textes étudiés tournent autour de l'informatique"
             case 2 : newMatiere.name = "Français"
             newMatiere.description = "Pour obtenir le BTS uniquement, le thème est le rêve"
             case 3 : newMatiere.name = "Swift"

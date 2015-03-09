@@ -12,7 +12,7 @@ import Foundation
 class AccueilVC: UIViewController {
     
     var DataNote = Array<Matiere>()
-    
+    var DataEleve = Array<Eleve>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,10 @@ class AccueilVC: UIViewController {
         {
             DataNote = MesFonctions.InitTestData()
         }
-        
+        if(DataEleve.count == 0)
+        {
+            DataEleve = MesFonctions.tableEleve()
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,19 +49,23 @@ class AccueilVC: UIViewController {
             VC.setDataNote(DataNote)
         }
         
-        if let VC: VC_AjoutNote = segue!.destinationViewController as? VC_AjoutNote
+       else if let VC: VC_AjoutNote = segue!.destinationViewController as? VC_AjoutNote
         {
             VC.DataNote=DataNote
         }
         
-        if let VC: VC_AjoutMatiere = segue!.destinationViewController as? VC_AjoutMatiere
+      else  if let VC: VC_AjoutMatiere = segue!.destinationViewController as? VC_AjoutMatiere
         {
             VC.DataNote=DataNote
         }
         
-        if let VC: VC_Matiere = segue!.destinationViewController as? VC_Matiere
+      else  if let VC: VC_Matiere = segue!.destinationViewController as? VC_Matiere
         {
             VC.DataNote=DataNote
+        }
+      else  if let VC: VC_Eleves = segue!.destinationViewController as? VC_Eleves
+        {
+            VC.DataEleve=DataEleve
         }
         
     }
