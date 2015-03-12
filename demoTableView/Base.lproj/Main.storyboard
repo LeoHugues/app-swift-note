@@ -147,12 +147,39 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbn-Hn-TkO">
-                                <rect key="frame" x="210" y="420" width="117" height="128"/>
+                                <rect key="frame" x="234" y="490" width="70" height="70"/>
                                 <state key="normal" image="suivant.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="getNextEleve:" destination="lwE-VP-RGy" eventType="touchUpInside" id="RVK-JM-Axx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="upz-Bz-hP9">
+                                <rect key="frame" x="81" y="245" width="183" height="128"/>
+                                <state key="normal" image="add139.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="hZW-ar-y3D" kind="push" id="gvn-W1-WCz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4J-6G-ro2">
+                                <rect key="frame" x="16" y="490" width="70" height="70"/>
+                                <state key="normal" image="precedent.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getBackEleve:" destination="lwE-VP-RGy" eventType="touchUpInside" id="kPc-H7-Y6Z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQD-c2-dfv">
+                                <rect key="frame" x="125" y="490" width="70" height="70"/>
+                                <state key="normal" image="delete4.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deteteEleve:" destination="lwE-VP-RGy" eventType="touchUpInside" id="7Bw-fK-dWA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -168,6 +195,95 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1T-5X-DDT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1791" y="-562"/>
+        </scene>
+        <!--Ajout Eleve-->
+        <scene sceneID="d6w-PM-DmT">
+            <objects>
+                <viewController id="hZW-ar-y3D" customClass="VC_AjoutEleve" customModule="demoTableView" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="axo-0o-Ivb"/>
+                        <viewControllerLayoutGuide type="bottom" id="1zg-4u-rTA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MKc-9j-snl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ajouter un élève" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKA-cp-oO3">
+                                <rect key="frame" x="80" y="78" width="161" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nom :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgb-aq-hYP">
+                                <rect key="frame" x="16" y="135" width="58" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Prénom :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LgI-AX-NQo">
+                                <rect key="frame" x="16" y="197" width="70" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date de Naissance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aau-B5-2uz">
+                                <rect key="frame" x="86" y="265" width="145" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="0U7-3x-uQn">
+                                <rect key="frame" x="0.0" y="288" width="320" height="162"/>
+                                <date key="date" timeIntervalSinceReferenceDate="447669694.75536102">
+                                    <!--2015-03-10 08:41:34 +0000-->
+                                </date>
+                            </datePicker>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4xm-hL-04Y">
+                                <rect key="frame" x="134" y="131" width="170" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4vn-l2-fXH">
+                                <rect key="frame" x="134" y="193" width="170" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rtB-cy-7he">
+                                <rect key="frame" x="123" y="490" width="70" height="70"/>
+                                <state key="normal" image="add139.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addEleve:" destination="hZW-ar-y3D" eventType="touchUpInside" id="PYR-qV-5Cd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Verif" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMz-mk-gca">
+                                <rect key="frame" x="116" y="164" width="188" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Verif" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WxP-Lz-PcA">
+                                <rect key="frame" x="116" y="231" width="195" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8XO-Qj-8QJ"/>
+                    <connections>
+                        <outlet property="dp_BirthdayEleve" destination="0U7-3x-uQn" id="6rM-Uc-f24"/>
+                        <outlet property="lb_verifFirstName" destination="WxP-Lz-PcA" id="BJM-GW-kQN"/>
+                        <outlet property="lb_verifName" destination="MMz-mk-gca" id="sN1-0Z-fcc"/>
+                        <outlet property="txt_firstnameEleve" destination="4vn-l2-fXH" id="xF0-TN-zyg"/>
+                        <outlet property="txt_nameEleve" destination="4xm-hL-04Y" id="ITf-da-2ba"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wbH-pa-b40" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1311" y="-564"/>
         </scene>
         <!--Reccap-->
         <scene sceneID="ufC-wZ-h7g">
@@ -562,15 +678,6 @@
                                     <action selector="modifierDate:" destination="kpb-Qi-pgk" eventType="touchUpInside" id="27R-Ky-Irq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f55-QJ-zY4">
-                                <rect key="frame" x="279" y="120" width="25" height="25"/>
-                                <state key="normal" image="modules.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="setCoef:" destination="kpb-Qi-pgk" eventType="touchUpInside" id="cJm-Mr-wtk"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mId-rI-RRp">
                                 <rect key="frame" x="279" y="149" width="25" height="25"/>
                                 <state key="normal" image="modules.png">
@@ -580,6 +687,12 @@
                                     <action selector="setNote:" destination="kpb-Qi-pgk" eventType="touchUpInside" id="ud1-KD-Cou"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwH-ah-vU4">
+                                <rect key="frame" x="137" y="93" width="134" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhc-GT-fzh">
                                 <rect key="frame" x="137" y="122" width="134" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -605,12 +718,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwH-ah-vU4">
-                                <rect key="frame" x="137" y="93" width="134" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f55-QJ-zY4">
+                                <rect key="frame" x="279" y="120" width="25" height="25"/>
+                                <state key="normal" image="modules.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setCoef:" destination="kpb-Qi-pgk" eventType="touchUpInside" id="cJm-Mr-wtk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -975,9 +1091,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="hBf-MP-laI"/>
-        <segue reference="t6F-5B-ook"/>
-        <segue reference="aFf-ku-Iik"/>
-        <segue reference="pGp-yD-aD1"/>
+        <segue reference="gNz-6Z-G3M"/>
+        <segue reference="d8x-ct-EHZ"/>
+        <segue reference="owu-IF-U3L"/>
+        <segue reference="Jhn-O5-RJ9"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -44,6 +44,17 @@ class Eleve
         self.listeMatiere = ListeMatiere
     }
     
+    init(Id: Int, Nom: String, Prenom: String, Date_naissance: NSDate)
+    {
+        self.id = Id
+        self.nom = Nom
+        self.prenom = Prenom
+        self.date_naissance = Date_naissance
+        self.photo = UIImage()
+        self.listeMatiere = Array<Matiere>()
+    }
+
+    
     //Méthodes
     
     

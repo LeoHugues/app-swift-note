@@ -41,9 +41,13 @@ class VC_Eleves: UIViewController {
         l_birthdayEleve.text = date
     }
     
+    @IBAction func deteteEleve(sender: AnyObject) {
+        
+    }
     @IBAction func getNextEleve(sender: AnyObject) {
-         
+        
     }
     
-
+    @IBAction func getBackEleve(sender: AnyObject) {
+    }
 }
