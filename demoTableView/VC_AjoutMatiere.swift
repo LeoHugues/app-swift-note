@@ -81,14 +81,6 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
         
     }
     
-    @IBAction func CheckNom(sender: AnyObject) {
-       // CheckNomMatiere()
-    }
-    
-    @IBAction func CheckCoef(sender: AnyObject) {
-       // CheckCoefMatiere()
-    }
-    
     // MARK: Error Styling
     
     func removeError(#label:UILabel, textField:UITextField) {
