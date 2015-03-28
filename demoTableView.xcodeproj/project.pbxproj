@@ -46,6 +46,8 @@
 		C07C65801AACCE9300AB2DA6 /* CoefRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C657F1AACCE9300AB2DA6 /* CoefRule.swift */; };
 		C07C65821AACD71B00AB2DA6 /* MatiereNameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */; };
 		C07C65841AACE1A100AB2DA6 /* StringRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65831AACE1A100AB2DA6 /* StringRule.swift */; };
+		E91A8D9C1AC45FD300234E98 /* Constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91A8D9B1AC45FD300234E98 /* Constantes.swift */; };
+		E91A8D9E1AC46E6000234E98 /* NoteRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91A8D9D1AC46E6000234E98 /* NoteRule.swift */; };
 		E9A4A9A31AAEEC29009BFFC5 /* VC_AjoutEleve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4A9A21AAEEC29009BFFC5 /* VC_AjoutEleve.swift */; };
 		E9ACAC011AAD98B70033B63B /* Eleve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ACAC001AAD98B70033B63B /* Eleve.swift */; };
 		E9ACAC031AAD98CF0033B63B /* Classe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ACAC021AAD98CF0033B63B /* Classe.swift */; };
@@ -108,6 +110,8 @@
 		C07C657F1AACCE9300AB2DA6 /* CoefRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoefRule.swift; sourceTree = "<group>"; };
 		C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatiereNameRule.swift; sourceTree = "<group>"; };
 		C07C65831AACE1A100AB2DA6 /* StringRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringRule.swift; sourceTree = "<group>"; };
+		E91A8D9B1AC45FD300234E98 /* Constantes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constantes.swift; sourceTree = "<group>"; };
+		E91A8D9D1AC46E6000234E98 /* NoteRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteRule.swift; sourceTree = "<group>"; };
 		E9A4A9A21AAEEC29009BFFC5 /* VC_AjoutEleve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VC_AjoutEleve.swift; sourceTree = "<group>"; };
 		E9ACAC001AAD98B70033B63B /* Eleve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eleve.swift; sourceTree = "<group>"; };
 		E9ACAC021AAD98CF0033B63B /* Classe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classe.swift; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 				C07C657F1AACCE9300AB2DA6 /* CoefRule.swift */,
 				C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */,
 				C07C65831AACE1A100AB2DA6 /* StringRule.swift */,
+				E91A8D9D1AC46E6000234E98 /* NoteRule.swift */,
 			);
 			path = Validator;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				F83DD4A219EFACA00012C5A2 /* Images.xcassets */,
 				F83DD4A419EFACA00012C5A2 /* LaunchScreen.xib */,
 				F83DD49919EFACA00012C5A2 /* Supporting Files */,
+				E91A8D9B1AC45FD300234E98 /* Constantes.swift */,
 			);
 			path = demoTableView;
 			sourceTree = "<group>";
@@ -415,6 +421,7 @@
 				54EBF75619EFE0F80012B91E /* AccueilVC.swift in Sources */,
 				C07C657E1AACA2B600AB2DA6 /* ZipCodeRule.swift in Sources */,
 				E9ACAC081AAD9ACB0033B63B /* VC_Eleves.swift in Sources */,
+				E91A8D9C1AC45FD300234E98 /* Constantes.swift in Sources */,
 				C07C65741AACA2B600AB2DA6 /* FullNameRule.swift in Sources */,
 				C07C65821AACD71B00AB2DA6 /* MatiereNameRule.swift in Sources */,
 				C07C65801AACCE9300AB2DA6 /* CoefRule.swift in Sources */,
@@ -440,6 +447,7 @@
 				C07C65781AACA2B600AB2DA6 /* PhoneNumberRule.swift in Sources */,
 				E9ACAC031AAD98CF0033B63B /* Classe.swift in Sources */,
 				5405C08D1A025C73005B11AB /* FonctionsCommunes.swift in Sources */,
+				E91A8D9E1AC46E6000234E98 /* NoteRule.swift in Sources */,
 				C07C65721AACA2B600AB2DA6 /* ConfirmRule.swift in Sources */,
 				C07C657D1AACA2B600AB2DA6 /* Validator.swift in Sources */,
 				F83DD49C19EFACA00012C5A2 /* AppDelegate.swift in Sources */,

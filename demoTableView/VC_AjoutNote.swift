@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VC_AjoutNote: UIViewController, UIAlertViewDelegate {
+class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     
     var DataNote = Array<Matiere>()
     var matiere = String()
@@ -26,12 +26,33 @@ class VC_AjoutNote: UIViewController, UIAlertViewDelegate {
     @IBOutlet weak var l_verif: UILabel!
     @IBOutlet weak var l_date: UILabel!
     @IBOutlet weak var tv_desc: UITextView!
+    @IBOutlet weak var lb_verifNote: UILabel!
+    @IBOutlet weak var lb_verifCoef: UILabel!
+    
+    let validator = Validator()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "Ajout Note"
+        
+        validator.registerField(
+            textField: tf_Note,
+            errorLabel: lb_verifNote,
+            rules: [
+                RequiredRule(),
+                NoteRule(),
+            ]
+        )
+        validator.registerField(
+            textField: tf_CoefNote,
+            errorLabel: lb_verifCoef,
+            rules: [
+                RequiredRule(),
+                NoteRule(),
+            ]
+        )
 
         // Do any additional setup after loading the view.
     }
@@ -115,24 +136,14 @@ class VC_AjoutNote: UIViewController, UIAlertViewDelegate {
 
     
     @IBAction func AjoutNote(sender: UIButton) {
+        self.clearErrors()
+        validator.validateAll(self)
         
-        if(CheckNote() == true)
-        {
-            let numberFormatter = NSNumberFormatter()
-            let number = numberFormatter.numberFromString(tf_Note.text)
-            let numberFloatValue = number?.doubleValue
-            
-            var note: Note = Note(Id: getRadomId(DataNote), NbPoint: numberFloatValue!, Date: selectionedDate, Description: tv_desc.text, Coefficient: tf_CoefNote.text.toInt()!)
-            //var note = Note()
-            
-       println(selectedRow)
-            
-           
-            
-            DataNote[MesFonctions.RechercheIndexMatiereByName(DataNote, name:matiere)].listeNote.append(note)
-            
-            l_verif.text = "Votre note a bien été ajouté"
-        }
+        let url = NSURL(string: Constants.UrlApi + "/note")
+        var request = NSURLRequest(URL: url!)
+       // request.HTTPMethod = "POST"
+        
+    //   request.HTTPBody(NSString : "{\"nbPoint\":18,\"coefficient\",\"appreciation\":\"fqdsfds sfg sdfg sfdgdsfg gsfq\",\"date\":\"22-02-1994\"}")
         
     }
     
@@ -161,95 +172,6 @@ class VC_AjoutNote: UIViewController, UIAlertViewDelegate {
         return id
     }
     
-    func CheckCoefNote() -> Bool {
-        
-        var coefValid = true
-        
-        let regexCoef = "[a-zA-Z]+"       //      Verification du coef de la note
-        
-        if(tf_CoefNote.text == ""){
-            l_verif.text = "Vous devez saisir un coef"
-            coefValid = false
-        }
-        else if let match = tf_CoefNote.text.rangeOfString(regexCoef, options: .RegularExpressionSearch){
-            l_verif.text = "un coef ne doit pas contenir de lettre"
-            coefValid = false
-        }
-        else if tf_Note.text.toInt() > 20
-        {
-            l_verif.text = "un coef ne peut pas être supérieur a vinght"
-            coefValid = false
-        }
-        else if tf_Note.text.toInt() < 0
-        {
-            l_verif.text = "un coef doit être supérieur à 0"
-            coefValid = false
-        }
-        
-        if(coefValid == true)
-        {
-            l_verif.text = "Le coef est valide"
-        }
-        
-        return coefValid
-    }
-    
-    func CheckNoteValue() -> Bool {
-        
-        var NoteValid = true
-        
-        let regexNote = "[a-zA-Z]+"       //      Verification de la note
-        
-        if(tf_Note.text == ""){
-            l_verif.text = "Vous devez saisir une note"
-            NoteValid = false
-        }
-        else if let match = tf_Note.text.rangeOfString(regexNote, options: .RegularExpressionSearch){
-            l_verif.text = "la note ne doit pas contenir de lettre"
-            NoteValid = false
-        }
-        else if tf_Note.text.toInt() > 20
-        {
-            l_verif.text = "Une Note ne peut pas être supérieur a vinght"
-            NoteValid = false
-        }
-        else if tf_Note.text.toInt() < 0
-        {
-            l_verif.text = "Une Note doit être supérieur à 0"
-            NoteValid = false
-        }
-        
-        if(NoteValid == true)
-        {
-            l_verif.text = "La note est valide"
-        }
-        
-        return NoteValid
-        
-    }
-
-    func CheckNote() -> Bool {
-        
-   
-        var coefValid = CheckCoefNote()
-        var NoteValid = CheckNoteValue()
-
-        if(coefValid == true && NoteValid == true)
-        {
-            return true
-        }
-        
-        return false
-    }
-    
-    @IBAction func CheckNote(sender: AnyObject) {
-        CheckNoteValue()
-    }
-    
-    @IBAction func ChechCoef(sender: AnyObject) {
-        CheckCoefNote()
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
         if let VC: AccueilVC = segue.destinationViewController as? AccueilVC
@@ -266,9 +188,71 @@ class VC_AjoutNote: UIViewController, UIAlertViewDelegate {
             VC.DataNote = DataNote
         }
     }
-
-
     
+    // MARK: Error Styling
+    
+    func removeError(#label:UILabel, textField:UITextField) {
+        label.hidden = true
+        textField.layer.borderWidth = 0.0
+    }
+    
+    func removeAllErrors(){
+        removeError(
+            label:lb_verifNote,
+            textField: tf_Note
+        )
+        removeError(
+            label: lb_verifCoef,
+            textField: tf_CoefNote
+        )
+    }
+    
+    func validationWasSuccessful() {
+        
+        //  Validation SUCCESS
+        
+        var alert = UIAlertController(
+            title: "Enregistrement",
+            message: "Votre Note a bien été ajoutée.",
+            preferredStyle: UIAlertControllerStyle.Alert
+        )
+        
+        var defaultAction = UIAlertAction(
+            title: "OK",
+            style: .Default,
+            handler: nil
+        )
+        
+        alert.addAction(defaultAction)
+        
+        self.presentViewController(
+            alert,
+            animated: true,
+            completion: nil
+        )
+    }
+    
+    func validationFailed(errors:[UITextField:ValidationError]) {
+        //  Validation FAILED
+        self.setErrors()
+    }
+    
+    private func setErrors(){
+        for (field, error) in validator.errors {
+            field.layer.borderColor = UIColor.redColor().CGColor
+            field.layer.borderWidth = 1.0
+            error.errorLabel?.text = error.errorMessage
+            error.errorLabel?.hidden = false
+        }
+    }
+    
+    private func clearErrors(){
+        for (field, error) in validator.errors {
+            field.layer.borderWidth = 0.0
+            error.errorLabel?.hidden = true
+        }
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
