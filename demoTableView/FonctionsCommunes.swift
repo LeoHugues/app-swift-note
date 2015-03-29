@@ -22,9 +22,7 @@ struct MesFonctions {
         dateFormatter.dateFormat = "dd-MM-yyyy"
         
         var date = dateFormatter.dateFromString(dateString)
-        
-        println(date)
-        
+                
         return date!
     }
     
@@ -92,7 +90,6 @@ struct MesFonctions {
             {
                 var note: Note = Note(Id: random(), NbPoint: Double(arc4random_uniform(20)), Date: MesFonctions.randDate(), Description: "", Coefficient: Int(arc4random_uniform(7) + 1))
                 newMatiere.listeNote.append(note)
-                println(note.id)
             }
             switch(i){
             case 0 : newMatiere.name = "Math"

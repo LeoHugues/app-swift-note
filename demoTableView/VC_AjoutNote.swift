@@ -37,6 +37,8 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         
         self.navigationItem.title = "Ajout Note"
         
+        tf_Note.restorationIdentifier = "nbPoint"
+        
         validator.registerField(
             textField: tf_Note,
             errorLabel: lb_verifNote,
@@ -62,8 +64,6 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         l_date.text = dateFormatter.stringFromDate(selectionedDate)
-        
-        println(matiere)
         
         pk_matiere.selectRow(MesFonctions.RechercheIndexMatiereByName(DataNote, name: matiere), inComponent: 0, animated: true)
     }
@@ -138,13 +138,6 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     @IBAction func AjoutNote(sender: UIButton) {
         self.clearErrors()
         validator.validateAll(self)
-        
-        let url = NSURL(string: Constants.UrlApi + "/note")
-        var request = NSURLRequest(URL: url!)
-       // request.HTTPMethod = "POST"
-        
-    //   request.HTTPBody(NSString : "{\"nbPoint\":18,\"coefficient\",\"appreciation\":\"fqdsfds sfg sdfg sfdgdsfg gsfq\",\"date\":\"22-02-1994\"}")
-        
     }
     
     func getRadomId(liste: Array<Matiere>) -> Int {
@@ -230,6 +223,60 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
             animated: true,
             completion: nil
         )
+
+//        var newNote: Note = Note()
+//        
+//        newNote.setNote(Float(tf_Note.text, "%,2"))
+//        newNote.setNote(tf_CoefNote.text.toInt()!)
+//        newNote.setNote(tv_desc.text)
+//        newNote.setNote(datePicker.date)
+        
+        
+        var dateFormatter : NSDateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-YYYY"
+        let dateString = dateFormatter.stringFromDate(datePicker.date)
+        
+        var data = Dictionary<String, String>()
+        data = [
+            "nbPoint"      : tf_Note.text,
+            "coefficient"  : tf_CoefNote.text,
+            "appreciation" : tv_desc.text,
+            "date" : dateString,
+        ]
+        
+        println(data)
+        
+        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
+        //var jsonObj = NSJSONSerialization.JSONObjectWithData(bytes!, options: nil, error: nil) as [Dictionary<String, String>]
+
+//        let stringData = NSString(
+//            data: bytes!,
+//            encoding: NSUTF8StringEncoding
+//        )
+
+        
+       // let body = (stringData! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+
+        
+        let url = NSURL(string: Constants.UrlApi + "/note")!
+        
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = body
+        
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            
+            var error: AutoreleasingUnsafeMutablePointer<NSError?> = nil
+            
+            let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: error) as? NSDictionary
+            
+            if (jsonResult != nil) {
+                println(jsonResult)
+            } else {
+                println("Marche pas")
+            }
+        })
     }
     
     func validationFailed(errors:[UITextField:ValidationError]) {
