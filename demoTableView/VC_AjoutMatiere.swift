@@ -124,6 +124,8 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
             animated: true,
             completion: nil
         )
+        
+        addMatiere()
     }
     
     func validationFailed(errors:[UITextField:ValidationError]) {
@@ -163,5 +165,33 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func addMatiere(){
+        var data = Dictionary<String, String>()
+        data = [
+            "nom" : tf_saisieMatiere.text,
+            "coefficient" : tf_coefMatiere.text,
+            "description" : tv_desc.text
+        ]
+        
+        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
+        
+        let url = NSURL(string: Constants.UrlApi + "/Matiere")!
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = body
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            
+            var error: AutoreleasingUnsafeMutablePointer<NSError?> = nil
+            
+            let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: error) as? NSDictionary
+            
+            if (jsonResult != nil) {
+                println(jsonResult.description)
+            }
+        })
+        tv_desc.text = ""
     }
 }

@@ -48,6 +48,9 @@ class Validator {
         
         if errors.isEmpty {
             delegate.validationWasSuccessful()
+            for field in validations.keys {
+            field.text = ""
+            }
         } else {
             delegate.validationFailed(errors)
         }
