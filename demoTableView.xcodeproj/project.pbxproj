@@ -53,6 +53,7 @@
 		E9ACAC031AAD98CF0033B63B /* Classe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ACAC021AAD98CF0033B63B /* Classe.swift */; };
 		E9ACAC051AAD98EA0033B63B /* Specialisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ACAC041AAD98EA0033B63B /* Specialisation.swift */; };
 		E9ACAC081AAD9ACB0033B63B /* VC_Eleves.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ACAC071AAD9ACB0033B63B /* VC_Eleves.swift */; };
+		E9D53DFE1ACA92D7006499BA /* VC_Classe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D53DFD1ACA92D7006499BA /* VC_Classe.swift */; };
 		F83DD49C19EFACA00012C5A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83DD49B19EFACA00012C5A2 /* AppDelegate.swift */; };
 		F83DD49E19EFACA00012C5A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83DD49D19EFACA00012C5A2 /* ViewController.swift */; };
 		F83DD4A319EFACA00012C5A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F83DD4A219EFACA00012C5A2 /* Images.xcassets */; };
@@ -117,6 +118,7 @@
 		E9ACAC021AAD98CF0033B63B /* Classe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classe.swift; sourceTree = "<group>"; };
 		E9ACAC041AAD98EA0033B63B /* Specialisation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Specialisation.swift; sourceTree = "<group>"; };
 		E9ACAC071AAD9ACB0033B63B /* VC_Eleves.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VC_Eleves.swift; sourceTree = "<group>"; };
+		E9D53DFD1ACA92D7006499BA /* VC_Classe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VC_Classe.swift; sourceTree = "<group>"; };
 		F83DD49619EFACA00012C5A2 /* demoTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demoTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F83DD49A19EFACA00012C5A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F83DD49B19EFACA00012C5A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		E9ACABFE1AAD950B0033B63B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E9D53DFC1ACA92B0006499BA /* VC_Classes */,
 				E9ACAC061AAD9A920033B63B /* VC_Eleves */,
 				E9ACABFF1AAD96210033B63B /* VC_Notes */,
 				54EBF75519EFE0F80012B91E /* AccueilVC.swift */,
@@ -230,6 +233,14 @@
 				E9A4A9A21AAEEC29009BFFC5 /* VC_AjoutEleve.swift */,
 			);
 			name = VC_Eleves;
+			sourceTree = "<group>";
+		};
+		E9D53DFC1ACA92B0006499BA /* VC_Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E9D53DFD1ACA92D7006499BA /* VC_Classe.swift */,
+			);
+			name = VC_Classes;
 			sourceTree = "<group>";
 		};
 		F83DD48D19EFACA00012C5A2 = {
@@ -354,6 +365,7 @@
 				TargetAttributes = {
 					F83DD49519EFACA00012C5A2 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = W6LNED9894;
 					};
 					F83DD4AA19EFACA00012C5A2 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -439,6 +451,7 @@
 				C07C65841AACE1A100AB2DA6 /* StringRule.swift in Sources */,
 				C07C65761AACA2B600AB2DA6 /* MinLengthRule.swift in Sources */,
 				5457C65419FE5E750035FA3A /* TVC_SectionMatiereTableViewCell.swift in Sources */,
+				E9D53DFE1ACA92D7006499BA /* VC_Classe.swift in Sources */,
 				C07C65731AACA2B600AB2DA6 /* EmailRule.swift in Sources */,
 				5405C0991A02AB4C005B11AB /* RootViewController.swift in Sources */,
 				C07C65771AACA2B600AB2DA6 /* PasswordRule.swift in Sources */,
@@ -575,6 +588,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = demoTableView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -585,6 +599,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = demoTableView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

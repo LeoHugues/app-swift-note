@@ -35,6 +35,8 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        lb_verifCoef.hidden = true
+        lb_verifNote.hidden = true
         self.navigationItem.title = "Ajout Note"
         
         tf_Note.restorationIdentifier = "nbPoint"
