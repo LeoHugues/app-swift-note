@@ -117,7 +117,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellNote") as UITableViewCell
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellNote") as! UITableViewCell
         
         cell.textLabel!.text = String(format: "%.2f", ListeNote[indexPath.row].nbPoint)
         cell.detailTextLabel?.text = String(ListeNote[indexPath.row].coefficient)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TVC_SectionMatiereTableViewCell: UITableViewCell {
+class TVC_CustomSection: UITableViewCell {
 
    
     @IBOutlet weak var l_title: UILabel!

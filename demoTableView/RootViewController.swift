@@ -20,7 +20,7 @@ class Root: UINavigationController {
         // Do any additional setup after loading the view.
     }
 
-    func setDataNote(data: Array<Matiere>)
+    func setNotes(data: Array<Matiere>)
     {
         DataNote = data
     }

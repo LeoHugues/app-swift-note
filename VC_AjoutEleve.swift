@@ -1,11 +1,3 @@
-//
-//  VC_AjoutEleve.swift
-//  demoTableView
-//
-//  Created by Tristan on 10/03/2015.
-//  Copyright (c) 2015 Logimax. All rights reserved.
-//
-
 import UIKit
 
 class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
@@ -105,11 +97,11 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
             animated: true,
             completion: nil
         )
-        var eleve = Eleve(
-            Id: 1,
-            Nom: txt_nameEleve.text,
-            Prenom: txt_firstnameEleve.text,
-            Date_naissance: dp_BirthdayEleve.date)
+//        var eleve = Eleve(
+//            Id: 1,
+//            Nom: txt_nameEleve.text,
+//            Prenom: txt_firstnameEleve.text,
+//            Date_naissance: dp_BirthdayEleve.date)
     }
     
     func validationFailed(errors:[UITextField:ValidationError]) {
@@ -132,7 +124,4 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
             error.errorLabel?.hidden = true
         }
     }
-
-    
-
 }

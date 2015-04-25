@@ -42,11 +42,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    func tableView(tableView: UITableView!, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 35
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return DataNote.count
     }
@@ -63,7 +63,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         {
             var nbRow = Int()
             var i = 0
-          
             
                     if(liste_retract[i] == false)
                     {
@@ -71,16 +70,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     }
                     i++
             
-            
-            
-            
             return nbRow
         }
     }
     
-    func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let cell: TVC_SectionMatiereTableViewCell = tableView.dequeueReusableCellWithIdentifier("cellSection") as TVC_SectionMatiereTableViewCell
+        let cell: TVC_CustomSection = tableView.dequeueReusableCellWithIdentifier("cellSection") as! TVC_CustomSection
         
         liste_retract[section] = cell.bl_retract
         
@@ -96,19 +92,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cellType1") as UITableViewCell
-    
-        
-       // cell.accessoryType = UITableViewCellAccessoryType.None
-        
-        if(bl_retract == true)
-        {
-            
-        }
-        else
-        {
-            
-        }
+        let cell = tableView.dequeueReusableCellWithIdentifier("cellType1") as! UITableViewCell
         
         cell.textLabel!.text = String(format:"%.2f", DataNote[indexPath.section].listeNote[indexPath.row].nbPoint)
         cell.detailTextLabel!.text = String(DataNote[indexPath.section].listeNote[indexPath.row].coefficient)
@@ -186,7 +170,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    func setDataNote(data: Array<Matiere>)
+    func setNotes(data: Array<Matiere>)
     {
         DataNote = data
     }

@@ -46,7 +46,7 @@ class AccueilVC: UIViewController {
         
         if let VC: ViewController = segue!.destinationViewController as? ViewController
         {
-            VC.setDataNote(DataNote)
+            VC.setNotes(DataNote)
         }
         
        else if let VC: VC_AjoutNote = segue!.destinationViewController as? VC_AjoutNote

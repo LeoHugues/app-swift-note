@@ -28,6 +28,10 @@ class Classe
         self.listeEleve = ListeEleve
     }
     
-
+    init(classe: NSDictionary){
+        self.id = classe["id"] as! Int
+        self.nom = classe["name"] as! String
+        self.listeEleve = []
+    }
 }
 

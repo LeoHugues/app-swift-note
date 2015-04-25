@@ -39,7 +39,7 @@ class SettingViewControllerTableViewController: UITableViewController, UIAlertVi
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("celluleTypeSetting") as UITableViewCell
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("celluleTypeSetting") as! UITableViewCell
         
         if indexPath.row == 0
         {
