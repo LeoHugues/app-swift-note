@@ -14,7 +14,7 @@ class RequiredRule: Rule {
     init(){}
     
     var message: String {
-        return "Vous devez remplir ce champs"
+        return "Ce champs ne peut pas être vide"
     }
     
     func validate(value:String) -> Bool {

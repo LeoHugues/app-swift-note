@@ -10,6 +10,13 @@ import UIKit
 
 struct MesFonctions {
     
+    static func parseJSON(inputData: NSData) -> NSDictionary{
+        var error: NSError?
+        var boardsDictionary = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error) as! NSDictionary
+        
+        return boardsDictionary
+    }
+    
     static func randDate() -> NSDate
     {
         let jour = arc4random_uniform(27) + 1

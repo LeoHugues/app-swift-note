@@ -59,7 +59,7 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
         
         if let VC: AccueilVC = self.parentViewController?.childViewControllerForStatusBarHidden() as? AccueilVC
         {
-            VC.DataNote = DataNote
+          //  VC.DataNote = DataNote
         }
         else if let VC = self.parentViewController?.childViewControllerForStatusBarHidden() as? ViewController
         {
@@ -153,7 +153,7 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
         
         if let VC: AccueilVC = segue.destinationViewController as? AccueilVC
         {
-            VC.DataNote = DataNote
+           // VC.DataNote = DataNote
         }
         
         if let VC: ViewController = segue.destinationViewController as? ViewController

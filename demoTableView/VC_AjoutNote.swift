@@ -74,7 +74,7 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         
         if let VC: AccueilVC = self.parentViewController?.childViewControllerForStatusBarHidden() as? AccueilVC
         {
-            VC.DataNote = DataNote
+           // VC.DataNote = DataNote
         }
         else if let VC = self.parentViewController?.childViewControllerForStatusBarHidden() as? VC_Matiere
         {
@@ -83,6 +83,8 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         
         
     }
+    
+    // MARK: - pickerView
     
     func pickerView(_: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 30
@@ -119,7 +121,9 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
 
     }
     
-    func alertView(alertView: UIAlertView!, clickedButtonAtIndex buttonIndex: Int)
+    // MARK: - AlertView
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int)
     {
         switch buttonIndex
             {
@@ -171,7 +175,7 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         
         if let VC: AccueilVC = segue.destinationViewController as? AccueilVC
         {
-            VC.DataNote = DataNote
+          //  VC.DataNote = DataNote
         }
         
         if let VC: ViewController = segue.destinationViewController as? ViewController

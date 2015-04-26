@@ -158,7 +158,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate {
     
     
     
-    func alertView(alertView: UIAlertView!, clickedButtonAtIndex buttonIndex: Int)
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int)
     {
         
         if(alertView.title == "Date")
@@ -176,9 +176,6 @@ class VC_Note: UIViewController, UIAlertViewDelegate {
                 
             default:
                 println("annulé")
-                
-                
-                
             }
         }
         else if(alertView.title == "Modifier coef")

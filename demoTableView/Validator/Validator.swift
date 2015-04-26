@@ -60,4 +60,8 @@ class Validator {
         self.errors = [:]
     }
     
+    func clearValidation() {
+            self.validations = [:]
+    }
+    
 }

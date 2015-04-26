@@ -15,7 +15,6 @@ class Classe
     
     var id: Int
     var nom: String
-    
     var listeEleve: Array<Eleve>
     
     
@@ -32,6 +31,13 @@ class Classe
         self.id = classe["id"] as! Int
         self.nom = classe["name"] as! String
         self.listeEleve = []
+    }
+    
+    init()
+    {
+        self.id = Int()
+        self.nom = String()
+        self.listeEleve = Array<Eleve>()
     }
 }
 

@@ -68,7 +68,7 @@ class SettingViewControllerTableViewController: UITableViewController, UIAlertVi
         }
     }
     
-    func alertView(alertView: UIAlertView!, clickedButtonAtIndex buttonIndex: Int)
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int)
     {
         if(alertView.title == "Supprimer")
         {

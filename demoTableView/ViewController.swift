@@ -38,7 +38,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if let VC: AccueilVC = self.parentViewController?.childViewControllerForStatusBarHidden() as? AccueilVC
         {
-            VC.DataNote = DataNote
+          //  VC.DataNote = DataNote
         }
     }
     
