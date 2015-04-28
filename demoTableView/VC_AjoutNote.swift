@@ -16,9 +16,6 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     var selectionedDate = NSDate()
     var selectedRow = Int()
 
-    
-    
-
     @IBOutlet weak var pk_matiere: UIPickerView!
     
     @IBOutlet weak var tf_Note: UITextField!

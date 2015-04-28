@@ -17,7 +17,6 @@ class Matiere {
     var listeNote: Array<Note>
     
     init(Id: Int, Name: String, Coefficient: Int, Description: String, ListeNote: Array<Note> ) {
-        
         self.id = Id
         self.name = Name
         self.coefficient = Coefficient
@@ -103,14 +102,24 @@ class Matiere {
         return self
     }
     
-    func saveMatière()
-    {
-        var data: Matiere = self
-  //      let jsonError: NSError?
- //       let decodedJson = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: jsonError!) as NSDictionary
-     //   if !(jsonError != nil) {
-//            println(decodedJson["title"])
-//        }
+    func APIGetMatiereById(id: Int) {
+        let url = NSURL(string: Constants.UrlApi + "/matiere/\(id)")!
         
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        
+        let jsonResult = MesFonctions.parseJSON(data!)
+        
+        var matiere = jsonResult["matiere"] as! NSDictionary
+        
+        self.id = matiere["id"] as! Int
+        self.name = matiere["name"] as! String
+        self.coefficient = matiere["coefficient"] as! Int
+        self.description = matiere["description"] as! String
     }
 }

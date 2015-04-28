@@ -1,6 +1,6 @@
 import UIKit
 
-class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     
     var classeListe = Array<Classe>()
     var classe = Classe()
@@ -12,7 +12,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate, UIPi
     var validationSuccess = Bool()
     
     var datePicker = UIDatePicker()
-    var classePicker = UIPickerView()
+    var classePicker = ClassePicker()
     
     // MARK: - Data Outlet
     
@@ -163,9 +163,12 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate, UIPi
     }
     
     @IBAction func updateClasse(sender: AnyObject) {
-        var picker = UIPickerView()
-        picker.dataSource = self
-        picker.delegate = self
+        var picker = ClassePicker()
+
+        picker.classeListe = classeListe
+        picker.delegate = picker
+        picker.dataSource = picker
+        
         classePicker = picker
         picker.selectRow(indexOfClasse, inComponent: 0, animated: false)
         
@@ -272,23 +275,23 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate, UIPi
         }
     }
     
-    // MARK: - UIPicker implementation
-    
-    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 30
-    }
-    
-    func numberOfComponentsInPickerView(_: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return classeListe.count
-    }
-    
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        return classeListe[row].nom
-    }
+//    // MARK: - UIPicker implementation
+//    
+//    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+//        return 30
+//    }
+//    
+//    func numberOfComponentsInPickerView(_: UIPickerView) -> Int {
+//        return 1
+//    }
+//    
+//    func pickerView(_: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return classeListe.count
+//    }
+//    
+//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+//        return classeListe[row].nom
+//    }
     
     // MARK: - Navigation Eleves
     
@@ -370,6 +373,17 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate, UIPi
             let dico = array as! NSDictionary
             var classe = Classe(classe: dico)
             self.classeListe.append(classe)
+        }
+    }
+    
+    // MARK: - View change
+    
+    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+        
+        if let VC = segue!.destinationViewController as? ViewController {
+            if let bt_section = sender as? UIButton {
+                VC.eleve = classe.listeEleve[indexOfEleve]
+            }
         }
     }
     

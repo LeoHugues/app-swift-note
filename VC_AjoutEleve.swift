@@ -6,9 +6,15 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
     @IBOutlet weak var lb_verifName: UILabel!
     @IBOutlet weak var txt_nameEleve: UITextField!
     @IBOutlet weak var txt_firstnameEleve: UITextField!
-    @IBOutlet weak var dp_BirthdayEleve: UIDatePicker!
+    @IBOutlet weak var tf_email: UITextField!
+    @IBOutlet weak var l_verifEmail: UILabel!
+    
+    var classeListe = Array<Classe>()
+    var indexOfClasse = 0
     
     let validator = Validator()
+    var datePicker = UIDatePicker()
+    var classePicker = ClassePicker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +32,7 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
     {
             lb_verifFirstName.hidden = true
             lb_verifName.hidden = true
-            dp_BirthdayEleve.datePickerMode = UIDatePickerMode.Date
+            datePicker.datePickerMode = UIDatePickerMode.Date
         
         validator.registerField(
             textField: txt_nameEleve,
@@ -71,6 +77,26 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
             textField: txt_firstnameEleve
         )
     }
+    
+    @IBAction func setClasse(sender: AnyObject) {
+        var picker = ClassePicker()
+        
+        picker.classeListe = classeListe
+        picker.delegate = picker
+        picker.dataSource = picker
+        
+        classePicker = picker
+        picker.selectRow(indexOfClasse, inComponent: 0, animated: false)
+        
+        var alertView = UIAlertView()
+        alertView.delegate = self
+        alertView.addButtonWithTitle("Ok")
+        alertView.addButtonWithTitle("Annuler")
+        alertView.title = "Classe de l'éleve";
+        alertView.setValue(picker, forKey: "accessoryView")
+        alertView.show()
+    }
+
     
     // MARK: ValidationDelegate Methods
     

@@ -64,26 +64,6 @@ struct MesFonctions {
         
         return 0
     }
-    static func tableEleve() ->Array<Eleve>
-    {
-        var DataEleve = Array<Eleve>()
-        
-        var newEleveOne: Eleve = Eleve(Id: 0, Nom: "Prophete", Prenom: "Tristan", Date_naissance: MesFonctions.randDate(), ListeMatiere: InitTestData())
-        DataEleve.append(newEleveOne)
-        
-        var newEleveTwo: Eleve = Eleve(Id: 0, Nom: "Hugues", Prenom: "Léo", Date_naissance: MesFonctions.randDate(), ListeMatiere: InitTestData())
-        DataEleve.append(newEleveTwo)
-        
-        var newEleveThree: Eleve = Eleve(Id: 0, Nom: "Bourial", Prenom: "Morad", Date_naissance: MesFonctions.randDate(), ListeMatiere: InitTestData())
-        DataEleve.append(newEleveThree)
-        
-        
-        var newEleveFour: Eleve = Eleve(Id: 0, Nom: "Welmant", Prenom: "Pierre", Date_naissance: MesFonctions.randDate(), ListeMatiere: InitTestData())
-        DataEleve.append(newEleveFour)
-     
-        return DataEleve
-    }
-    
     
     static func InitTestData() -> Array<Matiere>
     {

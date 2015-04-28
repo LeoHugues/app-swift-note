@@ -15,6 +15,7 @@ class Note {
     var date: NSDate
     var description: String
     var coefficient: Int
+    var matiere: Matiere
     
     init(Id: Int, NbPoint: Double, Date: NSDate, Description: String, Coefficient: Int) {
         self.id = Id
@@ -22,7 +23,7 @@ class Note {
         self.date = Date
         self.description = Description
         self.coefficient = Coefficient
-        
+        self.matiere = Matiere()
     }
     
     init()
@@ -32,6 +33,23 @@ class Note {
         self.date = NSDate()
         self.description = ""
         self.coefficient = 0
+        self.matiere = Matiere()
+    }
+    
+    init(id: String, NbPoint: String, dateString: String, Description: String, Coefficient: String, idMatiere: String) {
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        
+        var date = dateFormatter.dateFromString(dateString)
+        
+        self.id = id.toInt()!
+        self.nbPoint = Double(NbPoint.toInt()!)
+        self.date = date!
+        self.description = Description
+        self.coefficient = Coefficient.toInt()!
+        self.matiere = Matiere()
+        self.matiere.APIGetMatiereById(idMatiere.toInt()!)
     }
     
     func getNote() -> Note

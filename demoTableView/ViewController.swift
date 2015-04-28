@@ -1,31 +1,29 @@
-//
-//  ViewController.swift
-//  demoTableView
-//
-//  Created by Maxime Britto on 16/10/2014.
-//  Copyright (c) 2014 Logimax. All rights reserved.
-//
-
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var l_moyenne: UILabel!
     @IBOutlet weak var tableViewNote: UITableView!
+    
+    var eleve: Eleve = Eleve()
     var DataNote: Array<Matiere> = []
+    
     var bl_retract = false
     var liste_retract = Array<Bool>()
     
+    // MARK: - override Function
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        eleve.APIgetNotes()
+        DataNote = eleve.getNoteByMatiere()
         
         for(var i = 0; i < DataNote.count; i++)
         {
             liste_retract.append(false)
         }
         
-         self.navigationItem.title = "Mes Notes"
-        // Do any additional setup after loading the view, typically from a nib.
+         self.navigationItem.title = "Notes de " + eleve.prenom
     }
     
     
@@ -42,6 +40,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    // MARK: - TableView Function
+
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 35
     }
@@ -115,7 +115,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
 
-    
+    // MARK: - Navigation Function
+
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         
         if let VC: VC_Note = segue!.destinationViewController as? VC_Note

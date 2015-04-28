@@ -32,6 +32,7 @@
 		54EBF75619EFE0F80012B91E /* AccueilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EBF75519EFE0F80012B91E /* AccueilVC.swift */; };
 		54F1496C1A038C7B00638FA5 /* home63.png in Resources */ = {isa = PBXBuildFile; fileRef = 54F1496B1A038C7A00638FA5 /* home63.png */; };
 		C04494741AEBA3D800D49D90 /* VC_AjoutClasse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04494731AEBA3D800D49D90 /* VC_AjoutClasse.swift */; };
+		C0576CBC1AEF91A6004D5BA9 /* ClassePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0576CBB1AEF91A6004D5BA9 /* ClassePicker.swift */; };
 		C05F24261AED1534000C7489 /* AccueilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EBF75519EFE0F80012B91E /* AccueilVC.swift */; };
 		C07C65721AACA2B600AB2DA6 /* ConfirmRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65651AACA2B600AB2DA6 /* ConfirmRule.swift */; };
 		C07C65741AACA2B600AB2DA6 /* FullNameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65671AACA2B600AB2DA6 /* FullNameRule.swift */; };
@@ -98,6 +99,7 @@
 		54EBF75519EFE0F80012B91E /* AccueilVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccueilVC.swift; sourceTree = "<group>"; };
 		54F1496B1A038C7A00638FA5 /* home63.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home63.png; path = Img/home63.png; sourceTree = "<group>"; };
 		C04494731AEBA3D800D49D90 /* VC_AjoutClasse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VC_AjoutClasse.swift; sourceTree = "<group>"; };
+		C0576CBB1AEF91A6004D5BA9 /* ClassePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassePicker.swift; sourceTree = "<group>"; };
 		C07C65651AACA2B600AB2DA6 /* ConfirmRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmRule.swift; sourceTree = "<group>"; };
 		C07C65671AACA2B600AB2DA6 /* FullNameRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullNameRule.swift; sourceTree = "<group>"; };
 		C07C65691AACA2B600AB2DA6 /* MinLengthRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinLengthRule.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				F83DD49B19EFACA00012C5A2 /* AppDelegate.swift */,
 				54AFD91A19F6BE6100520A03 /* SettingViewControllerTableViewController.swift */,
 				549634B71A079F7A0012F4F1 /* Main.storyboard */,
+				C0576CBB1AEF91A6004D5BA9 /* ClassePicker.swift */,
 				C0FD8F1A1AEBF414002CC974 /* VC_ClasseDetail.swift */,
 				5405C0981A02AB4C005B11AB /* RootViewController.swift */,
 				5405C08C1A025C73005B11AB /* MesFonctions.swift */,
@@ -457,6 +460,7 @@
 				5457C65419FE5E750035FA3A /* TVC_CustomSection.swift in Sources */,
 				E9D53DFE1ACA92D7006499BA /* VC_Classe.swift in Sources */,
 				5405C0991A02AB4C005B11AB /* RootViewController.swift in Sources */,
+				C0576CBC1AEF91A6004D5BA9 /* ClassePicker.swift in Sources */,
 				C07C657C1AACA2B600AB2DA6 /* ValidationRule.swift in Sources */,
 				E9ACAC011AAD98B70033B63B /* Eleve.swift in Sources */,
 				E9ACAC031AAD98CF0033B63B /* Classe.swift in Sources */,

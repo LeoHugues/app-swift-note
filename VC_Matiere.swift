@@ -13,7 +13,6 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     var matiere = String()
     var DataNote = Array<Matiere>()
     var IndexOfmatiere = Int()
-    var ListeNote = Array<Note>()
     var l_verif = String()
     
     @IBOutlet weak var l_messageError: UILabel!
@@ -29,7 +28,17 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         super.viewDidLoad()
         
         self.navigationItem.title = "Matière"
-        // Do any additional setup after loading the view.
+        
+        if(IndexOfmatiere == 0) {
+            b_nextButton.hidden = false
+        } else {
+            b_backButton.hidden = true
+        }
+        if(IndexOfmatiere == DataNote.count - 1) {
+            b_nextButton.hidden = true
+        } else {
+            b_backButton.hidden = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,14 +68,10 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             b_nextButton.hidden = false
         }
         
-        let index = MesFonctions.RechercheIndexMatiereByName(DataNote, name: matiere)
-        
-        ListeNote = DataNote[index].listeNote
-        
-        l_title.text = DataNote[index].name
-        l_moyenne.text = String(format: "%.2f",moyenne())
-        l_coef.text = "\(String(DataNote[index].coefficient))"
-        tv_description.text = DataNote[index].description
+        l_title.text = DataNote[IndexOfmatiere].name
+        l_moyenne.text = String(format: "%.2f", moyenne())
+        l_coef.text = "\(String(DataNote[IndexOfmatiere].coefficient))"
+        tv_description.text = DataNote[IndexOfmatiere].description
         
         
     }
@@ -86,11 +91,11 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     }
     
     func tableView(tableView: UITableView,
-        numberOfRowsInSection section: Int) -> Int
-    {
+        numberOfRowsInSection section: Int) -> Int {
         
-        return ListeNote.count
+        return DataNote[IndexOfmatiere].listeNote.count
     }
+    
     @IBAction func setNameMatiere(sender: AnyObject) {
         
         var alertView = UIAlertView()
@@ -119,8 +124,8 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellNote") as! UITableViewCell
         
-        cell.textLabel!.text = String(format: "%.2f", ListeNote[indexPath.row].nbPoint)
-        cell.detailTextLabel?.text = String(ListeNote[indexPath.row].coefficient)
+        cell.textLabel!.text = String(format: "%.2f", DataNote[IndexOfmatiere].listeNote[indexPath.row].nbPoint)
+        cell.detailTextLabel?.text = String(DataNote[IndexOfmatiere].listeNote[indexPath.row].coefficient)
         
         return cell
     }
@@ -197,7 +202,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         var sommeCoef = 0
         var sommeNote = 0.0
         
-        for note: Note in ListeNote
+        for note: Note in DataNote[IndexOfmatiere].listeNote
         {
             sommeCoef += note.coefficient
             sommeNote += note.nbPoint * Double(note.coefficient)
@@ -206,7 +211,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         return sommeNote / Double(sommeCoef)
     }
     
-    func alertView(alertView: UIAlertView!, clickedButtonAtIndex buttonIndex: Int)
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int)
     {
         if(alertView.title == "Modifier nom matiere")
         {
@@ -233,9 +238,6 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             switch buttonIndex
                 {
             case 0:
-            
-                
-                
                 if(CheckCoefMatiere(alertView.textFieldAtIndex(0)!.text) == true)
                 {
                     DataNote[MesFonctions.RechercheIndexMatiereByName(DataNote, name: matiere)].coefficient = alertView.textFieldAtIndex(0)!.text.toInt()!
@@ -258,7 +260,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             case 0:
                 if(IndexOfmatiere > 0)
                 {
-                    ListeNote = DataNote[IndexOfmatiere-1].listeNote
+                    DataNote[IndexOfmatiere].listeNote = DataNote[IndexOfmatiere-1].listeNote
                     matiere = DataNote[IndexOfmatiere-1].name
                     
                     DataNote.removeAtIndex(IndexOfmatiere)
@@ -268,7 +270,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
                 }
                 else if (IndexOfmatiere < DataNote.count - 1)
                 {
-                    ListeNote = DataNote[IndexOfmatiere+1].listeNote
+                    DataNote[IndexOfmatiere].listeNote = DataNote[IndexOfmatiere+1].listeNote
                     matiere = DataNote[IndexOfmatiere+1].name
                     
                     DataNote.removeAtIndex(IndexOfmatiere)
@@ -294,7 +296,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         if(IndexOfmatiere > 0)
         {
-            ListeNote = DataNote[IndexOfmatiere-1].listeNote
+            DataNote[IndexOfmatiere].listeNote = DataNote[IndexOfmatiere-1].listeNote
             matiere = DataNote[IndexOfmatiere-1].name
             self.viewWillAppear(true)
             self.tableView.reloadData()
@@ -305,7 +307,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         if(IndexOfmatiere < DataNote.count - 1)
         {
-            ListeNote = DataNote[IndexOfmatiere+1].listeNote
+            DataNote[IndexOfmatiere].listeNote = DataNote[IndexOfmatiere+1].listeNote
             matiere = DataNote[IndexOfmatiere+1].name
             self.viewWillAppear(true)
             self.tableView.reloadData()
@@ -329,11 +331,11 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         {
             if let indexPath = tableView.indexPathForSelectedRow() as NSIndexPath?
             {
-                VC.id = ListeNote[indexPath.row].id
+                VC.id = DataNote[IndexOfmatiere].listeNote[indexPath.row].id
             }
             
             VC.DataNote = DataNote
-            VC.listeNote = ListeNote
+            VC.listeNote = DataNote[IndexOfmatiere].listeNote
             VC.nomMatiere = matiere
         }
         
