@@ -1,6 +1,6 @@
 import UIKit
 
-class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
+class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate, UIAlertViewDelegate {
     
     @IBOutlet weak var lb_verifFirstName: UILabel!
     @IBOutlet weak var lb_verifName: UILabel!
@@ -8,6 +8,8 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
     @IBOutlet weak var txt_firstnameEleve: UITextField!
     @IBOutlet weak var tf_email: UITextField!
     @IBOutlet weak var l_verifEmail: UILabel!
+    @IBOutlet weak var l_dateOfBirth: UILabel!
+    @IBOutlet weak var l_classe: UILabel!
     
     var classeListe = Array<Classe>()
     var indexOfClasse = 0
@@ -18,21 +20,6 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDisplayAjoutEleve()
-        
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func setDisplayAjoutEleve()
-    {
-            lb_verifFirstName.hidden = true
-            lb_verifName.hidden = true
-            datePicker.datePickerMode = UIDatePickerMode.Date
         
         validator.registerField(
             textField: txt_nameEleve,
@@ -51,6 +38,51 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
                 StringRule(),
             ]
         )
+        
+        validator.registerField(
+            textField: tf_email,
+            errorLabel: l_verifEmail,
+            rules: [
+                RequiredRule(),
+            ]
+        )
+        
+        setDisplayAjoutEleve()
+        
+        // Do any additional setup after loading the view.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func setDisplayAjoutEleve()
+    {
+        txt_firstnameEleve.layer.borderColor = Constants.AppColor.CGColor
+        txt_firstnameEleve.layer.borderWidth = 1
+        txt_firstnameEleve.layer.cornerRadius = 5
+        
+        txt_nameEleve.layer.borderColor = Constants.AppColor.CGColor
+        txt_nameEleve.layer.borderWidth = 1
+        txt_nameEleve.layer.cornerRadius = 5
+        
+        tf_email.layer.borderColor = Constants.AppColor.CGColor
+        tf_email.layer.borderWidth = 1
+        tf_email.layer.cornerRadius = 5
+        
+        lb_verifFirstName.hidden = true
+        lb_verifName.hidden = true
+        l_verifEmail.hidden = true
+        datePicker.datePickerMode = UIDatePickerMode.Date
+        
+        let date = datePicker.date
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        l_dateOfBirth.text = dateFormatter.stringFromDate(date)
+        
+        l_classe.text = classeListe[indexOfClasse].nom
     }
     
     
@@ -76,10 +108,54 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
             label: lb_verifFirstName,
             textField: txt_firstnameEleve
         )
+        removeError(
+            label: l_verifEmail,
+            textField: tf_email
+        )
+    }
+    
+    func setDate() {
+        let date = datePicker.date
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        l_dateOfBirth.text = dateFormatter.stringFromDate(date)
+    }
+    
+    @IBAction func setDateOfBirth(sender: AnyObject) {
+        
+        let PickerDate = UIDatePicker()
+        PickerDate.datePickerMode = UIDatePickerMode.Date
+        
+        datePicker = PickerDate
+        
+        var datePickerOfbirth = UIDatePicker(frame: CGRectMake(-8, 180, 300, 300))
+        datePickerOfbirth.datePickerMode = UIDatePickerMode.Date
+        
+        datePicker = datePickerOfbirth
+        
+        let alert = SCLAlertView()
+        
+        alert.kWindowWidth += 50
+        alert.kWindowHeight += 200
+        
+        alert.labelTitle.frame.origin.x += 25
+        
+        alert.contentView.addSubview(datePickerOfbirth)
+        alert.addButton("Ok") {
+            self.setDate()
+        }
+        
+        alert.showEdit("Modifier", subTitle:"Modifier la date de naissance de l'élève")
+    }
+    
+    func setClasse() {
+        indexOfClasse = classePicker.selectedRowInComponent(0)
+        l_classe.text = classeListe[indexOfClasse].nom
     }
     
     @IBAction func setClasse(sender: AnyObject) {
-        var picker = ClassePicker()
+        var picker = ClassePicker(frame: CGRectMake(-8, 180, 300, 300))
         
         picker.classeListe = classeListe
         picker.delegate = picker
@@ -88,46 +164,32 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
         classePicker = picker
         picker.selectRow(indexOfClasse, inComponent: 0, animated: false)
         
-        var alertView = UIAlertView()
-        alertView.delegate = self
-        alertView.addButtonWithTitle("Ok")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Classe de l'éleve";
-        alertView.setValue(picker, forKey: "accessoryView")
-        alertView.show()
+        let alert = SCLAlertView()
+        
+        alert.kWindowWidth += 50
+        alert.kWindowHeight += 200
+        
+        alert.labelTitle.frame.origin.x += 25
+        
+        alert.contentView.addSubview(picker)
+        alert.addButton("Ok") {
+            self.setClasse()
+        }
+        
+        alert.showEdit("Modifier", subTitle:"Modifier la classe de l'élève")
     }
-
-    
+        
     // MARK: ValidationDelegate Methods
     
     func validationWasSuccessful() {
         
         //  Validation SUCCESS
         
-        var alert = UIAlertController(
-            title: "Enregistrement",
-            message: "Votre élève a bien été ajouté",
-            preferredStyle: UIAlertControllerStyle.Alert
-        )
+        var eleve = Eleve(lastName: txt_nameEleve.text, firstName: txt_firstnameEleve.text, email: tf_email.text, dateOfBirth: l_dateOfBirth.text!, classe: classeListe[indexOfClasse])
         
-        var defaultAction = UIAlertAction(
-            title: "OK",
-            style: .Default,
-            handler: nil
-        )
-        
-        alert.addAction(defaultAction)
-        
-        self.presentViewController(
-            alert,
-            animated: true,
-            completion: nil
-        )
-//        var eleve = Eleve(
-//            Id: 1,
-//            Nom: txt_nameEleve.text,
-//            Prenom: txt_firstnameEleve.text,
-//            Date_naissance: dp_BirthdayEleve.date)
+        eleve.APIAdd()
+    
+        SCLAlertView().showSuccess("Ajout Réussi", subTitle: "Votre élève a bien était enregistrer", closeButtonTitle: "Ok", duration: 5.0)
     }
     
     func validationFailed(errors:[UITextField:ValidationError]) {
@@ -139,6 +201,7 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
         for (field, error) in validator.errors {
             field.layer.borderColor = UIColor.redColor().CGColor
             field.layer.borderWidth = 1.0
+            field.layer.cornerRadius = 5
             error.errorLabel?.text = error.errorMessage
             error.errorLabel?.hidden = false
         }
@@ -146,7 +209,7 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate {
     
     private func clearErrors(){
         for (field, error) in validator.errors {
-            field.layer.borderWidth = 0.0
+            field.layer.borderColor = Constants.AppColor.CGColor
             error.errorLabel?.hidden = true
         }
     }

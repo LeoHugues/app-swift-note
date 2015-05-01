@@ -11,7 +11,13 @@ class VC_Classe: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         super.viewDidLoad()
         self.navigationItem.title = "Mes Classe"
         
+       // getClasses()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        classeListe.removeAll(keepCapacity: true)
         getClasses()
+        tv_classe.reloadData()
     }
     
     //MARK: Table view implementation
@@ -70,16 +76,19 @@ class VC_Classe: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             var error: NSError?
     
             let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-    
-            let jsonResult = MesFonctions.parseJSON(data!)
-    
-            var classes = jsonResult["classe"] as! NSArray
-    
-            for array in classes {
-                let dico = array as! NSDictionary
-                var classe = Classe(classe: dico)
-                getEleve(classe)
-                self.classeListe.append(classe)
+            print(data?.length)
+            
+            if (data?.length != 0) {
+                let jsonResult = MesFonctions.parseJSON(data!)
+                
+                var classes = jsonResult["classe"] as! NSArray
+                
+                for array in classes {
+                    let dico = array as! NSDictionary
+                    var classe = Classe(classe: dico)
+                    getEleve(classe)
+                    self.classeListe.append(classe)
+                }
             }
         }
     
@@ -111,7 +120,8 @@ class VC_Classe: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     
             for array in eleves {
                 let dico = array as! NSDictionary
-                var eleve = Eleve(eleve: dico, classe: classe)
+                
+                var eleve = Eleve(id: dico["id"] as! String, lastName: dico["lastName"] as! String, firstName: dico["firstName"] as! String, email: dico["email"] as! String, dateOfBirth: dico["dateOfBirth"] as! String, classe: classe)
                 classe.listeEleve.append(eleve)
             }
         }
@@ -143,6 +153,7 @@ class VC_Classe: UIViewController, UITableViewDataSource, UITableViewDelegate, U
         if let VC = segue!.destinationViewController as? VC_Eleves {
             if let indexPath = tv_classe.indexPathForSelectedRow() as NSIndexPath? {
                 VC.classe = classeListe[indexPath.section]
+                VC.indexOfClasse = indexPath.section
                 VC.indexOfEleve = indexPath.row
             }
         }

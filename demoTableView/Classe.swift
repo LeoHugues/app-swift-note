@@ -27,6 +27,13 @@ class Classe
         self.listeEleve = ListeEleve
     }
     
+    init(Nom: String)
+    {
+        self.id = Int()
+        self.nom = Nom
+        self.listeEleve = Array<Eleve>()
+    }
+    
     init(classe: NSDictionary){
         self.id = classe["id"] as! Int
         self.nom = classe["name"] as! String
@@ -38,6 +45,61 @@ class Classe
         self.id = Int()
         self.nom = String()
         self.listeEleve = Array<Eleve>()
+    }
+    
+    func APICreate(){
+        var data = Dictionary<String, String>()
+        data = [
+            "name" : self.nom,
+        ]
+        
+        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
+        
+        // Prepare request
+        let url = NSURL(string: Constants.UrlApi + "/classe")!
+        
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = body
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+    }
+    
+    func APIUpdate(){
+        var data = Dictionary<String, String>()
+        data = [
+            "name" : self.nom,
+        ]
+        
+        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
+        
+        // Prepare request
+        let url = NSURL(string: Constants.UrlApi + "/classe/\(self.id)")!
+        
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "PUT"
+        request.HTTPBody = body
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+    }
+    
+    func APIDelete(){
+        // Prepare request
+        let url = NSURL(string: Constants.UrlApi + "/classe/\(self.id)")!
+        
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "DELETE"
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
     }
 }
 

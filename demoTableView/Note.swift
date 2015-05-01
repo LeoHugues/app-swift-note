@@ -11,11 +11,12 @@ import UIKit
 class Note {
     
     var id: Int
+    var eleve: Eleve
+    var matiere: Matiere
     var nbPoint: Double
     var date: NSDate
     var description: String
     var coefficient: Int
-    var matiere: Matiere
     
     init(Id: Int, NbPoint: Double, Date: NSDate, Description: String, Coefficient: Int) {
         self.id = Id
@@ -24,6 +25,7 @@ class Note {
         self.description = Description
         self.coefficient = Coefficient
         self.matiere = Matiere()
+        self.eleve = Eleve()
     }
     
     init()
@@ -34,6 +36,7 @@ class Note {
         self.description = ""
         self.coefficient = 0
         self.matiere = Matiere()
+        self.eleve = Eleve()
     }
     
     init(id: String, NbPoint: String, dateString: String, Description: String, Coefficient: String, idMatiere: String) {
@@ -50,35 +53,6 @@ class Note {
         self.coefficient = Coefficient.toInt()!
         self.matiere = Matiere()
         self.matiere.APIGetMatiereById(idMatiere.toInt()!)
-    }
-    
-    func getNote() -> Note
-    {
-        return self
-    }
-    
-    func setNote(NbPoint: Double) -> Note
-    {
-        self.nbPoint = NbPoint
-        return self
-    }
-    
-    func setNote(Date: NSDate) -> Note
-    {
-        self.date = Date
-        return self
-    }
-    
-    func setNote(desc: String) -> Note
-    {
-        self.description = desc
-        return self
-    }
-    
-    func setNote(Coefficient: Int) -> Note
-    {
-        self.coefficient = Coefficient
-        return self
-    }
-   
+        self.eleve = Eleve()
+    }   
 }

@@ -27,44 +27,80 @@ class Eleve
         self.notes = Array<Note>()
     }
     
-    init(Id: Int, Nom: String, Prenom: String, Date_naissance: NSDate)
-    {
-        self.id = Id
-        self.nom = Nom
-        self.prenom = Prenom
-        self.email = "whatever"
-        self.photo = UIImage()
-        self.date_naissance = Date_naissance
-        self.classe = Classe()
-        self.notes = Array<Note>()
-    }
-    
-    
-    init(eleve: NSDictionary, classe: Classe){
+    init(id: String, lastName: String, firstName: String, email: String, dateOfBirth: String, classe: Classe){
         
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         // convert string into date
-        let date:NSDate? = dateFormatter.dateFromString(eleve["dateOfBirth"] as! String)
-        
-        var id = eleve["id"] as! String
+        let date:NSDate? = dateFormatter.dateFromString(dateOfBirth)
         
         self.id = id.toInt()!
-        self.nom = eleve["lastName"] as! String
-        self.prenom = eleve["firstName"] as! String
-        self.email = eleve["email"] as! String
+        self.nom = lastName
+        self.prenom = firstName
+        self.email = email
         self.photo = UIImage()
         self.date_naissance = date!
         self.classe = classe
         self.notes = Array<Note>()
     }
     
+    init(lastName: String, firstName: String, email: String, dateOfBirth: String, classe: Classe){
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        
+        // convert string into date
+        let date:NSDate? = dateFormatter.dateFromString(dateOfBirth)
+        
+        self.id = Int()
+        self.nom = lastName
+        self.prenom = firstName
+        self.email = email
+        self.photo = UIImage()
+        self.date_naissance = date!
+        self.classe = classe
+        self.notes = Array<Note>()
+    }
+    
+    internal func APIAdd() {
+        
+        // Prepare data
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        
+        // convert string into date
+        let date: String = dateFormatter.stringFromDate(self.date_naissance as NSDate)
+        
+        var bodyData = Dictionary<String, AnyObject>()
+        bodyData = [
+            "idClasse": self.classe.id,
+            "firstName": self.prenom,
+            "lastName": self.nom,
+            "email": self.email,
+            "dateOfBirth": date
+        ]
+        
+        var body = NSJSONSerialization.dataWithJSONObject(bodyData, options: nil, error: nil)
+        
+        // Prepare request
+        let url = NSURL(string: Constants.UrlApi + "/eleve")!
+        
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = body
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+    }
+    
     internal func update() {
         
         // Prepare data
         var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy"
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         
             // convert string into date
         let date: String = dateFormatter.stringFromDate(self.date_naissance as NSDate)

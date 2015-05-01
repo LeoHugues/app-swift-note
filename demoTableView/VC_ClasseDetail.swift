@@ -12,8 +12,10 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
 
     var classeListe = Array<Classe>()
     var indexOfClasse = Int()
+    var classeUpdated = Bool()
     
     var validator = Validator()
+    var activityView = UIActivityIndicatorView()
     
     var textField = UITextField()
     var validationSuccess = Bool()
@@ -23,17 +25,47 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBOutlet weak var tv_eleve: UITableView!
     
+    @IBOutlet weak var b_precedent: UIButton!
+    @IBOutlet weak var b_next: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (classeListe.count > 0) {
+            setDisplay()
+        } else {
+            navigationController?.popViewControllerAnimated(true)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
-        l_title.text = classeListe[indexOfClasse].nom
+        if (classeListe.count > 0) {
+            setDisplay()
+            tv_eleve.reloadData()
+        } else {
+            navigationController?.popViewControllerAnimated(true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setDisplay() {
+        // Display buttons
+        if(indexOfClasse == 0) {
+            b_precedent.hidden = true
+        } else {
+            b_precedent.hidden = false
+        }
+        if(indexOfClasse == classeListe.count - 1) {
+            b_next.hidden = true
+        } else {
+            b_next.hidden = false
+        }
+        
+        l_title.text = classeListe[indexOfClasse].nom
     }
     
     //MARK: Table view implementation
@@ -52,49 +84,81 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     // MARK: - Update functions
     
-    @IBAction func UpdateName(sender: AnyObject) {
-        var alertView = UIAlertView()
+    func updateClasse() {
+        if(classeUpdated == true) {
+            classeListe[indexOfClasse].APIUpdate()
+            classeUpdated == false
+        }
+    }
+    
+    func updateClassName() {
+        let newName = textField.text
+        self.clearErrors(l_verifName)
+        validator.validateAll(self)
         
-        alertView.delegate = self
-        alertView.addButtonWithTitle("OK")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Modifier le Nom de la Classe"
-        alertView.alertViewStyle = UIAlertViewStyle.PlainTextInput
-        textField = alertView.textFieldAtIndex(0)!
+        if(validationSuccess == true) {
+            classeListe[indexOfClasse].nom = newName
+            l_title.text = newName
+            
+            classeUpdated = true
+            validationSuccess = false
+        }
+        validator.clearValidation()
+        validator.clearErrors()
+    }
+    
+    func deleteClasse() {
+        classeListe[indexOfClasse].APIDelete()
+        classeListe.removeAtIndex(indexOfClasse)
+        if (classeListe.count == indexOfClasse) {
+            indexOfClasse--
+        }
+        viewWillAppear(true)
+    }
+    
+    @IBAction func UpdateName(sender: AnyObject) {
+
+        let alert = SCLAlertView()
+        
+        let txt = alert.addTextField(title:"Entrer le nom")
+        self.textField = txt
         
         validator.registerField(
             textField: textField,
             errorLabel: l_verifName,
             rules: [
                 RequiredRule()
-            ])
+            ]
+        )
         
-        alertView.show()
+        alert.addButton("Remplacer") {
+            self.updateClassName()
+        }
+        alert.showEdit("Modifier", subTitle:"Modifier le Nom de la Classe")
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        
-        if(alertView.title == "Modifier le Nom de la Classe"){
-            switch buttonIndex
-            {
-            case 0:
-                let newName = textField.text
-                self.clearErrors(l_verifName)
-                validator.validateAll(self)
-                
-                if(validationSuccess == true) {
-                    classeListe[indexOfClasse].nom = newName
-                    l_title.text = newName
-                    
-                    validationSuccess = false
-                }
-                validator.clearValidation()
-                validator.clearErrors()
-                break
-            default:
-                break
-            }
+    @IBAction func deleteAction(sender: AnyObject) {
+        let alert = SCLAlertView()
+        alert.addButton("Supprimer") {
+            self.deleteClasse()
         }
+        alert.showWarning("Supprimer", subTitle:"Si vous supprimer la classe les élèves seront également supprimé")
+    }
+    
+    // MARK: - Navigation View
+    
+    @IBAction func backAction(sender: AnyObject) {
+        
+        updateClasse()
+        indexOfClasse--
+        self.viewWillAppear(true)
+    }
+    
+    @IBAction func nextAction(sender: AnyObject) {
+        activityView.startAnimating()
+        updateClasse()
+        indexOfClasse++
+        self.viewWillAppear(true)
     }
     
     // MARK: Error Styling
@@ -143,6 +207,13 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
                 VC.classe = classeListe[indexOfClasse]
                 VC.indexOfEleve = indexPath.row
             }
+        } else if let VC = segue!.destinationViewController as? VC_AjoutEleve {
+                VC.classeListe = classeListe
+                VC.indexOfClasse = indexOfClasse
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        updateClasse()
     }
 }

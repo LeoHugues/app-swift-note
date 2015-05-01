@@ -23,7 +23,6 @@ class VC_AjoutClasse: UIViewController, ValidationDelegate, UITextFieldDelegate 
             errorLabel: l_verifName,
             rules: [
                 RequiredRule(),
-                StringRule(),
             ]
         )
 
@@ -54,30 +53,11 @@ class VC_AjoutClasse: UIViewController, ValidationDelegate, UITextFieldDelegate 
     // MARK: ValidationDelegate Methods
     
     func validationWasSuccessful() {
+
+        let classe = Classe(Nom: tf_classeName.text)
+        classe.APICreate()
         
-        //  Validation SUCCESS
-        
-        addClasse()
-        
-        var alert = UIAlertController(
-            title: "Enregistrement",
-            message: "Votre classe a bien été ajouté",
-            preferredStyle: UIAlertControllerStyle.Alert
-        )
-        
-        var defaultAction = UIAlertAction(
-            title: "OK",
-            style: .Default,
-            handler: nil
-        )
-        
-        alert.addAction(defaultAction)
-        
-        self.presentViewController(
-            alert,
-            animated: true,
-            completion: nil
-        )
+        SCLAlertView().showSuccess("Ajout Réussi", subTitle: "Votre classe a bien était enregistrer", closeButtonTitle: "Ok", duration: 5.0)
     }
     
     func validationFailed(errors:[UITextField:ValidationError]) {
@@ -100,48 +80,9 @@ class VC_AjoutClasse: UIViewController, ValidationDelegate, UITextFieldDelegate 
             error.errorLabel?.hidden = true
         }
     }
-    
-    // MARK: Api request
-    
-    func addClasse(){
-        var data = Dictionary<String, String>()
-        data = [
-            "name" : tf_classeName.text,
-        ]
-        
-        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
-        
-        let url = NSURL(string: Constants.UrlApi + "/classe")!
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = body
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            
-            var error: AutoreleasingUnsafeMutablePointer<NSError?> = nil
-            
-            let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: error) as? NSDictionary
-            
-            if (jsonResult != nil) {
-                println(jsonResult.description)
-            }
-        })
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

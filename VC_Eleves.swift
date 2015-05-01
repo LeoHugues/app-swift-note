@@ -36,17 +36,15 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setDisplayEleve()
+        if(classe.listeEleve.count > 0) {
+            setDisplayEleve()
+        } else {
+            navigationController?.popViewControllerAnimated(true)
+        }
+        
         getClasses()
 
         // Do any additional setup after loading the view.
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        if(eleveWasUpdated == true) {
-            updateEleve()
-            eleveWasUpdated = false
-        }
     }
     
     func setDisplayEleve()
@@ -80,19 +78,33 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     
     // MARK: - Update function implementation
     func updateEleve(){
-        classe.listeEleve[indexOfEleve].update()
+        if (eleveWasUpdated == true) {
+            classe.listeEleve[indexOfEleve].update()
+            eleveWasUpdated == false
+        }
+    }
+    
+    func updateLastName() {
+        let newName = textField.text
+        self.clearErrors(l_verifLastName)
+        validator.validateAll(self)
+        
+        if(validationSuccess == true) {
+            classe.listeEleve[indexOfEleve].nom = newName
+            l_lastName.text = newName
+            eleveWasUpdated = true
+            validationSuccess = false
+        }
+        validator.clearValidation()
+        validator.clearErrors()
     }
     
     @IBAction func updateLastName(sender: AnyObject) {
         
-        var alertView = UIAlertView()
+        let alert = SCLAlertView()
         
-        alertView.delegate = self
-        alertView.addButtonWithTitle("OK")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Modifier le Nom"
-        alertView.alertViewStyle = UIAlertViewStyle.PlainTextInput
-        textField = alertView.textFieldAtIndex(0)!
+        let txt = alert.addTextField(title:"Entrer le nom")
+        self.textField = txt
         
         validator.registerField(
             textField: textField,
@@ -101,19 +113,33 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
                 RequiredRule()
             ])
         
-        alertView.show()
+        alert.addButton("Remplacer") {
+            self.updateLastName()
+        }
+        alert.showEdit("Modifier", subTitle:"Modifier le nom de l'élève")
+    }
+    
+    func updateFirstName() {
+        let newName = textField.text
+        self.clearErrors(l_verifFirstName)
+        validator.validateAll(self)
+        
+        if(validationSuccess == true) {
+            classe.listeEleve[indexOfEleve].prenom = newName
+            l_firstName.text = newName
+            eleveWasUpdated = true
+            validationSuccess = false
+        }
+        validator.clearValidation()
+        validator.clearErrors()
     }
     
     @IBAction func updateFirstName(sender: AnyObject) {
         
-        var alertView = UIAlertView()
+        let alert = SCLAlertView()
         
-        alertView.delegate = self
-        alertView.addButtonWithTitle("OK")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Modifier le Prénom"
-        alertView.alertViewStyle = UIAlertViewStyle.PlainTextInput
-        textField = alertView.textFieldAtIndex(0)!
+        let txt = alert.addTextField(title:"Entrer le prénom")
+        self.textField = txt
         
         validator.registerField(
             textField: textField,
@@ -122,19 +148,31 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
                 RequiredRule()
             ])
         
-        alertView.show()
+        alert.addButton("Remplacer") {
+            self.updateFirstName()
+        }
+        alert.showEdit("Modifier", subTitle:"Modifier le Prénom de l'élève")
+    }
+    
+    func updateEmail() {
+        let email = textField.text
+        self.clearErrors(l_verifEmail)
+        validator.validateAll(self)
+        
+        if(validationSuccess == true) {
+            classe.listeEleve[indexOfEleve].email = email
+            l_email.text = email
+            eleveWasUpdated = true
+            validationSuccess = false
+        }
     }
     
     @IBAction func updateEmail(sender: AnyObject) {
         
-        var alertView = UIAlertView()
+        let alert = SCLAlertView()
         
-        alertView.delegate = self
-        alertView.addButtonWithTitle("OK")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Modifier l'email"
-        alertView.alertViewStyle = UIAlertViewStyle.PlainTextInput
-        textField = alertView.textFieldAtIndex(0)!
+        let txt = alert.addTextField(title:"Entrer l'email")
+        self.textField = txt
         
         validator.registerField(
             textField: textField,
@@ -143,27 +181,54 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
                 RequiredRule()
             ])
         
-        alertView.show()
+        alert.addButton("Remplacer") {
+            self.updateEmail()
+        }
+        alert.showEdit("Modifier", subTitle:"Modifier l'email de l'élève")
+    }
+    
+    func updateDateOfBirth() {
+        let date = datePicker.date
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        l_dateOfBirth.text = dateFormatter.stringFromDate(date)
+        classe.listeEleve[indexOfEleve].date_naissance = date
+        eleveWasUpdated = true
     }
     
     @IBAction func updateDateOfBirth(sender: AnyObject) {
         
-        var datePickerOfbirth = UIDatePicker()
+        var datePickerOfbirth = UIDatePicker(frame: CGRectMake(-8, 180, 300, 300))
         datePickerOfbirth.datePickerMode = UIDatePickerMode.Date
         
         datePicker = datePickerOfbirth
+
+        let alert = SCLAlertView()
         
-        var alertView = UIAlertView()
-        alertView.delegate = self
-        alertView.addButtonWithTitle("Ok")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Date de Naissance";
-        alertView.setValue(datePickerOfbirth, forKey: "accessoryView")
-        alertView.show()
+        alert.kWindowWidth += 50
+        alert.kWindowHeight += 200
+        
+        alert.labelTitle.frame.origin.x += 25
+        
+        alert.contentView.addSubview(datePickerOfbirth)
+        alert.addButton("Remplacer") {
+            self.updateDateOfBirth()
+        }
+        
+        alert.showEdit("Modifier", subTitle:"Modifier la date de naissance de l'élève")
+    }
+    
+    func updateClasse() {
+        indexOfClasse = classePicker.selectedRowInComponent(0)
+        l_classe.text = classeListe[indexOfClasse].nom
+        classe.listeEleve[indexOfEleve].classe = classeListe[indexOfClasse]
+        eleveWasUpdated = true
     }
     
     @IBAction func updateClasse(sender: AnyObject) {
-        var picker = ClassePicker()
+        
+        var picker = ClassePicker(frame: CGRectMake(-8, 180, 300, 300))
 
         picker.classeListe = classeListe
         picker.delegate = picker
@@ -172,133 +237,35 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         classePicker = picker
         picker.selectRow(indexOfClasse, inComponent: 0, animated: false)
         
-        var alertView = UIAlertView()
-        alertView.delegate = self
-        alertView.addButtonWithTitle("Ok")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Classe de l'éleve";
-        alertView.setValue(picker, forKey: "accessoryView")
-        alertView.show()
-    }
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        let alert = SCLAlertView()
         
-        if(alertView.title == "Modifier le Nom"){
-            switch buttonIndex
-            {
-            case 0:
-                let newName = textField.text
-                self.clearErrors(l_verifLastName)
-                validator.validateAll(self)
-                
-                if(validationSuccess == true) {
-                    classe.listeEleve[indexOfEleve].nom = newName
-                    l_lastName.text = newName
-                    eleveWasUpdated = true
-                    validationSuccess = false
-                }
-                validator.clearValidation()
-                validator.clearErrors()
-                break
-            default:
-                break
-            }
-        } else if(alertView.title == "Modifier le Prénom") {
-            switch buttonIndex
-            {
-            case 0:
-                let newName = textField.text
-                self.clearErrors(l_verifFirstName)
-                validator.validateAll(self)
-                
-                if(validationSuccess == true) {
-                    classe.listeEleve[indexOfEleve].prenom = newName
-                    l_firstName.text = newName
-                    eleveWasUpdated = true
-                    validationSuccess = false
-                }
-                validator.clearValidation()
-                validator.clearErrors()
-                break
-            default:
-                break
-            }
-        } else if(alertView.title == "Modifier l'email") {
-            switch buttonIndex
-            {
-            case 0:
-                let email = textField.text
-                self.clearErrors(l_verifEmail)
-                validator.validateAll(self)
-                
-                if(validationSuccess == true) {
-                    classe.listeEleve[indexOfEleve].email = email
-                    l_email.text = email
-                    eleveWasUpdated = true
-                    validationSuccess = false
-                }
-                validator.clearValidation()
-                validator.clearErrors()
-                break
-            default:
-                break
-            }
-        } else if(alertView.title == "Date de Naissance") {
-            switch buttonIndex
-            {
-            case 0:
-                let date = datePicker.date
-                
-                var dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy"
-                l_dateOfBirth.text = dateFormatter.stringFromDate(date)
-                classe.listeEleve[indexOfEleve].date_naissance = date
-                eleveWasUpdated = true
-                break
-                
-            default:
-                break
-            }
-        } else if(alertView.title == "Classe de l'éleve") {
-            switch buttonIndex
-            {
-            case 0:
-                  indexOfClasse = classePicker.selectedRowInComponent(0)
-                  l_classe.text = classeListe[indexOfClasse].nom
-                  classe.listeEleve[indexOfEleve].classe = classeListe[indexOfClasse]
-                  eleveWasUpdated = true
-                break
-                
-            default:
-                break
-            }
+        alert.kWindowWidth += 50
+        alert.kWindowHeight += 200
+        
+        alert.labelTitle.frame.origin.x += 25
+        
+        alert.contentView.addSubview(picker)
+        alert.addButton("Remplacer") {
+            self.updateClasse()
         }
+        
+        alert.showEdit("Modifier", subTitle:"Modifier la classe de l'élève")
     }
     
-//    // MARK: - UIPicker implementation
-//    
-//    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-//        return 30
-//    }
-//    
-//    func numberOfComponentsInPickerView(_: UIPickerView) -> Int {
-//        return 1
-//    }
-//    
-//    func pickerView(_: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return classeListe.count
-//    }
-//    
-//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-//        return classeListe[row].nom
-//    }
+    func deleteEleve() {
+        classe.listeEleve[indexOfEleve].delete()
+        classe.listeEleve.removeAtIndex(indexOfEleve)
+        viewDidLoad()
+    }
     
     // MARK: - Navigation Eleves
     
     @IBAction func deteteEleve(sender: AnyObject) {
-        classe.listeEleve[indexOfEleve].delete()
-        classe.listeEleve.removeAtIndex(indexOfEleve)
-        viewDidLoad()
+        let alert = SCLAlertView()
+        alert.addButton("Supprimer") {
+            self.deleteEleve()
+        }
+        alert.showWarning("Supprimer", subTitle:"Si vous supprimer l'élèves ses notes seront également supprimé")
     }
     
     @IBAction func getNextEleve(sender: AnyObject) {
@@ -385,6 +352,10 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
                 VC.eleve = classe.listeEleve[indexOfEleve]
             }
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+            updateEleve()
     }
     
     override func didReceiveMemoryWarning() {

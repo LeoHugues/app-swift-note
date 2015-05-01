@@ -16,14 +16,6 @@ class Matiere {
     var description: String
     var listeNote: Array<Note>
     
-    init(Id: Int, Name: String, Coefficient: Int, Description: String, ListeNote: Array<Note> ) {
-        self.id = Id
-        self.name = Name
-        self.coefficient = Coefficient
-        self.description = Description
-        self.listeNote = ListeNote
-    }
-    
     init()
     {
         self.id = 0
@@ -34,72 +26,20 @@ class Matiere {
         self.listeNote = ListeNote
     }
     
-    func cleanAllNote()
-    {
-        self.listeNote.removeAll()
-    }
-
-    func getMatiere() -> Matiere
-    {
-        return self
-    }
-    
-    func rechercheNote(IdNote: Int) -> Note?     // recherche note
-    {
-        for note: Note in listeNote
-        {
-            if(note.id == IdNote)
-            {
-                return note
-            }
-        }
-        var note = Note()
-        
-        return note     //  retourne une note vide si la note n'existe pas
-    }
-    
-    
-    func setNote(NbPoint: Double, IdNote: Int) -> Matiere
-    {
-        if var Note = rechercheNote(IdNote) as Note?
-        {
-            if (Note.id == 0)
-            {
-                return self     //      Renvoie la matière tel quel si l'Id n'existe pas
-            }
-        }
-        
-        listeNote[IdNote].nbPoint = NbPoint
-        
-        return self
-    }
-    
-    
-    func setNote(date: NSDate, IdNote: Int) -> Matiere
-    {
-        if var Note = rechercheNote(IdNote) as Note?
-        {
-            if (Note.id == 0)
-            {
-                return self     //      Renvoie la matière tel quel si l'Id n'existe pas
-            }
-        }
-        
-        listeNote[IdNote].date = date
-        
-        return self
-    }
-    
-    func setDesc(desc: String) -> Matiere
-    {
-        self.description = desc
-        return self
-    }
-    
-    func setCoef(Coefficient: Int) -> Matiere
-    {
+    init(Name: String, Coefficient: Int, Description: String) {
+        self.id = Int()
+        self.name = Name
         self.coefficient = Coefficient
-        return self
+        self.description = Description
+        self.listeNote = Array<Note>()
+    }
+    
+    init(Id: Int, Name: String, Coefficient: Int, Description: String, ListeNote: Array<Note> ) {
+        self.id = Id
+        self.name = Name
+        self.coefficient = Coefficient
+        self.description = Description
+        self.listeNote = ListeNote
     }
     
     func APIGetMatiereById(id: Int) {
@@ -121,5 +61,63 @@ class Matiere {
         self.name = matiere["name"] as! String
         self.coefficient = matiere["coefficient"] as! Int
         self.description = matiere["description"] as! String
+    }
+    
+    func APICreateMatiere() {
+        var data = Dictionary<String, AnyObject>()
+        data = [
+            "nom" : self.name,
+            "coefficient" : self.coefficient,
+            "description" : self.description
+        ]
+        
+        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
+        
+        let url = NSURL(string: Constants.UrlApi + "/Matiere")!
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = body
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+    }
+    
+    func APIGetNotesByEleveID(id: Int) {
+        let url = NSURL(string: Constants.UrlApi + "/note")!
+        
+        var bodyFiltre = Dictionary<String, Dictionary<String, String>>()
+        bodyFiltre = [
+            "filtre" : [
+                "idEleve": String(id),
+                "idMatiere": String(self.id)
+            ]
+        ]
+        
+        var body = NSJSONSerialization.dataWithJSONObject(bodyFiltre, options: nil, error: nil)
+        
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = body
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        
+        if (data?.length != 0) {
+            let jsonResult = MesFonctions.parseJSON(data!)
+        
+            var notes = jsonResult["notes"] as! NSArray
+        
+            for array in notes {
+                let dico = array as! NSDictionary
+            
+                var note = Note(id: dico["id"] as! String, NbPoint: dico["nbPoints"] as! String, dateString: dico["date"] as! String, Description: dico["apreciation"] as! String, Coefficient:             dico["coefficient"] as! String, idMatiere: dico["matiere_id"] as! String)
+                self.listeNote.append(note)
+            }
+        }
+        
     }
 }

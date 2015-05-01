@@ -8,9 +8,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var eleve: Eleve = Eleve()
     var DataNote: Array<Matiere> = []
     
-    var bl_retract = false
-    var liste_retract = Array<Bool>()
-    
     // MARK: - override Function
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,12 +15,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         eleve.APIgetNotes()
         DataNote = eleve.getNoteByMatiere()
         
-        for(var i = 0; i < DataNote.count; i++)
-        {
-            liste_retract.append(false)
-        }
-        
-         self.navigationItem.title = "Notes de " + eleve.prenom
+        self.navigationItem.title = "Notes de " + eleve.prenom
     }
     
     
@@ -55,30 +47,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView,
         numberOfRowsInSection section: Int) -> Int
     {
-        if(bl_retract == true)
-        {
-            return 0
-        }
-        else
-        {
-            var nbRow = Int()
-            var i = 0
-            
-                    if(liste_retract[i] == false)
-                    {
-                       nbRow = DataNote[section].listeNote.count
-                    }
-                    i++
-            
-            return nbRow
-        }
+      return DataNote[section].listeNote.count
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let cell: TVC_CustomSection = tableView.dequeueReusableCellWithIdentifier("cellSection") as! TVC_CustomSection
-        
-        liste_retract[section] = cell.bl_retract
         
         cell.l_title.text = DataNote[section].name
         cell.nbRow.text = String(DataNote[section].listeNote.count)
@@ -101,17 +75,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func sectionTapped(sender: UIButton) {
-        
-        if(liste_retract[sender.tag] == false)
-        {
-            liste_retract[sender.tag] = true
-        }
-        else
-        {
-            liste_retract[sender.tag] = false
-        }
-        
-        tableViewNote.reloadData()
         
     }
 
@@ -152,28 +115,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    @IBAction func retract(sender: AnyObject) {
+    // MARK: APIRequest
+    func getMatieres() {
+        let url = NSURL(string: Constants.UrlApi + "/matiere")!
         
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
         
-        if(bl_retract == true)
-        {
-            tableViewNote.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            bl_retract = false
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        print(data?.length)
+        
+        if (data?.length != 0) {
+            let jsonResult = MesFonctions.parseJSON(data!)
+            
+            var matieres = jsonResult["matieres"] as! NSArray
+            
+            for array in matieres {
+                let dico = array as! NSDictionary
+                var matiere = Matiere(Name: dico[""] as! String, Coefficient: dico[""] as! Int, Description: dico[""] as! String)
+                matiere.APIGetNotesByEleveID(eleve.id)
+                self.classeListe.append(classe)
+            }
         }
-        else
-        {
-            bl_retract = true
-            tableViewNote.separatorStyle = UITableViewCellSeparatorStyle.None
-        }
-
-        
-        tableViewNote.reloadData()
-        
-    }
-    
-    func setNotes(data: Array<Matiere>)
-    {
-        DataNote = data
     }
     
     override func didReceiveMemoryWarning() {

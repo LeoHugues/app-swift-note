@@ -344,9 +344,6 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             VC.DataNote = DataNote
             VC.matiere = matiere
         }
-        
-
-        
     }
 
     /*

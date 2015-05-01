@@ -16,7 +16,7 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     @IBOutlet weak var tf_saisieMatiere: UITextField!
     @IBOutlet weak var tf_coefMatiere: UITextField!
     @IBOutlet weak var tv_desc: UITextView!
-    @IBOutlet weak var l_verif: UILabel!
+    @IBOutlet weak var l_verifNom: UILabel!
     @IBOutlet weak var l_verifCoef: UILabel!
 
     let validator = Validator()
@@ -30,7 +30,7 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
         
         validator.registerField(
             textField: tf_saisieMatiere,
-            errorLabel: l_verif,
+            errorLabel: l_verifNom,
             rules: [
                 RequiredRule(),
                 StringRule(),
@@ -90,7 +90,7 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     
     func removeAllErrors(){
         removeError(
-            label:l_verif,
+            label:l_verifNom,
             textField: tf_saisieMatiere
         )
         removeError(
@@ -103,29 +103,12 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     
     func validationWasSuccessful() {
         
-        //  Validation SUCCESS
+        let matiere = Matiere(Name: tf_saisieMatiere.text, Coefficient: tf_coefMatiere.text.toInt()!, Description: tv_desc.text)
         
-        var alert = UIAlertController(
-            title: "Enregistrement",
-            message: "Votre matière a bien était enregistré.",
-            preferredStyle: UIAlertControllerStyle.Alert
-        )
+        matiere.APICreateMatiere()
         
-        var defaultAction = UIAlertAction(
-            title: "OK",
-            style: .Default,
-            handler: nil
-        )
+        SCLAlertView().showSuccess("Ajout Réussi", subTitle: "Votre matière a bien était enregistrer", closeButtonTitle: "Ok", duration: 5.0)
         
-        alert.addAction(defaultAction)
-        
-        self.presentViewController(
-            alert,
-            animated: true,
-            completion: nil
-        )
-        
-        addMatiere()
     }
     
     func validationFailed(errors:[UITextField:ValidationError]) {
@@ -165,33 +148,5 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func addMatiere(){
-        var data = Dictionary<String, String>()
-        data = [
-            "nom" : tf_saisieMatiere.text,
-            "coefficient" : tf_coefMatiere.text,
-            "description" : tv_desc.text
-        ]
-        
-        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
-        
-        let url = NSURL(string: Constants.UrlApi + "/Matiere")!
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = body
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            
-            var error: AutoreleasingUnsafeMutablePointer<NSError?> = nil
-            
-            let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: error) as? NSDictionary
-            
-            if (jsonResult != nil) {
-                println(jsonResult.description)
-            }
-        })
-        tv_desc.text = ""
     }
 }
