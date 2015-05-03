@@ -10,33 +10,51 @@ import UIKit
 
 class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     
-    var DataNote = Array<Matiere>()
-    var matiere = String()
+    var eleve = Eleve()
+    var indexOfMatiere = Int()
     var datePicker = UIDatePicker()
-    var selectionedDate = NSDate()
-    var selectedRow = Int()
+    var matierePicker = MatierePicker()
 
     @IBOutlet weak var pk_matiere: UIPickerView!
     
+    @IBOutlet weak var l_titleView: UILabel!
     @IBOutlet weak var tf_Note: UITextField!
     @IBOutlet weak var tf_CoefNote: UITextField!
-    @IBOutlet weak var l_verif: UILabel!
-    @IBOutlet weak var l_date: UILabel!
-    @IBOutlet weak var tv_desc: UITextView!
     @IBOutlet weak var lb_verifNote: UILabel!
     @IBOutlet weak var lb_verifCoef: UILabel!
+    @IBOutlet weak var l_date: UILabel!
+    @IBOutlet weak var l_matiere: UILabel!
+    @IBOutlet weak var tv_desc: UITextView!
+    
+    @IBOutlet weak var b_date: UIButton!
+    @IBOutlet weak var b_matiere: UIButton!
+    @IBOutlet weak var b_add: UIButton!
+    
+
     
     let validator = Validator()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MesFonctions.convertButton(
+            [
+                b_date,
+                b_matiere,
+                b_add,
+            ]
+        )
         
         lb_verifCoef.hidden = true
         lb_verifNote.hidden = true
         self.navigationItem.title = "Ajout Note"
+        l_titleView.text = "Ajouter une note à " + eleve.nom + " " + eleve.prenom
         
-        tf_Note.restorationIdentifier = "nbPoint"
+        let date = datePicker.date
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        l_date.text = dateFormatter.stringFromDate(date)
+        l_matiere.text = eleve.matieres[matierePicker.selectedRowInComponent(0)].name
         
         validator.registerField(
             textField: tf_Note,
@@ -54,135 +72,80 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
                 NoteRule(),
             ]
         )
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        l_date.text = dateFormatter.stringFromDate(selectionedDate)
-        
-        pk_matiere.selectRow(MesFonctions.RechercheIndexMatiereByName(DataNote, name: matiere), inComponent: 0, animated: true)
     }
 
     override func viewWillDisappear(animated: Bool) {
         
-        if let VC: AccueilVC = self.parentViewController?.childViewControllerForStatusBarHidden() as? AccueilVC
-        {
-           // VC.DataNote = DataNote
-        }
-        else if let VC = self.parentViewController?.childViewControllerForStatusBarHidden() as? VC_Matiere
-        {
-            VC.DataNote = DataNote
-        }
+    }
+    
+    func setDate() {
+        let date = datePicker.date
         
-        
-    }
-    
-    // MARK: - pickerView
-    
-    func pickerView(_: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 30
-    }
-
-    func numberOfComponentsInPickerView(_: UIPickerView!) -> Int {
-        return 1
-    }
-    
-    func pickerView(_: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return DataNote.count
-    }
-    
-    func pickerView(_: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        return DataNote[row].name
-    }
-    
-    func pickerView(_: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedRow = row
-        matiere = DataNote[row].name
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        l_date.text = dateFormatter.stringFromDate(date)
     }
     
     @IBAction func setDate(sender: AnyObject) {
         
-        datePicker.datePickerMode = UIDatePickerMode.Date
+        var datePickerOfbirth = UIDatePicker(frame: CGRectMake(-8, 180, 300, 300))
+        datePickerOfbirth.datePickerMode = UIDatePickerMode.Date
         
-        var alertView = UIAlertView()
-        alertView.delegate = self
-        alertView.addButtonWithTitle("Ok")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Date";
-        alertView.setValue(datePicker, forKey: "accessoryView")
-        alertView.show()
-
-    }
-    
-    // MARK: - AlertView
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int)
-    {
-        switch buttonIndex
-            {
-        case 0:
-            selectionedDate = datePicker.date
-            
-            var dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yyyy"
-            l_date.text = dateFormatter.stringFromDate(selectionedDate)
-            
-        default:
-            println("annulé")
-            
+        datePicker = datePickerOfbirth
+        
+        let alert = SCLAlertView()
+        
+        alert.kWindowWidth += 50
+        alert.kWindowHeight += 200
+        
+        alert.labelTitle.frame.origin.x += 25
+        
+        alert.contentView.addSubview(datePickerOfbirth)
+        alert.addButton("Remplacer") {
+            self.setDate()
         }
-    }
+        
+        alert.showEdit("Modifier", subTitle:"Modifier la date de la note")
 
+    }
+    
+    func setMatiere() {
+        indexOfMatiere = matierePicker.selectedRowInComponent(0)
+        l_matiere.text = eleve.matieres[indexOfMatiere].name
+    }
+    
+    @IBAction func setMatiere(sender: AnyObject) {
+        var picker = MatierePicker(frame: CGRectMake(-8, 180, 300, 300))
+        
+        picker.matiereList = eleve.matieres
+        picker.delegate = picker
+        picker.dataSource = picker
+        
+        matierePicker = picker
+        picker.selectRow(indexOfMatiere, inComponent: 0, animated: false)
+        
+        let alert = SCLAlertView()
+        
+        alert.kWindowWidth += 50
+        alert.kWindowHeight += 200
+        
+        alert.labelTitle.frame.origin.x += 25
+        
+        alert.contentView.addSubview(picker)
+        alert.addButton("Ok") {
+            self.setMatiere()
+        }
+        
+        alert.showEdit("Modifier", subTitle:"Modifier la classe de l'élève")
+    }
     
     @IBAction func AjoutNote(sender: UIButton) {
         self.clearErrors()
         validator.validateAll(self)
-    }
-    
-    func getRadomId(liste: Array<Matiere>) -> Int {
-        
-        var id = random()
-        var validId = Bool()
-        
-        do
-        {
-            validId = true
-        
-            for matiere: Matiere in DataNote
-            {
-                for note: Note in matiere.listeNote
-                {
-                    if (note.id == id)
-                    {
-                        validId = false
-                    }
-                }
-            }
-            
-        }while(validId == false)
-        
-        return id
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        
-        if let VC: AccueilVC = segue.destinationViewController as? AccueilVC
-        {
-          //  VC.DataNote = DataNote
-        }
-        
-        if let VC: ViewController = segue.destinationViewController as? ViewController
-        {
-            VC.DataNote = DataNote
-        }
-        if let VC: VC_AjoutMatiere = segue.destinationViewController as? VC_AjoutMatiere
-        {
-            VC.DataNote = DataNote
-        }
     }
     
     // MARK: Error Styling
@@ -204,82 +167,17 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     }
     
     func validationWasSuccessful() {
+                
+        var note = Note(NbPoint: tf_Note.text.toInt()!,
+            Date        : datePicker.date,
+            Description : tv_desc.text,
+            Coefficient : tf_CoefNote.text.toInt()!,
+            eleve       : eleve,
+            matiere     : eleve.matieres[indexOfMatiere])
         
-        //  Validation SUCCESS
+        note.APICreateNote()
         
-        var alert = UIAlertController(
-            title: "Enregistrement",
-            message: "Votre Note a bien été ajoutée.",
-            preferredStyle: UIAlertControllerStyle.Alert
-        )
-        
-        var defaultAction = UIAlertAction(
-            title: "OK",
-            style: .Default,
-            handler: nil
-        )
-        
-        alert.addAction(defaultAction)
-        
-        self.presentViewController(
-            alert,
-            animated: true,
-            completion: nil
-        )
-
-//        var newNote: Note = Note()
-//        
-//        newNote.setNote(Float(tf_Note.text, "%,2"))
-//        newNote.setNote(tf_CoefNote.text.toInt()!)
-//        newNote.setNote(tv_desc.text)
-//        newNote.setNote(datePicker.date)
-        
-        
-        var dateFormatter : NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-YYYY"
-        let dateString = dateFormatter.stringFromDate(datePicker.date)
-        
-        var data = Dictionary<String, String>()
-        data = [
-            "nbPoint"      : tf_Note.text,
-            "coefficient"  : tf_CoefNote.text,
-            "appreciation" : tv_desc.text,
-            "date" : dateString,
-        ]
-        
-        println(data)
-        
-        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
-        //var jsonObj = NSJSONSerialization.JSONObjectWithData(bytes!, options: nil, error: nil) as [Dictionary<String, String>]
-
-//        let stringData = NSString(
-//            data: bytes!,
-//            encoding: NSUTF8StringEncoding
-//        )
-
-        
-       // let body = (stringData! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-
-        
-        let url = NSURL(string: Constants.UrlApi + "/note")!
-        
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = body
-        
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{ (response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            
-            var error: AutoreleasingUnsafeMutablePointer<NSError?> = nil
-            
-            let jsonResult: NSDictionary! = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.MutableContainers, error: error) as? NSDictionary
-            
-            if (jsonResult != nil) {
-                println(jsonResult)
-            } else {
-                println("Marche pas")
-            }
-        })
+        SCLAlertView().showSuccess("Ajout Réussi", subTitle: "Votre note a bien était enregistrer", closeButtonTitle: "Ok", duration: 5.0)
     }
     
     func validationFailed(errors:[UITextField:ValidationError]) {
@@ -307,16 +205,4 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

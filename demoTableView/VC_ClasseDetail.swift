@@ -27,11 +27,24 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     @IBOutlet weak var b_precedent: UIButton!
     @IBOutlet weak var b_next: UIButton!
+    @IBOutlet weak var b_setName: UIButton!
+    @IBOutlet weak var b_addClasse: UIButton!
+    @IBOutlet weak var b_seeClasse: UIButton!
+    @IBOutlet weak var b_delete: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if (classeListe.count > 0) {
+            MesFonctions.convertButton([
+                b_precedent,
+                b_next,
+                b_setName,
+                b_addClasse,
+                b_seeClasse,
+                b_delete
+                ]
+            )
             setDisplay()
         } else {
             navigationController?.popViewControllerAnimated(true)
@@ -39,6 +52,7 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     override func viewWillAppear(animated: Bool) {
+        classeListe[indexOfClasse].APIgetEleves()
         if (classeListe.count > 0) {
             setDisplay()
             tv_eleve.reloadData()

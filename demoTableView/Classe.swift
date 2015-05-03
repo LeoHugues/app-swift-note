@@ -101,5 +101,44 @@ class Classe
         
         NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
     }
+    
+    func APIgetEleves(){
+        
+        let url = NSURL(string: Constants.UrlApi + "/eleve")!
+        
+        var bodyFiltre = Dictionary<String, Dictionary<String, String>>()
+        bodyFiltre = [
+            "filtre" : [
+                "classe_id": String(self.id)
+            ]
+        ]
+        
+        var body = NSJSONSerialization.dataWithJSONObject(bodyFiltre, options: nil, error: nil)
+        
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = body
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        
+        let jsonResult = MesFonctions.parseJSON(data!)
+        
+        if (data?.length != nil && data?.length != 0) {
+            
+            var eleves = jsonResult["eleves"] as! NSArray
+            var listeEleves = Array<Eleve>()
+        
+            for array in eleves {
+                let dico = array as! NSDictionary
+            
+                var eleve = Eleve(id: dico["id"] as! String, lastName: dico["lastName"] as! String, firstName: dico["firstName"] as! String, email: dico["email"] as! String, dateOfBirth: dico["dateOfBirth"] as! String, classe: self)
+                listeEleves.append(eleve)
+            }
+            self.listeEleve = listeEleves
+        }
+    }
 }
 

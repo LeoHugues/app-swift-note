@@ -34,12 +34,12 @@ class Matiere {
         self.listeNote = Array<Note>()
     }
     
-    init(Id: Int, Name: String, Coefficient: Int, Description: String, ListeNote: Array<Note> ) {
+    init(Id: Int, Name: String, Coefficient: Int, Description: String) {
         self.id = Id
         self.name = Name
         self.coefficient = Coefficient
         self.description = Description
-        self.listeNote = ListeNote
+        self.listeNote = Array<Note>()
     }
     
     func APIGetMatiereById(id: Int) {
@@ -73,7 +73,7 @@ class Matiere {
         
         var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
         
-        let url = NSURL(string: Constants.UrlApi + "/Matiere")!
+        let url = NSURL(string: Constants.UrlApi + "/matiere")!
         var request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         request.HTTPBody = body
@@ -84,13 +84,45 @@ class Matiere {
         NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
     }
     
-    func APIGetNotesByEleveID(id: Int) {
+    func APIUpdate() {
+        var data = Dictionary<String, AnyObject>()
+        data = [
+            "nom"         : self.name,
+            "coefficient" : self.coefficient,
+            "description" : self.description
+        ]
+        
+        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
+        
+        let url = NSURL(string: Constants.UrlApi + "/matiere/\(self.id)")!
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "PUT"
+        request.HTTPBody = body
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+    }
+    
+    func APIDelete() {
+        let url = NSURL(string: Constants.UrlApi + "/matiere/\(self.id)")!
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "DELETE"
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+    }
+    
+    func APIGetNotesByEleveID(eleve: Eleve) {
         let url = NSURL(string: Constants.UrlApi + "/note")!
         
         var bodyFiltre = Dictionary<String, Dictionary<String, String>>()
         bodyFiltre = [
             "filtre" : [
-                "idEleve": String(id),
+                "idEleve": String(eleve.id),
                 "idMatiere": String(self.id)
             ]
         ]
@@ -106,15 +138,30 @@ class Matiere {
         
         let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
         
-        if (data?.length != 0) {
+        if (data?.length != 0 && data?.length != nil) {
             let jsonResult = MesFonctions.parseJSON(data!)
         
             var notes = jsonResult["notes"] as! NSArray
         
             for array in notes {
                 let dico = array as! NSDictionary
+                
+                // Prepare data
+                var dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
+                
+                // convert string into date
+                let date = dateFormatter.dateFromString(dico["date"] as! String)
             
-                var note = Note(id: dico["id"] as! String, NbPoint: dico["nbPoints"] as! String, dateString: dico["date"] as! String, Description: dico["apreciation"] as! String, Coefficient:             dico["coefficient"] as! String, idMatiere: dico["matiere_id"] as! String)
+                var note = Note(
+                    Id          : (dico["id"] as! String).toInt()!,
+                    NbPoint     : (dico["nbPoints"] as! String).toInt()!,
+                    Date        : date!,
+                    Description : dico["apreciation"] as! String,
+                    Coefficient : (dico["coefficient"] as! String).toInt()!,
+                    eleve       : eleve,
+                    matiere     : self
+                )
                 self.listeNote.append(note)
             }
         }

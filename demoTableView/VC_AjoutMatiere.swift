@@ -19,10 +19,13 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     @IBOutlet weak var l_verifNom: UILabel!
     @IBOutlet weak var l_verifCoef: UILabel!
 
+    @IBOutlet weak var b_add: UIButton!
+    
     let validator = Validator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MesFonctions.convertButton([b_add])
         
         self.navigationItem.title = "Ajout Matiere"
 
@@ -56,30 +59,8 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     }
     
    override func viewWillDisappear(animated: Bool) {
-        
-        if let VC: AccueilVC = self.parentViewController?.childViewControllerForStatusBarHidden() as? AccueilVC
-        {
-          //  VC.DataNote = DataNote
-        }
-        else if let VC = self.parentViewController?.childViewControllerForStatusBarHidden() as? ViewController
-        {
-            VC.DataNote = DataNote
-        }
-        else if let VC = self.parentViewController?.childViewControllerForStatusBarHidden() as? VC_AjoutNote
-        {
-            println(matiere)
-            
-            if(matiere != "")
-            {
-                VC.matiere = matiere
-            }
-            
-            VC.DataNote = DataNote
-            VC.pk_matiere.reloadAllComponents()
-        }
-
-        
-    }
+    
+   }
     
     // MARK: Error Styling
     
@@ -141,7 +122,7 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
         
         if let VC: ViewController = segue.destinationViewController as? ViewController
         {
-            VC.DataNote = DataNote
+            VC.eleve.matieres = DataNote
         }
     }
     

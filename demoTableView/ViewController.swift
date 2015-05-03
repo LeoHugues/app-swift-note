@@ -4,24 +4,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var l_moyenne: UILabel!
     @IBOutlet weak var tableViewNote: UITableView!
+    @IBOutlet weak var b_add: UIButton!
     
     var eleve: Eleve = Eleve()
-    var DataNote: Array<Matiere> = []
     
     // MARK: - override Function
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        eleve.APIgetNotes()
-        DataNote = eleve.getNoteByMatiere()
+        MesFonctions.convertButton([b_add])
         
         self.navigationItem.title = "Notes de " + eleve.prenom
     }
     
     
     override func viewWillAppear(animated: Bool) {
+        eleve.APIgetMatieres()
         tableViewNote.reloadData()
-        l_moyenne.text = String(format: "%.2f", MesFonctions.MoyenneGenerale(DataNote))
+        l_moyenne.text = String(MesFonctions.MoyenneGenerale(eleve.matieres))
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -40,27 +39,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return DataNote.count
+        return eleve.matieres.count
     }
     
     
     func tableView(tableView: UITableView,
         numberOfRowsInSection section: Int) -> Int
     {
-      return DataNote[section].listeNote.count
+      return eleve.matieres[section].listeNote.count
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let cell: TVC_CustomSection = tableView.dequeueReusableCellWithIdentifier("cellSection") as! TVC_CustomSection
         
-        cell.l_title.text = DataNote[section].name
-        cell.nbRow.text = String(DataNote[section].listeNote.count)
-        cell.b_add.tag = section
+        cell.l_title.text = eleve.matieres[section].name
+        cell.nbRow.text = String(eleve.matieres[section].listeNote.count)
         cell.section.tag = section
         
         return cell
-        
     }
     
     func tableView(tableView: UITableView,
@@ -68,14 +65,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("cellType1") as! UITableViewCell
         
-        cell.textLabel!.text = String(format:"%.2f", DataNote[indexPath.section].listeNote[indexPath.row].nbPoint)
-        cell.detailTextLabel!.text = String(DataNote[indexPath.section].listeNote[indexPath.row].coefficient)
+        cell.textLabel!.text = String(eleve.matieres[indexPath.section].listeNote[indexPath.row].nbPoint)
+        cell.detailTextLabel!.text = String(eleve.matieres[indexPath.section].listeNote[indexPath.row].coefficient)
         
         return cell
-    }
-    
-    @IBAction func sectionTapped(sender: UIButton) {
-        
     }
 
     // MARK: - Navigation Function
@@ -84,62 +77,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if let VC: VC_Note = segue!.destinationViewController as? VC_Note
         {
-           if let indexPath = tableViewNote.indexPathForSelectedRow() as NSIndexPath?
-           {
-                VC.listeNote = DataNote[indexPath.section].listeNote
-                VC.id = DataNote[indexPath.section].listeNote[indexPath.row].id
-                VC.nomMatiere = DataNote[indexPath.section].name
-                VC.indexNote = indexPath.row
-                VC.indexMatiere = indexPath.section
-           }
-            
-           VC.DataNote = DataNote
-
+            VC.eleve = eleve
+            if let indexPath = tableViewNote.indexPathForSelectedRow() as NSIndexPath?
+            {
+                VC.indexOfNote = indexPath.row
+            }
         }
         
         if let VC: VC_Matiere = segue!.destinationViewController as? VC_Matiere
         {
-            
-            VC.DataNote = DataNote
+            VC.eleve = eleve
             if let button = sender as? UIButton
             {
-                VC.matiere = DataNote[button.tag].name
+                VC.IndexOfmatiere = button.tag
             }
-            
         }
         
         if let VC: VC_AjoutMatiere = segue!.destinationViewController as? VC_AjoutMatiere
         {
-            VC.DataNote = DataNote
+            VC.DataNote = eleve.matieres
         }
         
-    }
-    
-    // MARK: APIRequest
-    func getMatieres() {
-        let url = NSURL(string: Constants.UrlApi + "/matiere")!
-        
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "GET"
-        
-        var response: NSURLResponse?
-        var error: NSError?
-        
-        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-        print(data?.length)
-        
-        if (data?.length != 0) {
-            let jsonResult = MesFonctions.parseJSON(data!)
-            
-            var matieres = jsonResult["matieres"] as! NSArray
-            
-            for array in matieres {
-                let dico = array as! NSDictionary
-                var matiere = Matiere(Name: dico[""] as! String, Coefficient: dico[""] as! Int, Description: dico[""] as! String)
-                matiere.APIGetNotesByEleveID(eleve.id)
-                self.classeListe.append(classe)
-            }
-        }
     }
     
     override func didReceiveMemoryWarning() {

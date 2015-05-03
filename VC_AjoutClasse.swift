@@ -12,11 +12,13 @@ class VC_AjoutClasse: UIViewController, ValidationDelegate, UITextFieldDelegate 
 
     @IBOutlet weak var tf_classeName: UITextField!
     @IBOutlet weak var l_verifName: UILabel!
+    @IBOutlet weak var b_addClasse: UIButton!
     
     let validator = Validator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MesFonctions.convertButton([b_addClasse])
         
         validator.registerField(
             textField: tf_classeName,

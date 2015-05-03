@@ -11,6 +11,10 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate, 
     @IBOutlet weak var l_dateOfBirth: UILabel!
     @IBOutlet weak var l_classe: UILabel!
     
+    @IBOutlet weak var b_dateOfBirth: UIButton!
+    @IBOutlet weak var b_classe: UIButton!
+    @IBOutlet weak var b_add: UIButton!
+    
     var classeListe = Array<Classe>()
     var indexOfClasse = 0
     
@@ -20,6 +24,7 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MesFonctions.convertButton([b_dateOfBirth, b_classe, b_add])
         
         validator.registerField(
             textField: txt_nameEleve,
@@ -74,7 +79,6 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate, 
         lb_verifFirstName.hidden = true
         lb_verifName.hidden = true
         l_verifEmail.hidden = true
-        datePicker.datePickerMode = UIDatePickerMode.Date
         
         let date = datePicker.date
         

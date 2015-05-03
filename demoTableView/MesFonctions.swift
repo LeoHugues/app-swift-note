@@ -17,6 +17,13 @@ struct MesFonctions {
         return boardsDictionary
     }
     
+    static func convertButton(buttons: Array<UIButton>){
+        for button in buttons {
+            button.setImage(button.imageView?.image!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+            button.imageView?.tintColor = Constants.AppColor
+        }
+    }
+    
     static func randDate() -> NSDate
     {
         let jour = arc4random_uniform(27) + 1
@@ -65,45 +72,9 @@ struct MesFonctions {
         return 0
     }
     
-    static func InitTestData() -> Array<Matiere>
+    static func MoyenneGenerale(Liste : Array<Matiere>) -> Int
     {
-        var DataNote = Array<Matiere>()
-        
-        for(var i = 0; i < 5; i++)
-        {
-            var newMatiere: Matiere = Matiere()
-            
-            for(var y = 0; y < 5; y++)
-            {
-                var note: Note = Note(Id: random(), NbPoint: Double(arc4random_uniform(20)), Date: MesFonctions.randDate(), Description: "", Coefficient: Int(arc4random_uniform(7) + 1))
-                newMatiere.listeNote.append(note)
-            }
-            switch(i){
-            case 0 : newMatiere.name = "Math"
-            newMatiere.description = "Arithmétique, calcul logique, graphe et matrice, rien de très compliqué"
-            case 1 : newMatiere.name = "Anglais"
-            newMatiere.description = "Anglais niveau TOIC, spécialisé dans l'informatique. Tous le vocabulaire et les textes étudiés tournent autour de l'informatique"
-            case 2 : newMatiere.name = "Français"
-            newMatiere.description = "Pour obtenir le BTS uniquement, le thème est le rêve"
-            case 3 : newMatiere.name = "Swift"
-            newMatiere.description = "Programation objet, manipulation des listes, travail sur un modèle MVC, avec les view controller et table view controller utilisation des protocoles et Delagate"
-            case 4 : newMatiere.name = "Algo"
-            newMatiere.description = "Algo basique : trie, recherche dicotomique, path finding..."
-                
-                
-            default : newMatiere.name = "Math"
-            }
-            newMatiere.coefficient = Int(arc4random_uniform(7)+1)
-            
-            DataNote.append(newMatiere)
-        }
-        
-        return DataNote
-    }
-    
-    static func MoyenneGenerale(Liste : Array<Matiere>) -> Double
-    {
-        var sommemoyennematiere = 0.00
+        var sommemoyennematiere = 0
         var sommecoefmatiere = 0
         
         for matiere : Matiere in Liste
@@ -111,20 +82,20 @@ struct MesFonctions {
             if matiere.listeNote.count > 0
             {
             var sommeCoef = 0
-            var sommeNote = 0.0
+            var sommeNote = 0
             
             for note:Note in matiere.listeNote
             {
                 sommeCoef += note.coefficient
-                sommeNote += note.nbPoint * Double(note.coefficient)
+                sommeNote += note.nbPoint * note.coefficient
                 
             }
             
-            sommemoyennematiere += Double(matiere.coefficient) * (sommeNote / Double(sommeCoef))
+            sommemoyennematiere += matiere.coefficient * (sommeNote / sommeCoef)
             sommecoefmatiere += matiere.coefficient
         }
             }
-        return sommemoyennematiere / Double(sommecoefmatiere)
+        return  18//sommemoyennematiere / sommecoefmatiere
         
     }
 

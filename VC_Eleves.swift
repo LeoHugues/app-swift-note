@@ -14,8 +14,10 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     var datePicker = UIDatePicker()
     var classePicker = ClassePicker()
     
-    // MARK: - Data Outlet
+    var textField = UITextField()
     
+    // MARK: - Data Outlet
+    // label
     @IBOutlet weak var l_lastName: UILabel!
     @IBOutlet weak var l_verifLastName: UILabel!
     @IBOutlet weak var l_verifFirstName: UILabel!
@@ -25,12 +27,18 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     @IBOutlet weak var l_dateOfBirth: UILabel!
     @IBOutlet weak var l_classe: UILabel!
     
-    var textField = UITextField()
-    
-    // MARK: - Navigation Outlet
-    
+    //button
+    @IBOutlet weak var b_lastName: UIButton!
+    @IBOutlet weak var b_firstName: UIButton!
+    @IBOutlet weak var b_email: UIButton!
+    @IBOutlet weak var b_dateOfBirth: UIButton!
+    @IBOutlet weak var b_classe: UIButton!
+    @IBOutlet weak var b_see: UIButton!
+    @IBOutlet weak var b_delete: UIButton!
     @IBOutlet weak var b_nextEleve: UIButton!
     @IBOutlet weak var b_precedentEleve: UIButton!
+    
+    var buttons = Array<UIButton>()
     
     // MARK: - Init Function
     
@@ -41,6 +49,20 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         } else {
             navigationController?.popViewControllerAnimated(true)
         }
+        
+        buttons = [
+            b_lastName,
+            b_firstName,
+            b_email,
+            b_dateOfBirth,
+            b_classe,
+            b_see,
+            b_delete,
+            b_nextEleve,
+            b_precedentEleve
+        ]
+        
+        MesFonctions.convertButton(buttons)
         
         getClasses()
 
@@ -58,6 +80,10 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         var dateString = dateFormatter.stringFromDate(date)
         
         l_lastName.text = classe.listeEleve[indexOfEleve].nom
+        l_lastName.backgroundColor = Constants.AppColor
+        l_lastName.layer.masksToBounds = true
+        l_lastName.layer.cornerRadius = 5
+        
         l_firstName.text = classe.listeEleve[indexOfEleve].prenom
         l_email.text = classe.listeEleve[indexOfEleve].email
         l_dateOfBirth.text = dateString
@@ -165,6 +191,8 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
             eleveWasUpdated = true
             validationSuccess = false
         }
+        validator.clearValidation()
+        validator.clearErrors()
     }
     
     @IBAction func updateEmail(sender: AnyObject) {
@@ -255,6 +283,9 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     func deleteEleve() {
         classe.listeEleve[indexOfEleve].delete()
         classe.listeEleve.removeAtIndex(indexOfEleve)
+        if (classe.listeEleve.count == indexOfEleve) {
+            indexOfEleve--
+        }
         viewDidLoad()
     }
     

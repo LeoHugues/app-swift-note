@@ -13,6 +13,7 @@ class Eleve
     var date_naissance: NSDate
     var classe: Classe
     var notes: Array<Note>
+    var matieres: Array<Matiere>
     
     //MARK: - Constructeurs
     init()
@@ -25,6 +26,7 @@ class Eleve
         self.date_naissance = NSDate()
         self.classe = Classe()
         self.notes = Array<Note>()
+        self.matieres = Array<Matiere>()
     }
     
     init(id: String, lastName: String, firstName: String, email: String, dateOfBirth: String, classe: Classe){
@@ -43,6 +45,7 @@ class Eleve
         self.date_naissance = date!
         self.classe = classe
         self.notes = Array<Note>()
+        self.matieres = Array<Matiere>()
     }
     
     init(lastName: String, firstName: String, email: String, dateOfBirth: String, classe: Classe){
@@ -61,6 +64,7 @@ class Eleve
         self.date_naissance = date!
         self.classe = classe
         self.notes = Array<Note>()
+        self.matieres = Array<Matiere>()
     }
     
     internal func APIAdd() {
@@ -95,6 +99,35 @@ class Eleve
         
         let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
     }
+    
+//    func APIgetEleve(id: Int){
+//        
+//        let url = NSURL(string: Constants.UrlApi + "/eleve/\(id)")!
+//        
+//        var request = NSMutableURLRequest(URL: url)
+//        request.HTTPMethod = "GET"
+//        
+//        var response: NSURLResponse?
+//        var error: NSError?
+//        
+//        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+//        
+//        let jsonResult = MesFonctions.parseJSON(data!)
+//        
+//        if (data?.length != nil && data?.length != 0) {
+//            
+//            var eleves = jsonResult["eleves"] as! NSArray
+//                
+//            var eleve = Eleve(
+//                id: eleves["id"] as! String,
+//                lastName: eleves["lastName"] as! String,
+//                firstName: eleves["firstName"] as! String,
+//                email: eleves["email"] as! String,
+//                dateOfBirth: eleves["dateOfBirth"] as! String,
+//                classe: self
+//            )
+//        }
+//    }
     
     internal func update() {
         
@@ -141,7 +174,7 @@ class Eleve
         let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
     }
     
-    internal func APIgetNotes() {
+    internal func APIgetNotes(matiere: Matiere) {
         
         let url = NSURL(string: Constants.UrlApi + "/note")!
         
@@ -170,29 +203,55 @@ class Eleve
         for array in notes {
             let dico = array as! NSDictionary
 
-            var note = Note(id: dico["id"] as! String, NbPoint: dico["nbPoints"] as! String, dateString: dico["date"] as! String, Description: dico["apreciation"] as! String, Coefficient: dico["coefficient"] as! String, idMatiere: dico["matiere_id"] as! String)
+            
+            var dateFormatter : NSDateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd-MM-YYYY"
+            let date = dateFormatter.dateFromString(dico["date"] as! String)
+            
+            var note = Note(
+                Id          : dico["id"] as! Int,
+                NbPoint     : dico["nbPoints"] as! Int,
+                Date        : date!,
+                Description : dico["apreciation"] as! String,
+                Coefficient : dico["coefficient"] as! Int,
+                eleve       : self,
+                matiere     : matiere
+            )
             self.notes.append(note)
         }
-        
     }
     
-    internal func getNoteByMatiere() -> Array<Matiere> {
+    func APIgetMatieres() {
+        let url = NSURL(string: Constants.UrlApi + "/matiere")!
         
-        var listeMatiere = Array<Matiere>()
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
         
-        for note: Note in notes {
-            var matiereExiste = false
-            for matiere: Matiere in listeMatiere {
-                if (note.matiere.id == matiere.id) {
-                    matiere.listeNote.append(note)
-                    matiereExiste = true
-                }
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        print(data?.length)
+        
+        if (data?.length != 0 && data?.length != nil) {
+            
+            let jsonResult = MesFonctions.parseJSON(data!)
+            var matieres = jsonResult["matiere"] as! NSArray
+            var listeMatiere = Array<Matiere>()
+            
+            for array in matieres {
+                let dico = array as! NSDictionary
+
+                var matiere = Matiere(
+                    Id: dico["id"] as! Int,
+                    Name: dico["name"] as! String,
+                    Coefficient: dico["coefficient"] as! Int,
+                    Description: dico["description"] as! String
+                )
+                matiere.APIGetNotesByEleveID(self)
+                listeMatiere.append(matiere)
             }
-            if(matiereExiste == false) {
-                note.matiere.listeNote.append(note)
-                listeMatiere.append(note.matiere)
-            }
+            self.matieres = listeMatiere
         }
-        return listeMatiere
     }
 }

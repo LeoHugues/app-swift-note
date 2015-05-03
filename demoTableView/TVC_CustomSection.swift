@@ -9,11 +9,9 @@
 import UIKit
 
 class TVC_CustomSection: UITableViewCell {
-
    
     @IBOutlet weak var l_title: UILabel!
 
-    @IBOutlet weak var b_add: UIButton!
     @IBOutlet weak var nbRow: UILabel!
     var bl_retract = false
     
@@ -27,6 +25,8 @@ class TVC_CustomSection: UITableViewCell {
         simpleTape.delegate = self
         self.addGestureRecognizer(simpleTape)
         
+        self.backgroundColor = Constants.AppColor
+        nbRow.textColor = Constants.AppColor
         nbRow.layer.masksToBounds = true
         nbRow.layer.cornerRadius = 8.0
         //b_title.titleLabel.autoresizingMask = UIViewAutoresizing.FlexibleWidth

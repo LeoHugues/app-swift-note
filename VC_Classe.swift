@@ -6,10 +6,12 @@ class VC_Classe: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     var loader = UIAlertView()
 
     @IBOutlet weak var tv_classe: UITableView!
+    @IBOutlet weak var b_addClasse: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Mes Classe"
+        MesFonctions.convertButton([b_addClasse])
         
        // getClasses()
     }
@@ -76,9 +78,8 @@ class VC_Classe: UIViewController, UITableViewDataSource, UITableViewDelegate, U
             var error: NSError?
     
             let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-            print(data?.length)
             
-            if (data?.length != 0) {
+            if (data?.length != nil && data?.length != 0) {
                 let jsonResult = MesFonctions.parseJSON(data!)
                 
                 var classes = jsonResult["classe"] as! NSArray
@@ -86,43 +87,9 @@ class VC_Classe: UIViewController, UITableViewDataSource, UITableViewDelegate, U
                 for array in classes {
                     let dico = array as! NSDictionary
                     var classe = Classe(classe: dico)
-                    getEleve(classe)
+                    classe.APIgetEleves()
                     self.classeListe.append(classe)
                 }
-            }
-        }
-    
-        internal func getEleve(classe: Classe){
-    
-            let url = NSURL(string: Constants.UrlApi + "/eleve")!
-    
-            var bodyFiltre = Dictionary<String, Dictionary<String, String>>()
-            bodyFiltre = [
-                "filtre" : [
-                    "classe_id": String(classe.id)
-                ]
-            ]
-    
-            var body = NSJSONSerialization.dataWithJSONObject(bodyFiltre, options: nil, error: nil)
-    
-            var request = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = "POST"
-            request.HTTPBody = body
-    
-            var response: NSURLResponse?
-            var error: NSError?
-    
-            let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-    
-            let jsonResult = MesFonctions.parseJSON(data!)
-    
-            var eleves = jsonResult["eleves"] as! NSArray
-    
-            for array in eleves {
-                let dico = array as! NSDictionary
-                
-                var eleve = Eleve(id: dico["id"] as! String, lastName: dico["lastName"] as! String, firstName: dico["firstName"] as! String, email: dico["email"] as! String, dateOfBirth: dico["dateOfBirth"] as! String, classe: classe)
-                classe.listeEleve.append(eleve)
             }
         }
     

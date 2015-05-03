@@ -11,7 +11,7 @@ import UIKit
 
 // Pop Up Styles
 public enum SCLAlertViewStyle {
-    case Success, Error, Notice, Warning, Info, Edit
+    case Success, Error, Notice, Warning, Info, Edit, Waiting
 }
 
 // Action Types
@@ -305,6 +305,11 @@ public class SCLAlertView: UIViewController {
         return showTitle(title, subTitle: subTitle, duration: duration, completeText:closeButtonTitle, style: .Warning)
     }
     
+    // showWarning(view, title, subTitle)
+    public func showWaiting(title: String, subTitle: String, closeButtonTitle:String?=nil, duration:NSTimeInterval=0.0) -> SCLAlertViewResponder {
+        return showTitle(title, subTitle: subTitle, duration: duration, completeText:closeButtonTitle, style: .Waiting)
+    }
+    
     // showInfo(view, title, subTitle)
     public func showInfo(title: String, subTitle: String, closeButtonTitle:String?=nil, duration:NSTimeInterval=0.0) -> SCLAlertViewResponder {
         return showTitle(title, subTitle: subTitle, duration: duration, completeText:closeButtonTitle, style: .Info)
@@ -334,28 +339,32 @@ public class SCLAlertView: UIViewController {
         // Icon style
         switch style {
         case .Success:
-            viewColor = UIColorFromRGB(0x22B573)
-            iconImage = SCLAlertViewStyleKit.imageOfCheckmark
+            viewColor = Constants.AppColor
+            iconImage = UIImage(named: "check60.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             
         case .Error:
-            viewColor = UIColorFromRGB(0xC1272D)
-            iconImage = SCLAlertViewStyleKit.imageOfCross
+            viewColor = Constants.AppColor
+            iconImage = SCLAlertViewStyleKit.imageOfCross.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             
         case .Notice:
-            viewColor = UIColorFromRGB(0x727375)
-            iconImage = SCLAlertViewStyleKit.imageOfNotice
+            viewColor = Constants.AppColor
+            iconImage = SCLAlertViewStyleKit.imageOfNotice.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             
         case .Warning:
-            viewColor = UIColor.redColor()//UIColorFromRGB(0xFFD110)
-            iconImage = SCLAlertViewStyleKit.imageOfWarning
+            viewColor = Constants.AppColor;UIColorFromRGB(0xFFD110)
+            iconImage = UIImage(named: "delete100.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            
+        case .Waiting:
+            viewColor = Constants.AppColor//UIColorFromRGB(0xFFD110)
+            iconImage = UIImage(named: "load2.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             
         case .Info:
-            viewColor = UIColorFromRGB(0x2866BF)
-            iconImage = SCLAlertViewStyleKit.imageOfInfo
+            viewColor = Constants.AppColor
+            iconImage = SCLAlertViewStyleKit.imageOfInfo.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             
         case .Edit:
             viewColor = Constants.AppColor//UIColorFromRGB(0xA429FF)
-            iconImage = SCLAlertViewStyleKit.imageOfEdit
+            iconImage = UIImage(named: "modules.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         }
         
         // Title
@@ -385,14 +394,20 @@ public class SCLAlertView: UIViewController {
         // Alert view colour and images
         self.circleView.backgroundColor = viewColor
         self.circleIconImageView.image  = iconImage
+        self.circleIconImageView.frame = CGRectMake(8, 8, 40, 40)
+        self.circleIconImageView.tintColor = UIColor.whiteColor()
+        
+        if style == SCLAlertViewStyle.Waiting {
+            self.kWindowHeight -= 45
+            self.contentView.subviews[2].removeFromSuperview()
+            self.circleIconImageView.frame = CGRectMake(8, 8, 40, 40)
+            self.circleIconImageView.tintColor = UIColor.whiteColor()
+        }
         for txt in inputs {
             txt.layer.borderColor = viewColor.CGColor
         }
         for btn in buttons {
             btn.backgroundColor = viewColor
-            if style == SCLAlertViewStyle.Warning {
-                btn.setTitleColor(UIColor.blackColor(), forState:UIControlState.Normal)
-            }
         }
         
         // Adding duration
@@ -403,7 +418,7 @@ public class SCLAlertView: UIViewController {
         
         // Animate in the alert view
         self.baseView.frame.origin.y = -400
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animateWithDuration(0.4, animations: {
             self.baseView.center.y = rv.center.y + 15
             self.view.alpha = 1
             }, completion: { finished in

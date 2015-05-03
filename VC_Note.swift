@@ -8,30 +8,30 @@
 
 import UIKit
 
-class VC_Note: UIViewController, UIAlertViewDelegate {
+class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     
-    var DataNote = Array<Matiere>()
-    var nomMatiere = String()
-    var listeNote = Array<Note>()
-    var id = Int()
-    var note = Note()
-    var indexNote = Int()
+    var eleve = Eleve()
+    var validator = Validator()
+    
+    var indexOfNote = Int()
+    var indexOfMatiere = Int()
+    var validationSuccess = false
+    var noteWasUpdated = false
+    
     var datePicker = UIDatePicker()
-    var date = NSDate()
-    var indexMatiere = Int()
-    
+    var textField = UITextField()
     
     @IBOutlet weak var l_title: UILabel!
 
     @IBOutlet weak var l_date: UILabel!
     @IBOutlet weak var l_coef: UILabel!
+    @IBOutlet weak var l_verifCoef: UILabel!
     @IBOutlet weak var l_note: UILabel!
-    @IBOutlet weak var l_verif: UILabel!
+    @IBOutlet weak var l_verifNote: UILabel!
     
     @IBOutlet weak var b_date: UIButton!
     @IBOutlet weak var b_coef: UIButton!
     @IBOutlet weak var b_note: UIButton!
-    
     @IBOutlet weak var b_prec: UIButton!
     @IBOutlet weak var b_next: UIButton!
     @IBOutlet weak var b_supp: UIButton!
@@ -40,337 +40,255 @@ class VC_Note: UIViewController, UIAlertViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        MesFonctions.convertButton(
+            [
+                b_date,
+                b_coef,
+                b_note,
+                b_prec,
+                b_next,
+                b_supp
+            ]
+        )
         
-        self.navigationItem.title = "Notes : \(nomMatiere)"
+        self.navigationItem.title = "Notes : \(eleve.matieres[indexOfMatiere].name)"
 
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        var i = 0
-        for n: Note in listeNote
-        {
-            if (n.id == id)
-            {
-                note = n
-                indexNote = i
-            }
-            i++
+        if(eleve.matieres[indexOfMatiere].listeNote.count > 0) {
+            setDisplay()
+        } else {
+            navigationController?.popViewControllerAnimated(true)
         }
-        
-        
-        if(indexNote == 0)
-        {
-            b_prec.hidden = true
-        }
-        else
-        {
-            b_prec.hidden = false
-        }
-        
-        if(indexNote == listeNote.count - 1)
-        {
-            b_next.hidden = true
-        }
-        else
-        {
-            b_next.hidden = false
-        }
-
-        
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        var dateForNs = note.date
-        var date = dateFormatter.stringFromDate(note.date)
-        
-        l_date.text = date
-        l_coef.text = String(note.coefficient)
-        l_note.text = String(format: "%.2f", note.nbPoint)
-        tv_desc.text = note.description
         
     }
     
     override func viewWillDisappear(animated: Bool) {
+        self.updateNote()
+    }
+    
+    func setDisplay() {
         
-        DataNote[indexMatiere].listeNote = listeNote
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        var date = dateFormatter.stringFromDate(
+            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].date
+        )
         
-        if let VC: VC_Matiere = self.parentViewController?.childViewControllerForStatusBarHidden() as? VC_Matiere
-        {
-            VC.DataNote = DataNote
-            VC.tableView.reloadData()
+        l_date.text = date
+        l_coef.text = String(
+            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].coefficient
+        )
+        l_note.text = String(
+            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].nbPoint
+        )
+        tv_desc.text = eleve.matieres[indexOfMatiere].listeNote[indexOfNote].description
+        l_verifNote.hidden = true
+        l_verifCoef.hidden = true
+        
+        // Display buttons
+        if(indexOfNote == 0) {
+            b_prec.hidden = true
+        } else {
+            b_prec.hidden = false
         }
-        else if let VC = self.parentViewController?.childViewControllerForStatusBarHidden() as? ViewController
-        {
-            VC.DataNote = DataNote
+        if(indexOfNote == eleve.matieres[indexOfMatiere].listeNote.count - 1) {
+            b_next.hidden = true
+        } else {
+            b_next.hidden = false
+        }
+    }
+    // MARK: Update function
+    
+    func updateNote() {
+        if(noteWasUpdated == true) {
+            let alert = SCLAlertView()
+            alert.showWaiting("Chargement", subTitle: "Veuillez patienter pendant le chargement des données")
+            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].APIUpdateNote()
+            alert.hideView()
+            noteWasUpdated = false
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+    func updateDate() {
+        let date = datePicker.date
         
-        if let VC: VC_Matiere = segue!.destinationViewController as? VC_Matiere
-        {
-            VC.DataNote = DataNote
-            VC.matiere = nomMatiere
-        }
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
         
+        l_date.text = dateFormatter.stringFromDate(date)
+        eleve.matieres[indexOfMatiere].listeNote[indexOfNote].date = date
     }
+    
     @IBAction func modifierDate(sender: AnyObject) {
         
+        var datePicker = UIDatePicker(frame: CGRectMake(-8, 180, 300, 300))
         datePicker.datePickerMode = UIDatePickerMode.Date
         
-        var alertView = UIAlertView()
-        alertView.delegate = self
-        alertView.addButtonWithTitle("Ok")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Date";
-        alertView.setValue(datePicker, forKey: "accessoryView")
-        alertView.show()
+        self.datePicker = datePicker
+        
+        let alert = SCLAlertView()
+        
+        alert.kWindowWidth += 50
+        alert.kWindowHeight += 200
+        
+        alert.labelTitle.frame.origin.x += 25
+        
+        alert.contentView.addSubview(datePicker)
+        alert.addButton("Remplacer") {
+            self.updateDate()
+        }
+        
+        alert.showEdit("Modifier", subTitle:"Modifier la date d'obtention de la note")
     }
-
-
+    
+    func updateCoef() {
+        
+        let coef = textField.text
+        self.clearErrors(l_verifCoef)
+        validator.validateAll(self)
+        
+        if(validationSuccess == true) {
+            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].coefficient = coef.toInt()!
+            l_coef.text = coef
+            noteWasUpdated = true
+            validationSuccess = false
+        }
+        validator.clearValidation()
+        validator.clearErrors()
+    }
     
     @IBAction func setCoef(sender: AnyObject) {
         
-        var alertView = UIAlertView()
+        let alert = SCLAlertView()
         
-        alertView.delegate = self
-        alertView.addButtonWithTitle("OK")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Modifier coef"
-        alertView.alertViewStyle = UIAlertViewStyle.PlainTextInput
-        alertView.show()
+        let txt = alert.addTextField(title:"Entrer le coéfficient")
+        self.textField = txt
         
+        validator.registerField(
+            textField: textField,
+            errorLabel: l_verifCoef,
+            rules: [
+                RequiredRule(),
+                NoteRule()
+            ])
+        
+        alert.addButton("Remplacer") {
+            self.updateCoef()
+        }
+        alert.showEdit("Modifier", subTitle:"Modifier le coéfficient de la note")
+        
+    }
+    
+    func updateNbPoint() {
+        let note = textField.text
+        self.clearErrors(l_verifCoef)
+        validator.validateAll(self)
+        
+        if(validationSuccess == true) {
+            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].nbPoint = note.toInt()!
+            l_note.text = note
+            noteWasUpdated = true
+            validationSuccess = false
+        }
+        validator.clearValidation()
+        validator.clearErrors()
     }
     
     @IBAction func setNote(sender: AnyObject) {
         
-        datePicker.datePickerMode = UIDatePickerMode.Date
+        let alert = SCLAlertView()
         
-        var alertView = UIAlertView()
-        alertView.delegate = self
-        alertView.addButtonWithTitle("Ok")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Modifier note";
-        alertView.alertViewStyle = UIAlertViewStyle.PlainTextInput
-        alertView.show()
+        let txt = alert.addTextField(title:"Entrer la note")
+        self.textField = txt
+        
+        validator.registerField(
+            textField: textField,
+            errorLabel: l_verifNote,
+            rules: [
+                RequiredRule(),
+                NoteRule()
+            ])
+        
+        alert.addButton("Remplacer") {
+            self.updateNbPoint()
+        }
+        alert.showEdit("Modifier", subTitle:"Modifier la note")
+    }
+    
+    func deleteNote() {
+        eleve.matieres[indexOfMatiere].listeNote.removeAtIndex(indexOfNote)
+        if (eleve.matieres[indexOfMatiere].listeNote.count == indexOfNote) {
+            indexOfNote--
+        }
+        viewWillAppear(true)
     }
     
     
+    @IBAction func backNote(sender: AnyObject) {
+        updateNote()
+        indexOfNote--
+        viewWillAppear(true)
+    }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int)
-    {
+    @IBAction func nextNote(sender: AnyObject) {
+        updateNote()
+        indexOfNote++
+        viewWillAppear(true)
+    }
+    
+    @IBAction func DeleteNote(sender: AnyObject) {
+        let alert = SCLAlertView()
         
-        if(alertView.title == "Date")
-        {
-            switch buttonIndex
-                {
-            case 0:
-                date = datePicker.date
-                
-                var dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy"
-                l_date.text = dateFormatter.stringFromDate(date)
-                
-                DataNote[indexMatiere].listeNote[indexNote].date = date
-                
-            default:
-                println("annulé")
-            }
+        alert.addButton("Supprimer") {
+            self.deleteNote()
         }
-        else if(alertView.title == "Modifier coef")
-        {
-            switch buttonIndex
-                {
-            case 0:
-                
-                if(CheckCoefMatiere(alertView.textFieldAtIndex(0)!.text) == true)
-                {
-                    DataNote[indexMatiere].listeNote[indexNote].coefficient = alertView.textFieldAtIndex(0)!.text.toInt()!
-                    l_coef.text = alertView.textFieldAtIndex(0)!.text
-                }
-                
-            default:
-                println("annulé")
-                
-            }
-            
-            
-        }
-        else if(alertView.title == "Modifier note")
-        {
-            switch buttonIndex
-                {
-            case 0:
-                
-                if(CheckNoteValue(alertView.textFieldAtIndex(0)!.text) == true)
-                {
-                    var string = NSString(string: alertView.textFieldAtIndex(0)!.text)
-                    string.doubleValue
-                    
-                    println(string.doubleValue)
-                    
-                    DataNote[indexMatiere].listeNote[indexNote].nbPoint = string.doubleValue
-                    
-                    l_note.text = alertView.textFieldAtIndex(0)!.text
-                }
-            default:
-                println("annulé")
-                
-            }
-            
-            
-        }
-        else if(alertView.title == "Supprimer note")
-        {
-            switch buttonIndex
-                {
-            case 0:
-                
-                if(listeNote.count == 1)
-                {
-                    l_verif.text = "Si vous supprimez cette note le programme plante :) "
-                }
-                else if (indexNote < listeNote.count - 1)
-                {
-                    listeNote.removeAtIndex(indexNote)
-                    
-                    note = listeNote[indexNote]
-                    id = note.id
-                    self.viewWillAppear(true)
-                }
-                else if(indexNote > 0)
-                {
-                    listeNote.removeAtIndex(indexNote)
-                    
-                    note = listeNote[indexNote - 1]
-                    id = note.id
-                    self.viewWillAppear(true)
-                }
-                
-            default:
-                println("annulé")
-                
-            }
-        }
-
+        alert.showWarning("Supprimer", subTitle:"Voulez vous supprimer la note ?")
     }
 
-    func CheckNoteValue(note: String) -> Bool {
-        
-        var NoteValid = true
-        
-        let regexNote = "[a-zA-Z]+"       //      Verification de la note
-        
-        if(note == ""){
-            l_verif.text = "Vous devez saisir une note"
-            NoteValid = false
-        }
-        else if let match = note.rangeOfString(regexNote, options: .RegularExpressionSearch){
-            l_verif.text = "la note ne doit pas contenir de lettre"
-            NoteValid = false
-        }
-        else if note.toInt() > 20
-        {
-            l_verif.text = "Une Note ne peut pas être supérieur a vinght"
-            NoteValid = false
-        }
-        else if note.toInt() < 0
-        {
-            l_verif.text = "Une Note doit être supérieur à 0"
-            NoteValid = false
-        }
-        
-        if(NoteValid == true)
-        {
-            l_verif.text = "La note est valide"
-        }
-        
-        return NoteValid
-        
-    }
-    
-    func CheckCoefMatiere(coef: String) -> Bool  //    Verifie l'utilisateur a saisie un coef valide
-    {
-        var coefValid = true
-        
-        
-        let RegexLettre = "[a-zA-Z]+"
-        
-        if let match = coef.rangeOfString(RegexLettre, options: .RegularExpressionSearch){
-            l_verif.text = "le coef ne doit pas contenir de lettre"
-            coefValid = false
-        }
-        else if coef.toInt() > 20
-        {
-            l_verif.text = "le coef ne peut pas être supérieur a vinght"
-            coefValid = false
-        }
-        else if coef == ""
-        {
-            l_verif.text = "vous devez saisir un coeficient"
-            coefValid = false
-        }
-        else if coef.toInt() < 0
-        {
-            l_verif.text = "le coef doit être supérieur à 0"
-            coefValid = false
-        }
-        
-        if(coefValid == true)
-        {
-            l_verif.text = "Le coef est valide"
-        }
-        
-        return coefValid
-    }
-    
-    @IBAction func backMatiere(sender: AnyObject) {
-        
-        if(indexNote > 0)
-        {
-            note = listeNote[indexNote - 1]
-            id = note.id
-            self.viewWillAppear(true)
-        }
-    }
-    
-    @IBAction func nextMatiere(sender: AnyObject) {
-        
-        if(indexNote < DataNote.count - 1)
-        {
-            note = listeNote[indexNote + 1]
-            id = note.id
-            self.viewWillAppear(true)
-        }
-        
-    }
-    @IBAction func DeleteMatiere(sender: AnyObject) {
-        
-        var alertView = UIAlertView()
-        alertView.delegate = self
-        alertView.addButtonWithTitle("OK")
-        alertView.addButtonWithTitle("Annuler")
-        alertView.title = "Supprimer note"
-        alertView.message = "Etes vous certain de vouloir supprimer cette note ?"
-        alertView.show()
-    }
-
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: Error Styling
+    
+    func removeError(#label:UILabel, textField:UITextField) {
+        label.hidden = true
+        textField.layer.borderWidth = 0.0
     }
-    */
+    
+    func removeAllErrors(label: UILabel, tf: UITextField){
+        removeError(
+            label: label,
+            textField: tf
+        )
+    }
+    
+    // MARK: ValidationDelegate Methods
+    
+    func validationWasSuccessful() {
+        validationSuccess = true
+    }
+    
+    func validationFailed(errors:[UITextField:ValidationError]) {
+        //  Validation FAILED
+        self.setErrors()
+    }
+    
+    private func setErrors(){
+        for (field, error) in validator.errors {
+            field.layer.borderColor = UIColor.redColor().CGColor
+            field.layer.borderWidth = 1.0
+            error.errorLabel?.text = error.errorMessage
+            error.errorLabel?.hidden = false
+        }
+    }
+    
+    private func clearErrors(label: UILabel){
+        label.text = ""
+    }
 
 }
