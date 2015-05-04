@@ -115,11 +115,6 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         
-        if let VC: AccueilVC = segue.destinationViewController as? AccueilVC
-        {
-           // VC.DataNote = DataNote
-        }
-        
         if let VC: ViewController = segue.destinationViewController as? ViewController
         {
             VC.eleve.matieres = DataNote

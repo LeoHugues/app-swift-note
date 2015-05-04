@@ -29,7 +29,6 @@
 		54DA098F1A0BBF75008B4277 /* menu48.png in Resources */ = {isa = PBXBuildFile; fileRef = 54DA098E1A0BBF75008B4277 /* menu48.png */; };
 		54E404D719F806F7005AA8E5 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E404D619F806F7005AA8E5 /* Note.swift */; };
 		54E404D919F80D11005AA8E5 /* Matiere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E404D819F80D11005AA8E5 /* Matiere.swift */; };
-		54EBF75619EFE0F80012B91E /* AccueilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EBF75519EFE0F80012B91E /* AccueilVC.swift */; };
 		54F1496C1A038C7B00638FA5 /* home63.png in Resources */ = {isa = PBXBuildFile; fileRef = 54F1496B1A038C7A00638FA5 /* home63.png */; };
 		C04494741AEBA3D800D49D90 /* VC_AjoutClasse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04494731AEBA3D800D49D90 /* VC_AjoutClasse.swift */; };
 		C0576CBC1AEF91A6004D5BA9 /* ClassePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0576CBB1AEF91A6004D5BA9 /* ClassePicker.swift */; };
@@ -39,7 +38,6 @@
 		C05C77EE1AF64FAA000698E3 /* VC_Accueil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05C77ED1AF64FAA000698E3 /* VC_Accueil.swift */; };
 		C05C77F11AF65282000698E3 /* settings48.png in Resources */ = {isa = PBXBuildFile; fileRef = C05C77EF1AF65282000698E3 /* settings48.png */; };
 		C05C77F21AF65282000698E3 /* start4.png in Resources */ = {isa = PBXBuildFile; fileRef = C05C77F01AF65282000698E3 /* start4.png */; };
-		C05F24261AED1534000C7489 /* AccueilVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EBF75519EFE0F80012B91E /* AccueilVC.swift */; };
 		C076DCAD1AF5029100105B7F /* MatierePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076DCAC1AF5029100105B7F /* MatierePicker.swift */; };
 		C07C65721AACA2B600AB2DA6 /* ConfirmRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65651AACA2B600AB2DA6 /* ConfirmRule.swift */; };
 		C07C65741AACA2B600AB2DA6 /* FullNameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65671AACA2B600AB2DA6 /* FullNameRule.swift */; };
@@ -104,7 +102,6 @@
 		54DA098E1A0BBF75008B4277 /* menu48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu48.png; path = Img/menu48.png; sourceTree = "<group>"; };
 		54E404D619F806F7005AA8E5 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		54E404D819F80D11005AA8E5 /* Matiere.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matiere.swift; sourceTree = "<group>"; };
-		54EBF75519EFE0F80012B91E /* AccueilVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccueilVC.swift; sourceTree = "<group>"; };
 		54F1496B1A038C7A00638FA5 /* home63.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home63.png; path = Img/home63.png; sourceTree = "<group>"; };
 		C04494731AEBA3D800D49D90 /* VC_AjoutClasse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VC_AjoutClasse.swift; sourceTree = "<group>"; };
 		C0576CBB1AEF91A6004D5BA9 /* ClassePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassePicker.swift; sourceTree = "<group>"; };
@@ -232,7 +229,6 @@
 		E9ACABFE1AAD950B0033B63B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				54EBF75519EFE0F80012B91E /* AccueilVC.swift */,
 				E9D53DFC1ACA92B0006499BA /* VC_Classes */,
 				E9ACAC061AAD9A920033B63B /* VC_Eleves */,
 				E9ACABFF1AAD96210033B63B /* VC_Notes */,
@@ -473,7 +469,6 @@
 				E9A4A9A31AAEEC29009BFFC5 /* VC_AjoutEleve.swift in Sources */,
 				C05C77EE1AF64FAA000698E3 /* VC_Accueil.swift in Sources */,
 				54E404D719F806F7005AA8E5 /* Note.swift in Sources */,
-				54EBF75619EFE0F80012B91E /* AccueilVC.swift in Sources */,
 				C07C657E1AACA2B600AB2DA6 /* ZipCodeRule.swift in Sources */,
 				C0FD39271AF3D1710053C75C /* SCLAlertView.swift in Sources */,
 				E9ACAC081AAD9ACB0033B63B /* VC_Eleves.swift in Sources */,
@@ -518,7 +513,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F83DD4B219EFACA00012C5A2 /* demoTableViewTests.swift in Sources */,
-				C05F24261AED1534000C7489 /* AccueilVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

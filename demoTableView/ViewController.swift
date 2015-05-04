@@ -23,14 +23,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         l_moyenne.text = String(MesFonctions.MoyenneGenerale(eleve.matieres))
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        
-        if let VC: AccueilVC = self.parentViewController?.childViewControllerForStatusBarHidden() as? AccueilVC
-        {
-          //  VC.DataNote = DataNote
-        }
-    }
-    
     // MARK: - TableView Function
 
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
