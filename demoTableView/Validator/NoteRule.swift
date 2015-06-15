@@ -1,11 +1,3 @@
-//
-//  NoteRule.swift
-//  demoTableView
-//
-//  Created by Tristan on 26/03/2015.
-//  Copyright (c) 2015 Logimax. All rights reserved.
-//
-
 import Foundation
 
 class NoteRule: Rule  {

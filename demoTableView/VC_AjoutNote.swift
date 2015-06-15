@@ -54,7 +54,8 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         l_date.text = dateFormatter.stringFromDate(date)
-        l_matiere.text = eleve.matieres[matierePicker.selectedRowInComponent(0)].name
+        matierePicker.selectRow(indexOfMatiere, inComponent: 0, animated: true)
+        l_matiere.text = eleve.matieres[indexOfMatiere].name
         
         validator.registerField(
             textField: tf_Note,
@@ -74,14 +75,6 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         )
     }
     
-    override func viewWillAppear(animated: Bool) {
-        
-    }
-
-    override func viewWillDisappear(animated: Bool) {
-        
-    }
-    
     func setDate() {
         let date = datePicker.date
         
@@ -95,7 +88,10 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         var datePickerOfbirth = UIDatePicker(frame: CGRectMake(-8, 180, 300, 300))
         datePickerOfbirth.datePickerMode = UIDatePickerMode.Date
         
+        datePickerOfbirth.date = datePicker.date
+        
         datePicker = datePickerOfbirth
+        
         
         let alert = SCLAlertView()
         

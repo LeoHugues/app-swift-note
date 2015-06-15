@@ -71,7 +71,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         {
             VC.eleve = eleve
             if let indexPath = tableViewNote.indexPathForSelectedRow() as NSIndexPath?
-            {
+            {   VC.indexOfMatiere = indexPath.section
                 VC.indexOfNote = indexPath.row
             }
         }

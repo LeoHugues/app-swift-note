@@ -79,8 +79,9 @@ class VC_Classe: UIViewController, UITableViewDataSource, UITableViewDelegate, U
     
             let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
             
-            if (data?.length != nil && data?.length != 0) {
-                let jsonResult = MesFonctions.parseJSON(data!)
+            if let inputData = data as NSData? {
+                println(inputData)
+                let jsonResult = MesFonctions.parseJSON(inputData)
                 
                 var classes = jsonResult["classe"] as! NSArray
                 

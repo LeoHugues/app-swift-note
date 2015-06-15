@@ -72,6 +72,26 @@ struct MesFonctions {
         return 0
     }
     
+    static func moyenneOfMatiere(matiere: Matiere) -> Int {
+        
+        var sommeCoef = 0
+        var sommeNote = 0
+        
+        for note:Note in matiere.listeNote
+        {
+            sommeCoef += note.coefficient
+            sommeNote += note.nbPoint * note.coefficient
+            
+        }
+        
+        if (sommeCoef == 0) {
+            return 0
+        }
+        
+        return sommeNote / sommeCoef
+
+    }
+    
     static func MoyenneGenerale(Liste : Array<Matiere>) -> Int
     {
         var sommemoyennematiere = 0
@@ -79,24 +99,17 @@ struct MesFonctions {
         
         for matiere : Matiere in Liste
         {
-            if matiere.listeNote.count > 0
-            {
-            var sommeCoef = 0
-            var sommeNote = 0
-            
-            for note:Note in matiere.listeNote
-            {
-                sommeCoef += note.coefficient
-                sommeNote += note.nbPoint * note.coefficient
-                
+            if (matiere.listeNote.count > 0 ) {
+                sommemoyennematiere += moyenneOfMatiere(matiere) * matiere.coefficient
+                sommecoefmatiere += matiere.coefficient
             }
-            
-            sommemoyennematiere += matiere.coefficient * (sommeNote / sommeCoef)
-            sommecoefmatiere += matiere.coefficient
         }
-            }
-        return  18//sommemoyennematiere / sommecoefmatiere
         
+        if (sommecoefmatiere == 0) {
+            return 0
+        }
+        
+        return sommemoyennematiere / sommecoefmatiere
     }
 
    

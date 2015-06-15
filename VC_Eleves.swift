@@ -131,6 +131,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let txt = alert.addTextField(title:"Entrer le nom")
         self.textField = txt
+        self.textField.text = classe.listeEleve[indexOfEleve].nom
         
         validator.registerField(
             textField: textField,
@@ -166,6 +167,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let txt = alert.addTextField(title:"Entrer le prénom")
         self.textField = txt
+        self.textField.text = classe.listeEleve[indexOfEleve].prenom
         
         validator.registerField(
             textField: textField,
@@ -201,12 +203,14 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let txt = alert.addTextField(title:"Entrer l'email")
         self.textField = txt
+        self.textField.text = classe.listeEleve[indexOfEleve].email
         
         validator.registerField(
             textField: textField,
             errorLabel: l_verifEmail,
             rules: [
-                RequiredRule()
+                RequiredRule(),
+                EMailRule()
             ])
         
         alert.addButton("Remplacer") {
@@ -231,6 +235,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         datePickerOfbirth.datePickerMode = UIDatePickerMode.Date
         
         datePicker = datePickerOfbirth
+        datePicker.date = classe.listeEleve[indexOfEleve].date_naissance
 
         let alert = SCLAlertView()
         

@@ -128,6 +128,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         datePicker.datePickerMode = UIDatePickerMode.Date
         
         self.datePicker = datePicker
+        self.datePicker.date = eleve.matieres[indexOfMatiere].listeNote[indexOfNote].date
         
         let alert = SCLAlertView()
         
@@ -166,6 +167,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let txt = alert.addTextField(title:"Entrer le coéfficient")
         self.textField = txt
+        self.textField.text = String(eleve.matieres[indexOfMatiere].listeNote[indexOfNote].coefficient)
         
         validator.registerField(
             textField: textField,
@@ -203,6 +205,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let txt = alert.addTextField(title:"Entrer la note")
         self.textField = txt
+        self.textField.text = String(eleve.matieres[indexOfMatiere].listeNote[indexOfNote].nbPoint)
         
         validator.registerField(
             textField: textField,
@@ -219,6 +222,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     }
     
     func deleteNote() {
+        eleve.matieres[indexOfMatiere].listeNote[indexOfNote].APIdelete()
         eleve.matieres[indexOfMatiere].listeNote.removeAtIndex(indexOfNote)
         if (eleve.matieres[indexOfMatiere].listeNote.count == indexOfNote) {
             indexOfNote--

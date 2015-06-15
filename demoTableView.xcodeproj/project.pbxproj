@@ -51,6 +51,7 @@
 		C07C65801AACCE9300AB2DA6 /* CoefRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C657F1AACCE9300AB2DA6 /* CoefRule.swift */; };
 		C07C65821AACD71B00AB2DA6 /* MatiereNameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */; };
 		C07C65841AACE1A100AB2DA6 /* StringRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07C65831AACE1A100AB2DA6 /* StringRule.swift */; };
+		C0BC4ECB1B2C7E180063EAE3 /* EMailRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BC4ECA1B2C7E180063EAE3 /* EMailRule.swift */; };
 		C0FD39271AF3D1710053C75C /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FD39261AF3D1710053C75C /* SCLAlertView.swift */; };
 		C0FD8F1B1AEBF414002CC974 /* VC_ClasseDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FD8F1A1AEBF414002CC974 /* VC_ClasseDetail.swift */; };
 		C0FD8F1F1AEBFB3C002CC974 /* classe.png in Resources */ = {isa = PBXBuildFile; fileRef = C0FD8F1E1AEBFB3C002CC974 /* classe.png */; };
@@ -124,6 +125,7 @@
 		C07C657F1AACCE9300AB2DA6 /* CoefRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoefRule.swift; sourceTree = "<group>"; };
 		C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatiereNameRule.swift; sourceTree = "<group>"; };
 		C07C65831AACE1A100AB2DA6 /* StringRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringRule.swift; sourceTree = "<group>"; };
+		C0BC4ECA1B2C7E180063EAE3 /* EMailRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EMailRule.swift; sourceTree = "<group>"; };
 		C0FD39261AF3D1710053C75C /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		C0FD8F1A1AEBF414002CC974 /* VC_ClasseDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VC_ClasseDetail.swift; path = demoTableView/VC_ClasseDetail.swift; sourceTree = "<group>"; };
 		C0FD8F1E1AEBFB3C002CC974 /* classe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classe.png; path = Img/classe.png; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				C07C65811AACD71B00AB2DA6 /* MatiereNameRule.swift */,
 				C07C65831AACE1A100AB2DA6 /* StringRule.swift */,
 				E91A8D9D1AC46E6000234E98 /* NoteRule.swift */,
+				C0BC4ECA1B2C7E180063EAE3 /* EMailRule.swift */,
 			);
 			path = Validator;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				E9ACAC011AAD98B70033B63B /* Eleve.swift in Sources */,
 				E9ACAC031AAD98CF0033B63B /* Classe.swift in Sources */,
 				5405C08D1A025C73005B11AB /* MesFonctions.swift in Sources */,
+				C0BC4ECB1B2C7E180063EAE3 /* EMailRule.swift in Sources */,
 				E91A8D9E1AC46E6000234E98 /* NoteRule.swift in Sources */,
 				C07C65721AACA2B600AB2DA6 /* ConfirmRule.swift in Sources */,
 				C07C657D1AACA2B600AB2DA6 /* Validator.swift in Sources */,

@@ -112,4 +112,16 @@ class Note {
         
         NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
     }
+    
+    internal func APIdelete() {
+        let url = NSURL(string: Constants.UrlApi + "/note/\(self.id)")!
+        
+        var request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "DELETE"
+        
+        var response: NSURLResponse?
+        var error: NSError?
+        
+        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+    }
 }

@@ -91,7 +91,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         l_title.text = eleve.matieres[IndexOfmatiere].name
         l_verifName.text = ""
         l_verifCoef.text = ""
-        //l_moyenne.text = String(format: "%.2f", moyenne())
+        l_moyenne.text = String(MesFonctions.moyenneOfMatiere(eleve.matieres[IndexOfmatiere]))
         l_coef.text = "\(String(eleve.matieres[IndexOfmatiere].coefficient))"
         tv_description.text = eleve.matieres[IndexOfmatiere].description
     }
@@ -132,6 +132,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         let txt = alert.addTextField(title:"Entrer le nom")
         self.textField = txt
+        self.textField.text = eleve.matieres[IndexOfmatiere].name
         
         validator.registerField(
             textField: textField,
@@ -167,6 +168,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         let txt = alert.addTextField(title:"Entrer le coéfficient")
         self.textField = txt
+        self.textField.text = String(eleve.matieres[IndexOfmatiere].coefficient)
         
         validator.registerField(
             textField: textField,

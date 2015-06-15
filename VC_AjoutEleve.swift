@@ -49,6 +49,7 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate, 
             errorLabel: l_verifEmail,
             rules: [
                 RequiredRule(),
+                EMailRule()
             ]
         )
         

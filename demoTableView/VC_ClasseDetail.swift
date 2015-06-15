@@ -136,6 +136,7 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         let txt = alert.addTextField(title:"Entrer le nom")
         self.textField = txt
+        self.textField.text = classeListe[indexOfClasse].nom
         
         validator.registerField(
             textField: textField,
