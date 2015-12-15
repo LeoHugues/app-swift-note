@@ -395,6 +395,7 @@
 		F83DD48E19EFACA00012C5A2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Logimax;
 				TargetAttributes = {

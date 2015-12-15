@@ -64,7 +64,7 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     
     // MARK: Error Styling
     
-    func removeError(#label:UILabel, textField:UITextField) {
+    func removeError(label label:UILabel, textField:UITextField) {
         label.hidden = true
         textField.layer.borderWidth = 0.0
     }
@@ -84,7 +84,7 @@ class VC_AjoutMatiere: UIViewController, ValidationDelegate, UITextFieldDelegate
     
     func validationWasSuccessful() {
         
-        let matiere = Matiere(Name: tf_saisieMatiere.text, Coefficient: tf_coefMatiere.text.toInt()!, Description: tv_desc.text)
+        let matiere = Matiere(Name: tf_saisieMatiere.text!, Coefficient: Int(tf_coefMatiere!.text!)!, Description: tv_desc.text)
         
         matiere.APICreateMatiere()
         

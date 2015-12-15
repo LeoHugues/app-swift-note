@@ -117,7 +117,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         validator.validateAll(self)
         
         if(validationSuccess == true) {
-            eleve.matieres[IndexOfmatiere].name = name
+            eleve.matieres[IndexOfmatiere].name = name!
             l_title.text = name
             matiereWasUpdated = true
             validationSuccess = false
@@ -130,7 +130,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         
         let alert = SCLAlertView()
         
-        let txt = alert.addTextField(title:"Entrer le nom")
+        let txt = alert.addTextField("Entrer le nom")
         self.textField = txt
         self.textField.text = eleve.matieres[IndexOfmatiere].name
         
@@ -153,7 +153,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         validator.validateAll(self)
 
         if(validationSuccess == true) {
-            eleve.matieres[IndexOfmatiere].coefficient = coef.toInt()!
+            eleve.matieres[IndexOfmatiere].coefficient = Int(coef!)!
             l_coef.text = coef
             matiereWasUpdated = true
             validationSuccess = false
@@ -166,7 +166,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 
         let alert = SCLAlertView()
         
-        let txt = alert.addTextField(title:"Entrer le coéfficient")
+        let txt = alert.addTextField("Entrer le coéfficient")
         self.textField = txt
         self.textField.text = String(eleve.matieres[IndexOfmatiere].coefficient)
         
@@ -185,7 +185,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellNote") as! UITableViewCell
+        let cell: UITableViewCell = (tableView.dequeueReusableCellWithIdentifier("cellNote")! as UITableViewCell)
         
         cell.textLabel!.text = String(
             eleve.matieres[IndexOfmatiere].listeNote[indexPath.row].nbPoint
@@ -242,7 +242,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     
     // MARK: Error Styling
     
-    func removeError(#label:UILabel, textField:UITextField) {
+    func removeError(label label:UILabel, textField:UITextField) {
         label.hidden = true
         textField.layer.borderWidth = 0.0
     }
@@ -284,7 +284,7 @@ class VC_Matiere: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         {
             VC.eleve = eleve
             
-            if let indexPath = tableView.indexPathForSelectedRow() as NSIndexPath?
+            if let indexPath = tableView.indexPathForSelectedRow as NSIndexPath?
             {
                 VC.indexOfNote = indexPath.row
             }

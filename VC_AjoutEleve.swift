@@ -99,7 +99,7 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate, 
     
     // MARK: Error Styling
     
-    func removeError(#label:UILabel, textField:UITextField) {
+    func removeError(label label:UILabel, textField:UITextField) {
         label.hidden = true
         textField.layer.borderWidth = 0.0
     }
@@ -190,7 +190,7 @@ class VC_AjoutEleve: UIViewController, ValidationDelegate, UITextFieldDelegate, 
         
         //  Validation SUCCESS
         
-        var eleve = Eleve(lastName: txt_nameEleve.text, firstName: txt_firstnameEleve.text, email: tf_email.text, dateOfBirth: l_dateOfBirth.text!, classe: classeListe[indexOfClasse])
+        let eleve = Eleve(lastName: txt_nameEleve.text!, firstName: txt_firstnameEleve.text!, email: tf_email.text!, dateOfBirth: l_dateOfBirth.text!, classe: classeListe[indexOfClasse])
         
         eleve.APIAdd()
     

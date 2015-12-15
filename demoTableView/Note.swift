@@ -51,77 +51,85 @@ class Note {
     
     func APICreateNote() {
         
-        var dateFormatter : NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-YYYY"
-        let dateString = dateFormatter.stringFromDate(self.date)
-        
-        var data = Dictionary<String, AnyObject>()
-        
-        data = [
-            "nbPoint"      : self.nbPoint,
-            "coefficient"  : self.coefficient,
-            "appreciation" : self.description,
-            "date"         : dateString,
-            "idMatiere"    : self.matiere.id,
-            "idEleve"      : self.eleve.id
-        ]
-        println(data)
-        
-        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
-        
-        let url = NSURL(string: Constants.UrlApi + "/note")!
-        
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = body
-        
-        var response: NSURLResponse?
-        var error: NSError?
-        
-        NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        do {
+            let dateFormatter : NSDateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd-MM-YYYY"
+            let dateString = dateFormatter.stringFromDate(self.date)
+            
+            var data = Dictionary<String, AnyObject>()
+            
+            data = [
+                "nbPoint"      : self.nbPoint,
+                "coefficient"  : self.coefficient,
+                "appreciation" : self.description,
+                "date"         : dateString,
+                "idMatiere"    : self.matiere.id,
+                "idEleve"      : self.eleve.id
+            ]
+            print(data)
+            
+            let url = NSURL(string: Constants.UrlApi + "/note")!
+            
+            let request = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = "POST"
+            
+            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(data, options: [])
+            
+            var response: NSURLResponse?
+            
+            _ = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response)
+        } catch (let e) {
+            print(e)
+        }
     }
     
     func APIUpdateNote() {
         
-        var dateFormatter : NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-YYYY"
-        let dateString = dateFormatter.stringFromDate(self.date)
-        
-        var data = Dictionary<String, AnyObject>()
-        
-        data = [
-            "nbPoint"      : self.nbPoint,
-            "coefficient"  : self.coefficient,
-            "appreciation" : self.description,
-            "date"         : dateString,
-            "idMatiere"    : self.matiere.id,
-            "idEleve"      : self.eleve.id
-        ]
-        println(data)
-        
-        var body = NSJSONSerialization.dataWithJSONObject(data, options: nil, error: nil)
-        
-        let url = NSURL(string: Constants.UrlApi + "/note/\(self.id)")!
-        
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "PUT"
-        request.HTTPBody = body
-        
-        var response: NSURLResponse?
-        var error: NSError?
-        
-        NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        do {
+            let dateFormatter : NSDateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd-MM-YYYY"
+            let dateString = dateFormatter.stringFromDate(self.date)
+            
+            var data = Dictionary<String, AnyObject>()
+            
+            data = [
+                "nbPoint"      : self.nbPoint,
+                "coefficient"  : self.coefficient,
+                "appreciation" : self.description,
+                "date"         : dateString,
+                "idMatiere"    : self.matiere.id,
+                "idEleve"      : self.eleve.id
+            ]
+            print(data)
+            
+            let body = try NSJSONSerialization.dataWithJSONObject(data, options: [])
+            
+            let url = NSURL(string: Constants.UrlApi + "/note/\(self.id)")!
+            
+            let request = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = "PUT"
+            request.HTTPBody = body
+            
+            var response: NSURLResponse?
+            
+            _ = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response)
+        } catch (let e) {
+            print(e)
+        }
     }
     
     internal func APIdelete() {
-        let url = NSURL(string: Constants.UrlApi + "/note/\(self.id)")!
-        
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "DELETE"
-        
-        var response: NSURLResponse?
-        var error: NSError?
-        
-        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        do {
+            let url = NSURL(string: Constants.UrlApi + "/note/\(self.id)")!
+            
+            let request = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = "DELETE"
+            
+            var response: NSURLResponse?
+
+            _ = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response)
+        } catch (let e) {
+            print(e)
+        }
     }
 }

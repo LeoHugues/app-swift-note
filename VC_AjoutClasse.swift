@@ -40,7 +40,7 @@ class VC_AjoutClasse: UIViewController, ValidationDelegate, UITextFieldDelegate 
     
     // MARK: Error Styling
     
-    func removeError(#label:UILabel, textField:UITextField) {
+    func removeError(label label:UILabel, textField:UITextField) {
         label.hidden = true
         textField.layer.borderWidth = 0.0
     }
@@ -56,7 +56,7 @@ class VC_AjoutClasse: UIViewController, ValidationDelegate, UITextFieldDelegate 
     
     func validationWasSuccessful() {
 
-        let classe = Classe(Nom: tf_classeName.text)
+        let classe = Classe(Nom: tf_classeName.text!)
         classe.APICreate()
         
         SCLAlertView().showSuccess("Ajout Réussi", subTitle: "Votre classe a bien était enregistrer", closeButtonTitle: "Ok", duration: 5.0)

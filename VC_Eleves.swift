@@ -116,7 +116,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         validator.validateAll(self)
         
         if(validationSuccess == true) {
-            classe.listeEleve[indexOfEleve].nom = newName
+            classe.listeEleve[indexOfEleve].nom = newName!
             l_lastName.text = newName
             eleveWasUpdated = true
             validationSuccess = false
@@ -129,7 +129,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let alert = SCLAlertView()
         
-        let txt = alert.addTextField(title:"Entrer le nom")
+        let txt = alert.addTextField("Entrer le nom")
         self.textField = txt
         self.textField.text = classe.listeEleve[indexOfEleve].nom
         
@@ -152,7 +152,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         validator.validateAll(self)
         
         if(validationSuccess == true) {
-            classe.listeEleve[indexOfEleve].prenom = newName
+            classe.listeEleve[indexOfEleve].prenom = newName!
             l_firstName.text = newName
             eleveWasUpdated = true
             validationSuccess = false
@@ -165,7 +165,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let alert = SCLAlertView()
         
-        let txt = alert.addTextField(title:"Entrer le prénom")
+        let txt = alert.addTextField("Entrer le prénom")
         self.textField = txt
         self.textField.text = classe.listeEleve[indexOfEleve].prenom
         
@@ -188,7 +188,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         validator.validateAll(self)
         
         if(validationSuccess == true) {
-            classe.listeEleve[indexOfEleve].email = email
+            classe.listeEleve[indexOfEleve].email = email!
             l_email.text = email
             eleveWasUpdated = true
             validationSuccess = false
@@ -201,7 +201,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let alert = SCLAlertView()
         
-        let txt = alert.addTextField(title:"Entrer l'email")
+        let txt = alert.addTextField("Entrer l'email")
         self.textField = txt
         self.textField.text = classe.listeEleve[indexOfEleve].email
         
@@ -318,7 +318,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     
     // MARK: Error Styling
     
-    func removeError(#label:UILabel, textField:UITextField) {
+    func removeError(label label:UILabel, textField:UITextField) {
         label.hidden = true
         textField.layer.borderWidth = 0.0
     }
@@ -358,24 +358,28 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     
     internal func getClasses(){
         
-        let url = NSURL(string: Constants.UrlApi + "/classe")!
-        
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "GET"
-        
-        var response: NSURLResponse?
-        var error: NSError?
-        
-        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-        
-        let jsonResult = MesFonctions.parseJSON(data!)
-        
-        var classes = jsonResult["classe"] as! NSArray
-        
-        for array in classes {
-            let dico = array as! NSDictionary
-            var classe = Classe(classe: dico)
-            self.classeListe.append(classe)
+        do {
+            
+            let url = NSURL(string: Constants.UrlApi + "/classe")!
+            
+            let request = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = "GET"
+            
+            var response: NSURLResponse?
+            
+            let data = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response)
+            
+            let jsonResult = MesFonctions.parseJSON(data)
+            
+            let classes = jsonResult["classe"] as! NSArray
+            
+            for array in classes {
+                let dico = array as! NSDictionary
+                let classe = Classe(classe: dico)
+                self.classeListe.append(classe)
+            }
+        } catch (let e) {
+            print(e)
         }
     }
     
@@ -384,7 +388,7 @@ class VC_Eleves: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         
         if let VC = segue!.destinationViewController as? ViewController {
-            if let bt_section = sender as? UIButton {
+            if let _ = sender as? UIButton {
                 VC.eleve = classe.listeEleve[indexOfEleve]
             }
         }

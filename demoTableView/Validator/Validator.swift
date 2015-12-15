@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@objc protocol ValidationDelegate {
+protocol ValidationDelegate {
     func validationWasSuccessful()
     func validationFailed(errors:[UITextField:ValidationError])
 }
@@ -27,7 +27,7 @@ class Validator {
         validations[textField] = ValidationRule(textField: textField, rules: rules, errorLabel: nil)
     }
     
-    func registerField(#textField:UITextField, errorLabel:UILabel, rules:[Rule]) {
+    func registerField(textField textField:UITextField, errorLabel:UILabel, rules:[Rule]) {
         validations[textField] = ValidationRule(textField: textField, rules:rules, errorLabel:errorLabel)
     }
     

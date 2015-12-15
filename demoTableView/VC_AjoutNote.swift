@@ -51,7 +51,7 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
         l_titleView.text = "Ajouter une note à " + eleve.nom + " " + eleve.prenom
         
         let date = datePicker.date
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         l_date.text = dateFormatter.stringFromDate(date)
         matierePicker.selectRow(indexOfMatiere, inComponent: 0, animated: true)
@@ -78,14 +78,14 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     func setDate() {
         let date = datePicker.date
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         l_date.text = dateFormatter.stringFromDate(date)
     }
     
     @IBAction func setDate(sender: AnyObject) {
         
-        var datePickerOfbirth = UIDatePicker(frame: CGRectMake(-8, 180, 300, 300))
+        let datePickerOfbirth = UIDatePicker(frame: CGRectMake(-8, 180, 300, 300))
         datePickerOfbirth.datePickerMode = UIDatePickerMode.Date
         
         datePickerOfbirth.date = datePicker.date
@@ -115,7 +115,7 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     }
     
     @IBAction func setMatiere(sender: AnyObject) {
-        var picker = MatierePicker(frame: CGRectMake(-8, 180, 300, 300))
+        let picker = MatierePicker(frame: CGRectMake(-8, 180, 300, 300))
         
         picker.matiereList = eleve.matieres
         picker.delegate = picker
@@ -146,7 +146,7 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     
     // MARK: Error Styling
     
-    func removeError(#label:UILabel, textField:UITextField) {
+    func removeError(label label:UILabel, textField:UITextField) {
         label.hidden = true
         textField.layer.borderWidth = 0.0
     }
@@ -164,10 +164,10 @@ class VC_AjoutNote: UIViewController, ValidationDelegate, UIAlertViewDelegate {
     
     func validationWasSuccessful() {
                 
-        var note = Note(NbPoint: tf_Note.text.toInt()!,
+        let note = Note(NbPoint: Int(tf_Note.text!)!,
             Date        : datePicker.date,
             Description : tv_desc.text,
-            Coefficient : tf_CoefNote.text.toInt()!,
+            Coefficient : Int(tf_CoefNote.text!)!,
             eleve       : eleve,
             matiere     : eleve.matieres[indexOfMatiere])
         

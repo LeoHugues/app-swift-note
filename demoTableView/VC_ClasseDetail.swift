@@ -89,7 +89,7 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("eleve") as! UITableViewCell
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("eleve")! as UITableViewCell
         
         cell.textLabel?.text = classeListe[indexOfClasse].listeEleve[indexPath.row].nom
         
@@ -101,7 +101,7 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
     func updateClasse() {
         if(classeUpdated == true) {
             classeListe[indexOfClasse].APIUpdate()
-            classeUpdated == false
+            classeUpdated = false
         }
     }
     
@@ -111,7 +111,7 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
         validator.validateAll(self)
         
         if(validationSuccess == true) {
-            classeListe[indexOfClasse].nom = newName
+            classeListe[indexOfClasse].nom = newName!
             l_title.text = newName
             
             classeUpdated = true
@@ -134,7 +134,7 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
 
         let alert = SCLAlertView()
         
-        let txt = alert.addTextField(title:"Entrer le nom")
+        let txt = alert.addTextField("Entrer le nom")
         self.textField = txt
         self.textField.text = classeListe[indexOfClasse].nom
         
@@ -178,7 +178,7 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     // MARK: Error Styling
     
-    func removeError(#label:UILabel, textField:UITextField) {
+    func removeError(label label:UILabel, textField:UITextField) {
         label.hidden = true
         textField.layer.borderWidth = 0.0
     }
@@ -218,7 +218,7 @@ class VC_ClasseDetail: UIViewController, UITableViewDataSource, UITableViewDeleg
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         
         if let VC = segue!.destinationViewController as? VC_Eleves {
-            if let indexPath = tv_eleve.indexPathForSelectedRow() as NSIndexPath? {
+            if let indexPath = tv_eleve.indexPathForSelectedRow! as NSIndexPath? {
                 VC.classe = classeListe[indexOfClasse]
                 VC.indexOfEleve = indexPath.row
             }

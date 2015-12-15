@@ -152,7 +152,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         validator.validateAll(self)
         
         if(validationSuccess == true) {
-            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].coefficient = coef.toInt()!
+            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].coefficient = Int(coef!)!
             l_coef.text = coef
             noteWasUpdated = true
             validationSuccess = false
@@ -165,7 +165,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let alert = SCLAlertView()
         
-        let txt = alert.addTextField(title:"Entrer le coéfficient")
+        let txt = alert.addTextField("Entrer le coéfficient")
         self.textField = txt
         self.textField.text = String(eleve.matieres[indexOfMatiere].listeNote[indexOfNote].coefficient)
         
@@ -190,7 +190,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         validator.validateAll(self)
         
         if(validationSuccess == true) {
-            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].nbPoint = note.toInt()!
+            eleve.matieres[indexOfMatiere].listeNote[indexOfNote].nbPoint = Int(note!)!
             l_note.text = note
             noteWasUpdated = true
             validationSuccess = false
@@ -203,7 +203,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
         
         let alert = SCLAlertView()
         
-        let txt = alert.addTextField(title:"Entrer la note")
+        let txt = alert.addTextField("Entrer la note")
         self.textField = txt
         self.textField.text = String(eleve.matieres[indexOfMatiere].listeNote[indexOfNote].nbPoint)
         
@@ -259,7 +259,7 @@ class VC_Note: UIViewController, UIAlertViewDelegate, ValidationDelegate {
     
     // MARK: Error Styling
     
-    func removeError(#label:UILabel, textField:UITextField) {
+    func removeError(label label:UILabel, textField:UITextField) {
         label.hidden = true
         textField.layer.borderWidth = 0.0
     }
